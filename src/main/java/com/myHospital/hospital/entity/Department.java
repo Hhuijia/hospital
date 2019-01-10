@@ -1,8 +1,5 @@
 package com.myHospital.hospital.entity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Department {
     /**
      * departmentNo	科室编号	varchar		必填	唯一代表一个科室，格式固定
@@ -23,8 +20,7 @@ public class Department {
     }
 
     public void setDepartmentNo(String departmentNo) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        this.departmentNo = "DEPARTMENT_" + departmentNo + "_" + df.format(new Date());
+        this.departmentNo = "DEPARTMENT_" + departmentNo + "_" + System.currentTimeMillis();
     }
 
     public String getDepartmentName() {

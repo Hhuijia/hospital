@@ -36,9 +36,17 @@ public interface UsersDao {
     @Update("UPDATE users SET userName=#{userName},userSex=#{userSex},userAge=#{userAge},userAddress=#{userAddress} WHERE userNo=#{userNo}")
     int updateUserByNo(Users user);
 
-    //通过查询用户信息
+    //通过userNo查询用户信息
     @Select("SELECT * FROM users WHERE userNo = #{userNo}")
     Users findUserByNo(String userNo);
+
+    //通过userName查询用户信息
+    @Select("SELECT * FROM users WHERE userName = #{userName}")
+    Users findUserByName(String userName);
+
+    //通过userPhone查询用户信息
+    @Select("SELECT * FROM users WHERE userPhone = #{userPhone}")
+    Users findUserByPhone(String userPhone);
 
     //查询所有用户信息
     @Select("SELECT * FROM users")

@@ -1,8 +1,7 @@
 package com.myHospital.hospital.entity;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Random;
 
 public class Doctors {
     /**
@@ -43,8 +42,9 @@ public class Doctors {
     }
 
     public void setDoctorNo(String doctorIDNum) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        this.doctorNo = "DOCTOR_" + doctorIDNum.substring(11) + "_" + df.format(new Date());
+        Random random = new Random();
+        String str = String.format("%04d", random.nextInt(1001));
+        this.doctorNo = "DOCTOR_" + str + "_" + System.currentTimeMillis();
     }
 
     public String getDoctorName() {
