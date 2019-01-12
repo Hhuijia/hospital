@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/favicon.ico">
+    <title>注册</title>
+    <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/justified-nav.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <form class="form-signin" action="#" th:action="@{/resign}" th:object="${users}" method="post">
+            <h2 class="form-signin-heading">请注册</h2>
+            <label for="inputName" class="sr-only">姓名</label>
+            <input type="text" th:field="*{userName}" id="inputName" class="form-control" placeholder="姓名" required autofocus>
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" th:field="*{userPwd}" id="inputPassword" class="form-control" placeholder="密码" required>
+            <input type="radio" th:field="*{userSex}" name="inputSex" value="0" class="form-control" checked>男
+            <input type="radio" th:field="*{userSex}" name="inputSex" value="1" class="form-control">女
+            <label for="inputAge" class="sr-only">年龄</label>
+            <input type="text" th:field="*{userAge}" id="inputAge" class="form-control" placeholder="年龄" required>
+            <label for="inputPhone" class="sr-only">手机号码</label>
+            <input type="text" th:field="*{userPhone}" id="inputPhone" class="form-control" placeholder="手机号码" required>
+            <label for="inputAddress" class="sr-only">居住地址</label>
+            <input type="text" th:field="*{userAddress}" id="inputAddress" class="form-control" placeholder="居住地址" required>
+
+            <button class="btn btn-lg btn-primary btn-block" type="reset">重置</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+        </form>
+    </div> <!-- /container -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/static/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
