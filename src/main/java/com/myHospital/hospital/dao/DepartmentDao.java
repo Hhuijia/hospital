@@ -1,4 +1,4 @@
-package com.myHospital.hospital.mapper;
+package com.myHospital.hospital.dao;
 
 import com.myHospital.hospital.entity.Department;
 import org.apache.ibatis.annotations.Delete;

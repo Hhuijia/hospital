@@ -2,11 +2,15 @@ package com.myHospital.hospital.service;
 
 import com.myHospital.hospital.entity.Users;
 
-import java.util.List;
+public interface UsersService {
 
-public abstract class UsersService {
+    //添加用户
+    void addUsers(Users users);
 
-    public abstract List<Users> findAllUser();
-    public abstract int addUsers();
+    //通过userIDNum查找用户信息
+    Users findUserByIDNum(String userIDNum);
+
+    //通过userIDNum查找用户角色
+    String findRoleByIDNum(String userIDNum);
 
 }
