@@ -1,7 +1,11 @@
 package com.myHospital.hospital.service;
 
 import com.myHospital.hospital.entity.Users;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface UsersService {
 
     //添加用户

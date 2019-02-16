@@ -4,12 +4,16 @@ import com.myHospital.hospital.dao.UsersDao;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Description:
  * @Author: Queeney.Huang
  * @Date: 1/17/2019
  */
+@Repository
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
@@ -46,4 +50,5 @@ public class UsersServiceImpl implements UsersService {
         }
         return role;
     }
+
 }

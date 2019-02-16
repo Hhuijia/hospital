@@ -27,7 +27,7 @@ public class Users {
     private String userName;
     private String userPwd;
     private String salt;
-    private Integer userSex;
+    private String userSex;
     private Integer userAge;
     private Timestamp userBirth;
     private String userIDNum;
@@ -66,11 +66,11 @@ public class Users {
         this.userPwd = userPwd;
     }
 
-    public Integer getUserSex() {
+    public String getUserSex() {
         return userSex;
     }
 
-    public void setUserSex(Integer userSex) {
+    public void setUserSex(String userSex) {
         this.userSex = userSex;
     }
 

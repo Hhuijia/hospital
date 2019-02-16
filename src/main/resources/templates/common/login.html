@@ -14,10 +14,10 @@
 </head>
 <body>
     <div class="container">
-        <form class="form-signin" action="/login" method="post">
+        <form class="form-signin" action="/common/login" method="post">
             <h2 class="form-signin-heading" th:text="${desc}">请登录</h2>
             <h4 th:text="${errorMsg}"></h4>
-            <input type="text" id="inputPhone" name="inputPhone" class="form-control" placeholder="手机号码" required autofocus>
+            <input type="text" id="inputPhone" name="inputPhone" class="form-control" placeholder="用户名" required autofocus>
             <input type="password" id="inputPassword" name="inputPassWord" class="form-control" placeholder="密码" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
         </form>
