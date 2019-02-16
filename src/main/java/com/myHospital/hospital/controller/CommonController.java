@@ -36,11 +36,38 @@ public class CommonController {
 
     @GetMapping(value = "/index")
     public ModelAndView index() {
-        log.info("********登陆成功*********");
+        log.info("********登录成功*********");
         Session session = SecurityUtils.getSubject().getSession();
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView index = new ModelAndView();
-        index.setViewName("show");
+        String role = usersService.findRoleByIDNum(user.getUserIDNum());
+        String title = " ";
+        String desc = " ";
+        if ("user".equals(role)){
+            log.info("********user（[{}]）登录成功*********",user.getUserName());
+            index.setViewName("user/index");
+            title = "userLogin";
+            desc = "用户";
+        }else if ("admin".equals(role)){
+            log.info("********admin（[{}]）登录成功*********",user.getUserName());
+            index.setViewName("admin/index");
+            title = "adminLogin";
+            desc = "管理员";
+        }else if ("doctor".equals(role)){
+            log.info("********doctor（[{}]）登录成功*********",user.getUserName());
+            index.setViewName("doctor/index");
+            title = "doctorLogin";
+            desc = "医生";
+        }else if("nurse".equals(role)){
+            log.info("********nurse（[{}]）登录成功*********",user.getUserName());
+            index.setViewName("nurse/index");
+            title = "nurseLogin";
+            desc = "护士";
+        }
+        index.addObject("title",title);
+        index.addObject("desc",desc);
+        index.addObject("username",user.getUserName());
+        index.addObject("password",user.getUserPwd());
         return index;
     }
 
@@ -85,33 +112,15 @@ public class CommonController {
             modelAndView.setViewName("login");
             modelAndView.addObject("errorMsg",errorMsg);
             token.clear();
-            return modelAndView;
         }
-//        String role = usersService.findRoleByIDNum(userIDNum);
-//        if ("user".equals(role)){
-//            System.out.println("user!");
-//            modelAndView.setViewName("user/index");
-//            return modelAndView;
-//        }else if ("admin".equals(role)){
-//            System.out.println("admin!");
-//            modelAndView.setViewName("admin/index");
-//            return modelAndView;
-//        }else if ("doctor".equals(role)){
-//            System.out.println("doctor!");
-//            modelAndView.setViewName("doctor/index");
-//            return modelAndView;
-//        }
-//
-//        Users users = usersService.findUserByIDNum(userIDNum);
-//        subject.getSession().setAttribute("user", users);
-//        return modelAndView;
+        return modelAndView;
     }
 
     @GetMapping(value = "/login")
     public ModelAndView loginFirst(){
         log.info("********跳转到登录界面*********");
         ModelAndView view = new ModelAndView();
-        view.setViewName("login");
+        view.setViewName("common/login");
         view.addObject("title","LoginUser");
         view.addObject("desc","欢迎您，请登录！");
         return view;
