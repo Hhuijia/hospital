@@ -4,16 +4,19 @@ import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.UsersService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 /**
  * @Description:
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Date: 1/18/2019
  */
 public class EnceladusShiroRealm extends AuthorizingRealm {
+    private static final Logger log = LoggerFactory.getLogger(EnceladusShiroRealm.class);
 
     @Autowired
     private UsersService usersService;
@@ -32,7 +36,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("————权限认证————");
+        log.info("################权限验证####################");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String userIDNum = (String) principalCollection.getPrimaryPrincipal();
         Users user = usersService.findUserByIDNum(userIDNum);
@@ -54,14 +58,14 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("————身份认证————");
+        log.info("################身份验证####################");
         String userIDNum = (String) authenticationToken.getPrincipal();
-        Users users = usersService.findUserByIDNum(userIDNum);
-        if (users == null){
-            return null;
-        }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(users.getUserIDNum(),
-                users.getUserPwd(), ByteSource.Util.bytes(users.getUserIDNum()), getName());
+        Users users = Optional.ofNullable(usersService.findUserByIDNum(userIDNum)).orElseThrow(UnknownAccountException::new);
+
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(users.getUserName(), users.getUserPwd(), getName());
+        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(users.getUserName()+users.getSalt()));
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("USER_SESSION", users);
         return authenticationInfo;
     }
 }

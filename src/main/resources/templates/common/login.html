@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,18 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/static/img/favicon.ico">
-    <title>登录</title>
+    <title th:text="${title}">登录</title>
     <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/justified-nav.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <form class="form-signin">
-            <h2 class="form-signin-heading">请登录</h2>
-            <label for="inputPhone" class="sr-only">手机号码</label>
-            <input type="text" id="inputPhone" class="form-control" placeholder="手机号码" required autofocus>
-            <label for="inputPassword" class="sr-only">密码</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <form class="form-signin" action="/login" method="post">
+            <h2 class="form-signin-heading" th:text="${desc}">请登录</h2>
+            <h4 th:text="${errorMsg}"></h4>
+            <input type="text" id="inputPhone" name="inputPhone" class="form-control" placeholder="手机号码" required autofocus>
+            <input type="password" id="inputPassword" name="inputPassWord" class="form-control" placeholder="密码" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
         </form>
     </div> <!-- /container -->

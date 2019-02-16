@@ -19,13 +19,14 @@ public class Users {
      * userAddress	用户住址	varchar		必填
      * userCreateTime	用户添加时间	date		必填	根据系统时间自动生成
      * userUpdateTime	用户修改时间	timestamp		必填	根据系统时间写入
-     * doctor_id	医生ID	varchar		若角色为医生则必填
-     *
+     * doctorId	 医生ID	 varchar   若角色为医生则必填
+     * nurseId
      * */
 
     private String userId;
     private String userName;
     private String userPwd;
+    private String salt;
     private Integer userSex;
     private Integer userAge;
     private Timestamp userBirth;
@@ -34,7 +35,8 @@ public class Users {
     private String userAddress;
     private Timestamp userCreateTime;
     private Timestamp userUpdateTime;
-    private String doctor_id;
+    private String doctorId;
+    private String nurseId;
 
     private List<Role> role = new ArrayList<>();
 
@@ -128,19 +130,35 @@ public class Users {
         this.userUpdateTime = userUpdateTime;
     }
 
-    public String getDoctor_id() {
-        return doctor_id;
-    }
-
-    public void setDoctor_id(String doctor_id) {
-        this.doctor_id = doctor_id;
-    }
-
     public List<Role> getRole() {
         return role;
     }
 
     public void setRole(List<Role> role) {
         this.role = role;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(String nurseId) {
+        this.nurseId = nurseId;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
