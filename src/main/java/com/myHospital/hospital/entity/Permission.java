@@ -11,7 +11,6 @@ import java.util.List;
 public class Permission {
     private Integer permissionId;
     private String permissionName;
-    private List<Role> roles = new ArrayList<>();
 
     public Integer getPermissionId() {
         return permissionId;
@@ -27,13 +26,5 @@ public class Permission {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 }

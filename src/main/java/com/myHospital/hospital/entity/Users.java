@@ -6,22 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Users {
-    /**
-     * userId	用户ID	varchar	10	必填	唯一代表一名用户，格式固定
-     * roleId	角色ID	varchar	11	必填	外键
-     * userName	用户姓名	varchar		必填	真实姓名
-     * userPwd	用户密码	varchar		必填	6-12位，数字+字母组成
-     * userSex	用户性别	int		必填	男：0/女：1
-     * userBirth	用户出生日期	date		必填
-     * userAge	用户年龄	int		必填	只允许输入整数
-     * userIDNum	用户身份证号	varchar		必填	身份证号格式
-     * userPhone	用户联系方式	varchar		必填
-     * userAddress	用户住址	varchar		必填
-     * userCreateTime	用户添加时间	date		必填	根据系统时间自动生成
-     * userUpdateTime	用户修改时间	timestamp		必填	根据系统时间写入
-     * doctorId	 医生ID	 varchar   若角色为医生则必填
-     * nurseId
-     * */
 
     private String userId;
     private String userName;
@@ -29,7 +13,7 @@ public class Users {
     private String salt;
     private String userSex;
     private Integer userAge;
-    private Timestamp userBirth;
+    private String userBirth;
     private String userIDNum;
     private String userPhone;
     private String userAddress;
@@ -38,16 +22,12 @@ public class Users {
     private String doctorId;
     private String nurseId;
 
-    private List<Role> role = new ArrayList<>();
-
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId() {
-        Random random = new Random();
-        String str = String.format("%04d", random.nextInt(1001));
-        this.userId = "USER_" + str + "_" + System.currentTimeMillis();
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -82,11 +62,11 @@ public class Users {
         this.userAge = userAge;
     }
 
-    public Timestamp getUserBirth() {
+    public String getUserBirth() {
         return userBirth;
     }
 
-    public void setUserBirth(Timestamp userBirth) {
+    public void setUserBirth(String userBirth) {
         this.userBirth = userBirth;
     }
 
@@ -128,14 +108,6 @@ public class Users {
 
     public void setUserUpdateTime(Timestamp userUpdateTime) {
         this.userUpdateTime = userUpdateTime;
-    }
-
-    public List<Role> getRole() {
-        return role;
-    }
-
-    public void setRole(List<Role> role) {
-        this.role = role;
     }
 
     public String getDoctorId() {

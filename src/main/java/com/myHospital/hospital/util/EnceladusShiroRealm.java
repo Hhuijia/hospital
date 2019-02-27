@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,11 +40,12 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
         log.info("################权限验证####################");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String userIDNum = (String) principalCollection.getPrimaryPrincipal();
-        Users user = usersService.findUserByIDNum(userIDNum);
+        List<Role> roles = usersService.findRoleByIDNum(userIDNum);
 
-        for (Role role : user.getRole()){
+        for (Role role : roles){
             authorizationInfo.addRole(role.getRoleName());
-            for (Permission permission : role.getPermissions()){
+            List<Permission> permissions = usersService.findPermissionByRoleId(role.getRoleId());
+            for (Permission permission : permissions){
                 authorizationInfo.addStringPermission(permission.getPermissionName());
             }
         }

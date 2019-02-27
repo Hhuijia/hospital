@@ -21,5 +21,6 @@ public class PasswordHelper {
         String salt2 = randomNumberGenerator.nextBytes().toHex();
         String newPassword = new SimpleHash(ALGORITHM_NAME, user.getUserPwd(), salt1+salt2, HASH_ITERATIONS).toHex();
         user.setUserPwd(newPassword);
+        user.setSalt(salt2);
     }
 }

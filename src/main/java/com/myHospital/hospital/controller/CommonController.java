@@ -1,5 +1,6 @@
 package com.myHospital.hospital.controller;
 
+import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.UsersService;
 import com.myHospital.hospital.util.PasswordHelper;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -40,7 +43,7 @@ public class CommonController {
         Session session = SecurityUtils.getSubject().getSession();
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView index = new ModelAndView();
-        String role = usersService.findRoleByIDNum(user.getUserIDNum());
+        List<Role> role = usersService.findRoleByIDNum(user.getUserIDNum());
         String title = " ";
         String desc = " ";
         if ("user".equals(role)){

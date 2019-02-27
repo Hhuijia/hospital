@@ -1,5 +1,7 @@
 package com.myHospital.hospital.service;
 
+import com.myHospital.hospital.entity.Permission;
+import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,9 @@ public interface UsersService {
     Users findUserByIDNum(String userIDNum);
 
     //通过userIDNum查找用户角色
-    String findRoleByIDNum(String userIDNum);
+    List<Role> findRoleByIDNum(String userIDNum);
+
+    //通过roleId查找角色权限
+    List<Permission> findPermissionByRoleId(String roleId);
 
 }

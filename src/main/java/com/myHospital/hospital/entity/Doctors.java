@@ -4,19 +4,6 @@ import java.sql.Timestamp;
 import java.util.Random;
 
 public class Doctors {
-    /**
-     * doctorId	医生ID	varchar		必填	唯一代表一名医生，格式固定
-     * departmentId	科室ID	varchar		必填	外键
-     * doctorName	医生姓名	varchar		必填
-     * doctorTitle	医生职称	varchar		必填
-     * doctorProfession	医生主诊	varchar		必填	医生主要诊治领域
-     * doctorMedicalServiceLife	医生从医年限	int		必填
-     * doctorIntroduction	医生简介	varchar		必填
-     * doctorCreateTime	医生添加时间	date		必填	根据系统时间自动生成
-     * doctorUpdateTime	医生修改时间	timestamp		必填	根据系统时间写入
-     *
-     * */
-
     private String doctorId;
     private String doctorName;
     private String doctorTitle;
@@ -30,10 +17,8 @@ public class Doctors {
         return doctorId;
     }
 
-    public void setDoctorId() {
-        Random random = new Random();
-        String str = String.format("%04d", random.nextInt(1001));
-        this.doctorId = "DOCTOR_" + str + "_" + System.currentTimeMillis();
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
     }
 
     public String getDoctorName() {

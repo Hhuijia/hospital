@@ -8,16 +8,14 @@ import java.util.*;
  * @Date: 1/21/2019
  */
 public class Role {
-    private Integer roleId;
+    private String roleId;
     private String roleName;
-    private List<Users> users = new ArrayList<>();
-    private List<Permission> permissions = new ArrayList<>();
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 
@@ -27,21 +25,5 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public List<Users> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<Users> users) {
-        this.users = users;
-    }
-
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
     }
 }

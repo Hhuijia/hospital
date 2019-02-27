@@ -1,26 +1,26 @@
 package com.myHospital.hospital.entity;
 
+import java.sql.Timestamp;
+
+/**
+ * @author QUEENEY
+ * @date 2019/2/27
+ */
 public class Department {
-    /**
-     * departmentNo	科室编号	varchar		必填	唯一代表一个科室，格式固定
-     * departmentName	科室名称	varchar		必填
-     * departmentSystem	所属系统	varchar		必填	内科，外科，妇儿科，五官科
-     * departmentInfo	科室简介	varchar		必填
-     * departmentSymptom	主要表现症状	varchar		必填
-     *
-     * */
-    private String departmentNo;
+    private String departmentId;
     private String departmentName;
     private String departmentSystem;
     private String departmentInfo;
     private String departmentSymptom;
+    private Timestamp departmentCreatedTime;
+    private Timestamp departmentUpdateTime;
 
-    public String getDepartmentNo() {
-        return departmentNo;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentNo(String departmentNo) {
-        this.departmentNo = "DEPARTMENT_" + departmentNo + "_" + System.currentTimeMillis();
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getDepartmentName() {
@@ -53,5 +53,21 @@ public class Department {
 
     public void setDepartmentSymptom(String departmentSymptom) {
         this.departmentSymptom = departmentSymptom;
+    }
+
+    public Timestamp getDepartmentCreatedTime() {
+        return departmentCreatedTime;
+    }
+
+    public void setDepartmentCreatedTime(Timestamp departmentCreatedTime) {
+        this.departmentCreatedTime = departmentCreatedTime;
+    }
+
+    public Timestamp getDepartmentUpdateTime() {
+        return departmentUpdateTime;
+    }
+
+    public void setDepartmentUpdateTime(Timestamp departmentUpdateTime) {
+        this.departmentUpdateTime = departmentUpdateTime;
     }
 }

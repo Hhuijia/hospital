@@ -1,5 +1,7 @@
 package com.myHospital.hospital.dao;
 
+import com.myHospital.hospital.entity.Permission;
+import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import org.apache.ibatis.annotations.*;
 
@@ -17,14 +19,17 @@ public interface UsersDao {
      *
      *  */
 
-    //添加用户1
-    @Insert("INSERT INTO users(userId,userName,userPwd,userSex,userAge,userBirth,userIDNum,userPhone,userAddress) " +
-            "VALUES(#{userId},#{userName},#{userPwd},#{userSex},#{userAge},#{userBirth},#{userIDNum},#{userPhone},#{userAddress})")
+    //添加用户-病患
+    @Insert("INSERT INTO users VALUES(#{userId},#{userName},#{userPwd},#{userSex},#{userAge},#{userBirth},#{userIDNum},#{userPhone},#{userAddress},,,#{salt},null,null)")
     void addUser(Users user);
 
-    //添加用户2
-    @Insert("INSERT INTO users VALUES(#{userId},'2',#{userName},#{userPwd},#{userSex},#{userAge},#{userBirth},#{userIDNum},#{userPhone},#{userAddress},#{doctor_id})")
+    //添加用户-医生
+    @Insert("INSERT INTO users VALUES(#{userId},#{userName},#{userPwd},#{userSex},#{userAge},#{userBirth},#{userIDNum},#{userPhone},#{userAddress},,,#{salt},#{doctorId},null)")
     void addDoctor(Users user);
+
+    //添加用户-护士
+    @Insert("INSERT INTO users VALUES(#{userId},#{userName},#{userPwd},#{userSex},#{userAge},#{userBirth},#{userIDNum},#{userPhone},#{userAddress},,,#{salt},null,#{nurseId})")
+    void addNurse(Users user);
 
 //    //通过userNo更新用户信息
 //    @Update("UPDATE users SET userName=#{userName},userSex=#{userSex},userAge=#{userAge},userAddress=#{userAddress} WHERE userNo=#{userId}")
@@ -43,10 +48,16 @@ public interface UsersDao {
     Users findUserByIDNum(String userIDNum);
 
     //通过userIDNum查询用户角色
-    @Select("SELECT roleName FROM users u, role r WHERE userIDNum = #{userIDNum} AND u.roleId = r.roleId")
-    String findRoleByIDNum(String userIDNum);
+    @Select("SELECT * FROM role WHERE roleId in (SELECT roleId FROM users u, userRole ur WHERE userIDNum = #{userIDNum} AND u.userId = ur.userId)")
+    List<Role> findRoleByIDNum(String userIDNum);
+
+    //通过userIDNum查询用户角色
+    @Select("SELECT * FROM permission WHERE permissionId in (SELECT permissionId FROM RolePermission WHERE roleId = #{roleId})")
+    List<Permission> findPermissionByRoleId(String roleId);
 
     //查询所有用户信息
     @Select("SELECT * FROM users")
     List<Users> findAllUser();
+
+
 }
