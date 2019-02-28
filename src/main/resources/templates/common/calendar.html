@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>日历页面</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/matrix-style.css" />
+<link rel="stylesheet" href="css/matrix-media.css" />
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">日历</a></div>
+    <h1>日历</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box widget-calendar">
+          <div class="widget-title"> <span class="icon"><i class="icon-calendar"></i></span>
+            <h5>日历 &amp; 待办事项</h5>
+            <div class="buttons"> <a id="add-event" data-toggle="modal" href="#modal-add-event" class="btn btn-inverse btn-mini"><i class="icon-plus icon-white"></i> 添加新事项</a>
+              <div class="modal hide" id="modal-add-event">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h3>添加新事项</h3>
+                </div>
+                <div class="modal-body">
+                  <p>输入待办事项:</p>
+                  <p>
+                    <input id="event-name" type="text" />
+                  </p>
+                </div>
+                <div class="modal-footer"> 
+                  <a href="#" class="btn" data-dismiss="modal">取消</a> 
+                  <a href="#" id="add-event-submit" class="btn btn-primary">添加事项</a> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="widget-content">
+            <div class="panel-left">
+              <div id="fullcalendar"></div>
+            </div>
+            <div id="external-events" class="panel-right">
+              <div class="panel-title">
+                <h5>将事项拖动至日历中</h5>
+              </div>
+              <div class="panel-content">
+                <div class="external-event ui-draggable label label-inverse">事件 1</div>
+                <div class="external-event ui-draggable label label-inverse">事件 2</div>
+                <div class="external-event ui-draggable label label-inverse">事件 3</div>
+                <div class="external-event ui-draggable label label-inverse">事件 4</div>
+                <div class="external-event ui-draggable label label-inverse">事件 5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/matrix.js"></script> 
+<script src="js/matrix.calendar.js"></script>
+</body>
+</html>
