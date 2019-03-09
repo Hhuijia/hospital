@@ -1,6 +1,5 @@
 package com.myHospital.hospital.serviceImpl;
 
-import com.myHospital.hospital.controller.CommonController;
 import com.myHospital.hospital.dao.UsersDao;
 import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,52 +30,54 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void addUsers(Users users) {
-        try {
-            log.info("******************addUsers********************");
-            String str = String.format("%04d", new Random().nextInt(1001));
-            users.setUserId( "USER_" + str + "_" + System.currentTimeMillis());
-            PasswordHelper passwordHelper = new PasswordHelper();
-            passwordHelper.encryptPassword(users);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            users.setUserBirth(simpleDateFormat.format(users.getUserBirth()));
-            log.info("******************当前user-[{}]********************",users);
-            usersDao.addUser(users);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        log.info("******************addUsers********************");
+        String str = String.format("%04d", new Random().nextInt(1001));
+        users.setUserId( "USER_" + str + "_" + System.currentTimeMillis());
+        PasswordHelper passwordHelper = new PasswordHelper();
+        passwordHelper.encryptPassword(users);
+        log.info("******************当前user-[{}]********************",users);
+        usersDao.addUser(users);
     }
 
     @Override
-    public Users findUserByIDNum(String userIDNum) {
-        Users user = new Users();
-        try {
-            user = usersDao.findUserByIDNum(userIDNum);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return user;
+    public void deleteUserById(String userId) {
+        log.info("******************deleteUserById********************");
+        usersDao.deleteUserById(userId);
     }
 
     @Override
-    public List<Role> findRoleByIDNum(String userIDNum) {
-        List<Role> roles =new ArrayList<>();
-        try {
-            roles.addAll(usersDao.findRoleByIDNum(userIDNum));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return roles;
+    public Users findUserByIDNum(String userIDNum){
+        log.info("******************findUserByIDNum********************");
+        return usersDao.findUserByIDNum(userIDNum);
     }
 
     @Override
-    public List<Permission> findPermissionByRoleId(String roleId) {
-        List<Permission> permissions =new ArrayList<>();
-        try {
-            permissions.addAll(usersDao.findPermissionByRoleId(roleId));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return permissions;
+    public String findUserIdByIDNum(String userIDNum) {
+        log.info("******************findUserIdByIDNum********************");
+        return usersDao.findUserIdByIDNum(userIDNum);
+    }
+
+    @Override
+    public List<String> findRoleNameByIDNum(String userIDNum){
+        log.info("******************findRoleNameByIDNum********************");
+        return usersDao.findRoleNameByIDNum(userIDNum);
+    }
+
+    @Override
+    public List<Role> findRoleByIDNum(String userIDNum){
+        log.info("******************findRoleByIDNum********************");
+        return usersDao.findRoleByIDNum(userIDNum);
+    }
+
+    @Override
+    public List<Permission> findPermissionByRoleId(String roleId){
+        log.info("******************findPermissionByRoleId********************");
+        return usersDao.findPermissionByRoleId(roleId);
+    }
+
+    @Override
+    public List<Users> checkAllUser() {
+        log.info("******************checkAllUser********************");
+        return usersDao.checkAllUser();
     }
 }

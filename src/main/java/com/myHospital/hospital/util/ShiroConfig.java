@@ -67,7 +67,7 @@ public class ShiroConfig {
     public EnceladusShiroRealm getEnceladusShiroRealm(EhCacheManager ehCacheManager){
         log.info("##################enceladusShiroRealm##################");
         EnceladusShiroRealm enceladusShiroRealm = new EnceladusShiroRealm();
-        enceladusShiroRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
+//        enceladusShiroRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
         enceladusShiroRealm.setCacheManager(ehCacheManager);
         return enceladusShiroRealm;
     }
@@ -115,7 +115,7 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setLoginUrl("/common/login");//未登录界面
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/notRole"); //无权限界面
-        shiroFilterFactoryBean.setSuccessUrl("/home/index"); //登陆成功后跳转的界面
+        shiroFilterFactoryBean.setSuccessUrl("/common/index"); //登陆成功后跳转的界面
 
         loadShiroFilterChain(shiroFilterFactoryBean);
 
@@ -133,6 +133,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/nurse/**", "roles[nurse]"); //护士身份，需要角色权限 “nurse”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]"); //管理员身份，需要角色权限 “admin”
         filterChainDefinitionMap.put("/common/login", "anon"); //开放登录窗口
+
+        filterChainDefinitionMap.put("/static/**", "anon");
 
         log.info("##################从数据库读取权限规则，加载到shiroFilter中##################");
 

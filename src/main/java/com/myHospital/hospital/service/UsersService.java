@@ -13,8 +13,17 @@ public interface UsersService {
     //添加用户
     void addUsers(Users users);
 
+    //通过userId删除医生信息
+    void deleteUserById(String userId);
+
     //通过userIDNum查找用户信息
     Users findUserByIDNum(String userIDNum);
+
+    //通过userIDNum查询用户ID
+    String findUserIdByIDNum(String userIDNum);
+
+    //通过userIDNum查找用户角色
+    List<String> findRoleNameByIDNum(String userIDNum);
 
     //通过userIDNum查找用户角色
     List<Role> findRoleByIDNum(String userIDNum);
@@ -22,4 +31,6 @@ public interface UsersService {
     //通过roleId查找角色权限
     List<Permission> findPermissionByRoleId(String roleId);
 
+    //查询所有用户（不包括医生护士管理员）
+    List<Users> checkAllUser();
 }

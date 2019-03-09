@@ -12,6 +12,10 @@ public class Doctors {
     private String doctorIntroduction;
     private Timestamp doctorCreateTime;
     private Timestamp doctorUpdateTime;
+    private String userId;
+    private String departmentName;
+
+    private Users users;
 
     public String getDoctorId() {
         return doctorId;
@@ -75,5 +79,29 @@ public class Doctors {
 
     public void setDoctorUpdateTime(Timestamp doctorUpdateTime) {
         this.doctorUpdateTime = doctorUpdateTime;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 }

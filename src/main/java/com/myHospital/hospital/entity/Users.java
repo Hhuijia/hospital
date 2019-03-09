@@ -13,13 +13,11 @@ public class Users {
     private String salt;
     private String userSex;
     private Integer userAge;
-    private String userBirth;
     private String userIDNum;
     private String userPhone;
     private String userAddress;
     private Timestamp userCreateTime;
     private Timestamp userUpdateTime;
-    private String doctorId;
     private String nurseId;
 
     public String getUserId() {
@@ -62,14 +60,6 @@ public class Users {
         this.userAge = userAge;
     }
 
-    public String getUserBirth() {
-        return userBirth;
-    }
-
-    public void setUserBirth(String userBirth) {
-        this.userBirth = userBirth;
-    }
-
     public String getUserIDNum() {
         return userIDNum;
     }
@@ -108,14 +98,6 @@ public class Users {
 
     public void setUserUpdateTime(Timestamp userUpdateTime) {
         this.userUpdateTime = userUpdateTime;
-    }
-
-    public String getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
     }
 
     public String getNurseId() {
