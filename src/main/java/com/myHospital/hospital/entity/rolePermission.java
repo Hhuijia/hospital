@@ -4,14 +4,32 @@ package com.myHospital.hospital.entity;
  * @author QUEENEY
  * @date 2019/2/27
  */
-public class rolePermission {
-    private String rolePermissionId;
+public class RolePermission {
+    private String rpId;
+    private String roleId;
+    private String permissionId;
 
-    public String getRolePermissionId() {
-        return rolePermissionId;
+    public String getRpId() {
+        return rpId;
     }
 
-    public void setRolePermissionId(String rolePermissionId) {
-        this.rolePermissionId = rolePermissionId;
+    public void setRpId(String rpId) {
+        this.rpId = rpId;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(String permissionId) {
+        this.permissionId = permissionId;
     }
 }
