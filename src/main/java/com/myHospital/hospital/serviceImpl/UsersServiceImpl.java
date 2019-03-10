@@ -29,23 +29,6 @@ public class UsersServiceImpl implements UsersService {
     private UsersDao usersDao;
 
     @Override
-    public void addUsers(Users users) {
-        log.info("******************addUsers********************");
-        String str = String.format("%04d", new Random().nextInt(1001));
-        users.setUserId( "USER_" + str + "_" + System.currentTimeMillis());
-        PasswordHelper passwordHelper = new PasswordHelper();
-        passwordHelper.encryptPassword(users);
-        log.info("******************当前user-[{}]********************",users);
-        usersDao.addUser(users);
-    }
-
-    @Override
-    public void deleteUserById(String userId) {
-        log.info("******************deleteUserById********************");
-        usersDao.deleteUserById(userId);
-    }
-
-    @Override
     public Users findUserByIDNum(String userIDNum){
         log.info("******************findUserByIDNum********************");
         return usersDao.findUserByIDNum(userIDNum);

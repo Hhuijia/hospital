@@ -13,6 +13,9 @@ public class Nurses {
     private String nursePlace;
     private Timestamp nurseCreateTime;
     private Timestamp nurseUpdateTime;
+    private String userId;
+
+    private Users users;
 
     public String getNurseId() {
         return nurseId;
@@ -60,5 +63,21 @@ public class Nurses {
 
     public void setNurseUpdateTime(Timestamp nurseUpdateTime) {
         this.nurseUpdateTime = nurseUpdateTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 }

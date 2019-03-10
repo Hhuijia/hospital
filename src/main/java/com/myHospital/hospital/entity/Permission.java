@@ -1,5 +1,6 @@
 package com.myHospital.hospital.entity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +10,15 @@ import java.util.List;
  * @Date: 1/21/2019
  */
 public class Permission {
-    private Integer permissionId;
+    private String permissionId;
     private String permissionName;
+    private Timestamp permissionCreateTime;
 
-    public Integer getPermissionId() {
+    public String getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Integer permissionId) {
+    public void setPermissionId(String permissionId) {
         this.permissionId = permissionId;
     }
 
@@ -26,5 +28,13 @@ public class Permission {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
+    }
+
+    public Timestamp getPermissionCreateTime() {
+        return permissionCreateTime;
+    }
+
+    public void setPermissionCreateTime(Timestamp permissionCreateTime) {
+        this.permissionCreateTime = permissionCreateTime;
     }
 }

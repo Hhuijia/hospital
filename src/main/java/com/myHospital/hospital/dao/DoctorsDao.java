@@ -13,12 +13,12 @@ public interface DoctorsDao {
     @Insert("INSERT INTO doctors(doctorId,doctorName,doctorTitle,doctorProfession,doctorMedicalServiceLife,doctorIntroduction,userId,departmentName) VALUES(#{doctorId},#{doctorName},#{doctorTitle},#{doctorProfession},#{doctorMedicalServiceLife},#{doctorIntroduction},#{userId},#{departmentName})")
     void addDoctor(Doctors doctors);
 
-    //通过doctorNo更新医生信息
-    @Update("UPDATE doctors SET doctorName=#{doctorName},doctorSex=#{doctorSex},doctorAge=#{doctorAge},doctorPhone=#{doctorPhone},departmentNo=#{departmentNo},doctorTitle=#{doctorTitle},doctorProfession=#{doctorProfession},doctorMedicalServiceLife=#{doctorMedicalServiceLife},doctorIntroduction=#{doctorIntroduction} WHERE userNo=#{userNo}")
-    int updateUserByNo(Doctors doctors);
+//    //通过doctorNo更新医生信息
+//    @Update("UPDATE doctors SET doctorName=#{doctorName},doctorSex=#{doctorSex},doctorAge=#{doctorAge},doctorPhone=#{doctorPhone},departmentNo=#{departmentNo},doctorTitle=#{doctorTitle},doctorProfession=#{doctorProfession},doctorMedicalServiceLife=#{doctorMedicalServiceLife},doctorIntroduction=#{doctorIntroduction} WHERE userNo=#{userNo}")
+//    int updateUserByNo(Doctors doctors);
 
-    //通过doctorName查询医生信息
-    @Select("SELECT userId FROM doctors WHERE doctorId=#{doctorId}")
+    //通过doctorId查询对应在用户表的信息
+    @Select("SELECT userId FROM doctors WHERE doctorId = #{doctorId}")
     String findUserIdById(String doctorId);
 
     //查询所有医生信息

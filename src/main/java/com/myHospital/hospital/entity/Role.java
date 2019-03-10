@@ -1,5 +1,6 @@
 package com.myHospital.hospital.entity;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -10,6 +11,10 @@ import java.util.*;
 public class Role {
     private String roleId;
     private String roleName;
+    private Timestamp roleCreateTime;
+    private String perNameContain;
+
+    private List<RolePermission> rolePermissions;
 
     public String getRoleId() {
         return roleId;
@@ -25,5 +30,29 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Timestamp getRoleCreateTime() {
+        return roleCreateTime;
+    }
+
+    public void setRoleCreateTime(Timestamp roleCreateTime) {
+        this.roleCreateTime = roleCreateTime;
+    }
+
+    public String getPerNameContain() {
+        return perNameContain;
+    }
+
+    public void setPerNameContain(String perNameContain) {
+        this.perNameContain = perNameContain;
+    }
+
+    public List<RolePermission> getRolePermissions() {
+        return rolePermissions;
+    }
+
+    public void setRolePermissions(List<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 }

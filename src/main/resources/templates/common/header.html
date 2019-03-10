@@ -55,8 +55,6 @@
         <li> <a href="/admin/nurseManage"> <span>护士管理</span></a> </li>
         <li> <a href="/admin/adminManage"> <span>Admin管理</span></a> </li>
         <li> <a href="/admin/userManage"> <span>用户管理</span></a> </li>
-        <li> <a href="/admin/medicineManage"> <span>药品管理</span></a></li>
-        <li> <a href="/admin/departmentManage"> <span>科室管理</span></a></li>
       </ul>
     </li>
     <li shiro:hasRole="admin" class="submenu"> <a href="#"><i class="icon icon-cogs"></i> <span>其它管理</span> </a>
@@ -65,7 +63,7 @@
         <li> <a href="/admin/departmentManage"> <span>科室管理</span></a></li>
       </ul>
     </li>
-    <li shiro:hasRole="admin"><a href="/admin/departmentManage"><i class="icon icon-cogs"></i> <span>角色权限</span> </a></li>
+    <li shiro:hasRole="admin"><a href="/admin/rolePermissionManage"><i class="icon icon-cogs"></i> <span>角色权限</span> </a></li>
     <li shiro:hasRole="admin" class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>查看记录</span> </a>
       <ul>
         <li><a href="index2.html">预约记录</a></li>

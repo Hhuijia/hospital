@@ -4,7 +4,7 @@ package com.myHospital.hospital.entity;
  * @author QUEENEY
  * @date 2019/2/27
  */
-public class userRole {
+public class UserRole {
     private String userRoleId;
 
     public String getUserRoleId() {

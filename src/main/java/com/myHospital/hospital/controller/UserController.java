@@ -1,9 +1,11 @@
 package com.myHospital.hospital.controller;
 
 import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.service.CommonService;
 import com.myHospital.hospital.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/users")
 public class UserController {
 
+    private CommonService commonService;
+
     @Autowired
     private UsersService usersService;
 
@@ -27,8 +31,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/resign")
-    public ModelAndView resignUser(Users users){
-        usersService.addUsers(users);
+    public ModelAndView resignUser(@ModelAttribute Users users){
+        commonService.add(users,null,"user");
         return new ModelAndView("users/login");
     }
 

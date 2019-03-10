@@ -1,9 +1,9 @@
 package com.myHospital.hospital.serviceImpl;
 
-import com.myHospital.hospital.dao.DoctorsDao;
-import com.myHospital.hospital.entity.Doctors;
+import com.myHospital.hospital.dao.NursesDao;
+import com.myHospital.hospital.entity.Nurses;
 import com.myHospital.hospital.entity.Users;
-import com.myHospital.hospital.service.DoctorService;
+import com.myHospital.hospital.service.NurseService;
 import com.myHospital.hospital.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.util.Random;
  * @date 2019/3/9
  */
 @Repository
-public class DoctorServiceImp implements DoctorService {
-    private static final Logger log = LoggerFactory.getLogger(DoctorServiceImp.class);
+public class NurseServiceImp implements NurseService {
+    private static final Logger log = LoggerFactory.getLogger(NurseServiceImp.class);
 
 }

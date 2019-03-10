@@ -10,12 +10,6 @@ import java.util.List;
 @Repository
 public interface UsersService {
 
-    //添加用户
-    void addUsers(Users users);
-
-    //通过userId删除医生信息
-    void deleteUserById(String userId);
-
     //通过userIDNum查找用户信息
     Users findUserByIDNum(String userIDNum);
 
