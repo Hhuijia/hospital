@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${title}">科室管理页面</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/colorpicker.css" />
+<link rel="stylesheet" href="/static/css/datepicker.css" />
+
+<link rel="stylesheet" href="/static/css/matrix-style.css" />
+<link rel="stylesheet" href="/static/css/matrix-media.css" />
+<link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="headerPart" th:replace="common/header::header"></div>
+<div id="content">
+	<div id="content-header">
+		<div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">其它管理</a></div>
+		<h1>科室管理</h1>
+	</div>
+	<div class="container-fluid">
+	    <hr>
+	    <div class="row-fluid">
+	    	<div class="span12">
+        		<div class="widget-box">
+	    			<div class="widget-title"> 
+	    				<span class="icon"> <i class="icon-align-justify"></i> </span>
+	      				<h5>添加科室</h5>
+	    			</div>
+	    			<div class="widget-content nopadding">
+	    				<form action="#" class="form-horizontal" th:action="@{addDepartment}" method="post" th:object="${department}">
+							<div class="control-group">
+							  <label class="control-label">科室名称 :</label>
+							  <div class="controls">
+								<input type="text" class="span11" placeholder="Name" th:field="*{departmentName}">
+							  </div>
+							</div>
+							<div class="control-group">
+							  <label class="control-label">科室所属 :</label>
+							  <div class="controls">
+								<input type="text" class="span11" placeholder="System" th:field="*{departmentSystem}">
+							  </div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">科室主诊 :</label>
+								<div class="controls">
+									<input type="text" class="span11" placeholder="Symptom" th:field="*{departmentSymptom}">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">科室简介 :</label>
+								<div class="controls">
+									<textarea class="span11" placeholder="Information" th:field="*{departmentInfo}" ></textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<button type="submit" class="btn btn-success span11">确定</button>
+								</div>
+							</div>
+				        </form>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="row-fluid">
+	    	<div class="span12">
+			    <div class="widget-box">
+			      	<div class="widget-title">
+				      	<span class="icon"><i class="icon-th"></i></span>
+				        <h5>科室表格</h5>
+			      	</div>
+			      	<div class="widget-content nopadding">
+				        <table class="table table-bordered data-table">
+				        	<thead>
+					            <tr>
+					              <th>编号</th>
+					              <th>添加日期</th>
+					              <th>名称</th>
+					              <th>所属</th>
+					              <th>主诊</th>
+					              <th>简介</th>
+					              <th>操作</th>
+					            </tr>
+				          	</thead>
+				          	<tbody>
+					            <tr th:each="department:${departments}">
+									<td th:text="${department.departmentId}"></td>
+									<td th:text="${department.departmentCreateTime}"></td>
+									<td th:text="${department.departmentName}"></td>
+									<td th:text="${department.departmentSystem}"></td>
+									<td th:text="${department.departmentSymptom}"></td>
+									<td th:text="${department.departmentInfo}"></td>
+									<td>
+				        				<a th:href="@{/admin/editDepartment(departmentId=${department.getDepartmentId()})}" class="btn btn-primary btn-mini">编辑</a>
+				        				<a th:href="@{/admin/delDepartment(departmentId=${department.getDepartmentId()})}" class="btn btn-danger btn-mini">删除</a>
+					            	</td>
+					            </tr>
+				          	</tbody>
+				        </table>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footerPart" th:replace="common/footer::footer"></div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.ui.custom.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-colorpicker.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/jquery.toggle.buttons.html"></script>
+<script src="/static/js/masked.js"></script>
+<script src="/static/js/jquery.uniform.js"></script>
+<script src="/static/js/select2.min.js"></script>
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/matrix.js"></script>
+<script src="/static/js/matrix.tables.js"></script>
+<script src="/static/js/matrix.form_common.js"></script>
+</body>
+</html>
