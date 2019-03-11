@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${title}">药品管理页面</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/colorpicker.css" />
+<link rel="stylesheet" href="/static/css/datepicker.css" />
+
+<link rel="stylesheet" href="/static/css/matrix-style.css" />
+<link rel="stylesheet" href="/static/css/matrix-media.css" />
+<link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="headerPart" th:replace="common/header::header"></div>
+<div id="content">
+	<div id="content-header">
+		<div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">其它管理</a></div>
+		<h1>药品管理</h1>
+	</div>
+	<div class="container-fluid">
+	    <hr>
+	    <div class="row-fluid">
+	    	<div class="span12">
+        		<div class="widget-box">
+	    			<div class="widget-title"> 
+	    				<span class="icon"> <i class="icon-align-justify"></i> </span>
+	      				<h5>添加药品</h5>
+	    			</div>
+	    			<div class="widget-content nopadding">
+	    				<form action="#" class="form-horizontal" th:action="@{addMedicine}" method="post" th:object="${medicine}">
+	    					<div class="span6">
+					            <div class="control-group">
+					              <label class="control-label">药品名称 :</label>
+					              <div class="controls">
+					                <input type="text" class="span11" placeholder="Name" th:field="*{medicineName}">
+					              </div>
+					            </div>
+					            <div class="control-group">
+					              <label class="control-label">药品单价 :</label>
+					              <div class="controls">
+					                <input type="text" class="span11" placeholder="Price" th:field="*{medicinePrice}">
+					              </div>
+					            </div>
+					            <div class="control-group">
+					              <label class="control-label">药品剩余 :</label>
+					              <div class="controls">
+					                <input type="text" class="span11" placeholder="Residual" th:field="*{medicineResidual}">
+					              </div>
+					            </div>
+				        	</div>
+				        	<div class="span6">
+					            <div class="control-group">
+					              	<label class="control-label">药品类型 :</label>
+					              	<div class="controls">
+					                	<input type="text" class="span11" placeholder="Type" th:field="*{medicineType}">
+					            	</div>
+					            </div>
+					            <div class="control-group">
+						            <label class="control-label">药品疗效 :</label>
+						            <div class="controls">
+					                	<input type="text" class="span11" placeholder="Efficacy" th:field="*{medicineEfficacy}">
+					                </div>
+					            </div>
+				        		<div class="control-group">
+					              <label class="control-label">药品剂量 :</label>
+					              <div class="controls">
+					                <input type="text" class="span11" placeholder="Dosage" th:field="*{medicineDosage}" />
+					              </div>
+					            </div>
+				        	</div>
+				        	<div class="control-group">
+				            	<div class="controls">
+				              		<button type="submit" class="btn btn-success span11">确定</button>
+				          		</div>
+				            </div>
+				        </form>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="row-fluid">
+	    	<div class="span12">
+			    <div class="widget-box">
+			      	<div class="widget-title">
+				      	<span class="icon"><i class="icon-th"></i></span>
+				        <h5>药品表格</h5>
+			      	</div>
+			      	<div class="widget-content nopadding">
+				        <table class="table table-bordered data-table">
+				        	<thead>
+					            <tr>
+					              <th>编号</th>
+					              <th>添加日期</th>
+					              <th>名称</th>
+					              <th>单价</th>
+					              <th>剩余</th>
+					              <th>类型</th>
+					              <th>疗效</th>
+					              <th>剂量</th>
+					              <th>操作</th>
+					            </tr>
+				          	</thead>
+				          	<tbody>
+					            <tr th:each="medicine:${medicines}">
+									<td th:text="${medicine.medicineId}"></td>
+									<td th:text="${medicine.medicineCreateTime}"></td>
+									<td th:text="${medicine.medicineName}"></td>
+									<td th:text="${medicine.medicinePrice}"></td>
+									<td th:text="${medicine.medicineResidual}"></td>
+									<td th:text="${medicine.medicineType}"></td>
+									<td th:text="${medicine.medicineEfficacy}"></td>
+									<td th:text="${medicine.medicineDosage}"></td>
+									<td>
+				        				<a th:href="@{/admin/editMedicine(medicineId=${medicine.getMedicineId()})}" class="btn btn-primary btn-mini">编辑</a>
+				        				<a th:href="@{/admin/delMedicine(medicineId=${medicine.getMedicineId()})}" class="btn btn-danger btn-mini">删除</a>
+					            	</td>
+					            </tr>
+				          	</tbody>
+				        </table>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footerPart" th:replace="common/footer::footer"></div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.ui.custom.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-colorpicker.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/jquery.toggle.buttons.html"></script>
+<script src="/static/js/masked.js"></script>
+<script src="/static/js/jquery.uniform.js"></script>
+<script src="/static/js/select2.min.js"></script>
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/matrix.js"></script>
+<script src="/static/js/matrix.tables.js"></script>
+<script src="/static/js/matrix.form_common.js"></script>
+</body>
+</html>
