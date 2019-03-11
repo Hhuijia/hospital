@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title th:text="${title}">角色权限管理页面</title>
 <meta charset="UTF-8" />
@@ -80,8 +80,8 @@
 								<td th:text="${role.roleName}"></td>
 								<td th:text="${role.perNameContain}"></td>
 								<td>
-			        				<a href="#" class="btn btn-danger btn-mini">删除</a>
-				            	</td>
+                                    <a th:href="@{/admin/delRole(roleId=${role.getRoleId()})}" class="btn btn-danger btn-mini">删除</a>
+                                </td>
 				            </tr>
 			          	</tbody>
 			        </table>
@@ -136,7 +136,7 @@
 								<td th:text="${per.permissionCreateTime}"></td>
 								<td th:text="${per.permissionName}"></td>
 								<td>
-			        				<a href="#" class="btn btn-danger btn-mini">删除</a>
+			        				<a th:href="@{/admin/delPermission(permissionId=${per.getPermissionId()})}" class="btn btn-danger btn-mini">删除</a>
 				            	</td>
 				            </tr>
 			          	</tbody>
