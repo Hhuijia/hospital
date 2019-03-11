@@ -24,4 +24,10 @@ public interface RolePermissionService {
 
     //查询所有角色
     List<Role> findAllRole();
+
+    //删除角色
+    void delRole(String roleId);
+
+    //删除权限
+    void delPermission(String permissionId);
 }

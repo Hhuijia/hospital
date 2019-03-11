@@ -13,12 +13,6 @@ public interface UsersService {
     //通过userIDNum查找用户信息
     Users findUserByIDNum(String userIDNum);
 
-    //通过userIDNum查询用户ID
-    String findUserIdByIDNum(String userIDNum);
-
-    //通过userIDNum查找用户角色
-    List<String> findRoleNameByIDNum(String userIDNum);
-
     //通过userIDNum查找用户角色
     List<Role> findRoleByIDNum(String userIDNum);
 

@@ -61,7 +61,7 @@ public class RolePermissionServiceImp implements RolePermissionService {
         for (Role role : roles){
             StringBuilder str = new StringBuilder();
             List<RolePermission> rolePermissions = role.getRolePermissions();
-            if (rolePermissions.size()==0 && rolePermissions.isEmpty()){
+            if (rolePermissions.size()==0){
                 role.setPerNameContain(" ");
             }else {
                 for (RolePermission rolePermission : rolePermissions) {
@@ -72,5 +72,20 @@ public class RolePermissionServiceImp implements RolePermissionService {
             }
         }
         return roles;
+    }
+
+    @Override
+    public void delRole(String roleId) {
+        log.info("******************delRole********************");
+        rolePermissionDao.deleteRPByRoleId(roleId);
+        rolePermissionDao.deleteURByRoleId(roleId);
+        rolePermissionDao.deleteRoleById(roleId);
+    }
+
+    @Override
+    public void delPermission(String permissionId) {
+        log.info("******************delPermission********************");
+        rolePermissionDao.deleteRPByPermissionId(permissionId);
+        rolePermissionDao.deletePermissionById(permissionId);
     }
 }

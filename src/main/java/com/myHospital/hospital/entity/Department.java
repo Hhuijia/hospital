@@ -12,7 +12,7 @@ public class Department {
     private String departmentSystem;
     private String departmentInfo;
     private String departmentSymptom;
-    private Timestamp departmentCreatedTime;
+    private Timestamp departmentCreateTime;
     private Timestamp departmentUpdateTime;
 
     public String getDepartmentId() {
@@ -55,12 +55,12 @@ public class Department {
         this.departmentSymptom = departmentSymptom;
     }
 
-    public Timestamp getDepartmentCreatedTime() {
-        return departmentCreatedTime;
+    public Timestamp getDepartmentCreateTime() {
+        return departmentCreateTime;
     }
 
-    public void setDepartmentCreatedTime(Timestamp departmentCreatedTime) {
-        this.departmentCreatedTime = departmentCreatedTime;
+    public void setDepartmentCreateTime(Timestamp departmentCreateTime) {
+        this.departmentCreateTime = departmentCreateTime;
     }
 
     public Timestamp getDepartmentUpdateTime() {

@@ -33,11 +33,15 @@ public class AdminController {
     @Autowired
     private RolePermissionService rolePermissionService;
 
+    @Autowired
+    private MedicineDepartmentService medicineDepartmentService;
+
     @GetMapping("/doctorManage")
     public ModelAndView doctorManage(){
         log.info("********管理员界面/医生管理*********");
-        List<Doctors> doctors = commonService.findAll("doctor");;
+        List<Doctors> doctors = commonService.findAll("doctor");
         List<String> departmentName= departmentService.findAlldepartmentName();
+        List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","医生管理");
 //        modelAndView.addObject("username",userIDNum.substring(0,4));
@@ -49,12 +53,16 @@ public class AdminController {
             modelAndView.addObject("departmentName",departmentName);
             log.info("[{}]",departmentName);
         }
+        if (roles != null && !roles.isEmpty()){
+            modelAndView.addObject("roles",roles);
+            log.info("[{}]",roles);
+        }
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/doctors");
         return modelAndView;
     }
     @PostMapping("/addDoctor")
-    public ModelAndView addDoctor(@ModelAttribute Users users, @RequestParam String departmentName,
+    public ModelAndView addDoctor(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String departmentName,
                                   @RequestParam String doctorTitle, @RequestParam String doctorProfession,
                                   @RequestParam int doctorMedicalServiceLife, @RequestParam String doctorIntroduction){
         log.info("********添加医生*********");
@@ -66,7 +74,7 @@ public class AdminController {
         doctors.setDoctorMedicalServiceLife(doctorMedicalServiceLife);
         doctors.setDoctorIntroduction(doctorIntroduction);
         doctors.setDepartmentName(departmentName);
-        commonService.add(users,doctors,"doctor");
+        commonService.add(users,doctors,roleIds,"doctor");
         return new ModelAndView("redirect:doctorManage");
     }
     @GetMapping("/delDoctor")
@@ -77,7 +85,7 @@ public class AdminController {
     }
     @GetMapping("/editDoctor")
     public ModelAndView editDoctor(@RequestParam String doctorId){
-        log.info("********删除医生*********");
+        log.info("********编辑医生*********");
         return new ModelAndView("redirect:doctorManage");
     }
 
@@ -86,24 +94,29 @@ public class AdminController {
     public ModelAndView adminManage(){
         log.info("********管理员界面/管理员管理*********");
         List<Admins> admins = commonService.findAll("admin");
+        List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","管理员管理");
         if (admins != null && !admins.isEmpty()){
             modelAndView.addObject("admins",admins);
             log.info("[{}]",admins);
         }
+        if (roles != null && !roles.isEmpty()){
+            modelAndView.addObject("roles",roles);
+            log.info("[{}]",roles);
+        }
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/admins");
         return modelAndView;
     }
     @PostMapping("/addAdmin")
-    public ModelAndView addAdmin(@ModelAttribute Users users, @RequestParam String adminTitle){
+    public ModelAndView addAdmin(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String adminTitle){
         log.info("********添加管理员*********");
         users.setUserPwd("huanghuijia");
         Admins admins = new Admins();
         admins.setAdminName(users.getUserName());
         admins.setAdminTitle(adminTitle);
-        commonService.add(users,admins,"admin");
+        commonService.add(users,admins,roleIds,"admin");
         return new ModelAndView("redirect:adminManage");
     }
     @GetMapping("/delAdmin")
@@ -124,6 +137,7 @@ public class AdminController {
         log.info("********管理员界面/护士管理*********");
         List<Nurses> nurses = commonService.findAll("nurse");
         List<String> departmentName = departmentService.findAlldepartmentName();
+        List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","护士管理");
 //        modelAndView.addObject("username",userIDNum.substring(0,4));
@@ -135,19 +149,24 @@ public class AdminController {
             modelAndView.addObject("departmentName",departmentName);
             log.info("[{}]",departmentName);
         }
+        if (roles != null && !roles.isEmpty()){
+            modelAndView.addObject("roles",roles);
+            log.info("[{}]",roles);
+        }
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/nurses");
         return modelAndView;
     }
     @PostMapping("/addNurse")
-    public ModelAndView addNurse(@ModelAttribute Users users, @RequestParam String nurseTitle, @RequestParam String nursePlace){
+    public ModelAndView addNurse(@ModelAttribute Users users, @RequestParam List<String> roleIds,
+                                 @RequestParam String nurseTitle, @RequestParam String nursePlace){
         log.info("********添加护士*********");
         users.setUserPwd("huanghuijia");
         Nurses nurses = new Nurses();
         nurses.setNurseName(users.getUserName());
         nurses.setNurseTitle(nurseTitle);
         nurses.setNursePlace(nursePlace);
-        commonService.add(users,nurses,"nurse");
+        commonService.add(users,nurses,roleIds,"nurse");
         return new ModelAndView("redirect:nurseManage");
     }
     @GetMapping("/delNurse")
@@ -166,14 +185,18 @@ public class AdminController {
     @GetMapping("/userManage")
     public ModelAndView userManage(){
         log.info("********管理员界面/用户管理*********");
-        List<Users> users;
-        users = usersService.checkAllUser();
+        List<Users> users = usersService.checkAllUser();
+        List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","用户管理");
 //        modelAndView.addObject("username",userIDNum.substring(0,4));
         if (users != null && !users.isEmpty()){
             modelAndView.addObject("users",users);
             log.info("[{}]",users);
+        }
+        if (roles != null && !roles.isEmpty()){
+            modelAndView.addObject("roles",roles);
+            log.info("[{}]",roles);
         }
         modelAndView.setViewName("admin/users");
         return modelAndView;
@@ -214,22 +237,82 @@ public class AdminController {
         rolePermissionService.addPermission(permission);
         return new ModelAndView("redirect:rolePermissionManage");
     }
+    @GetMapping("/delRole")
+    public ModelAndView delRole(@RequestParam String roleId){
+        log.info("**************删除角色*************");
+        rolePermissionService.delRole(roleId);
+        return new ModelAndView("redirect:rolePermissionManage");
+    }
+    @GetMapping("/delPermission")
+    public ModelAndView delPermission(@RequestParam String permissionId){
+        log.info("**************删除权限*************");
+        rolePermissionService.delPermission(permissionId);
+        return new ModelAndView("redirect:rolePermissionManage");
+    }
 
 
     @GetMapping("/medicineManage")
     public ModelAndView medicineManage(){
         log.info("********管理员界面/药品管理*********");
+        List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","药品管理");
+        if (medicines != null && !medicines.isEmpty()){
+            modelAndView.addObject("medicines",medicines);
+            log.info("[{}]",medicines);
+        }
+        modelAndView.addObject("medicine",new Medicine());
         modelAndView.setViewName("admin/medicine");
         return modelAndView;
     }
+    @PostMapping("/addMedicine")
+    public ModelAndView addMedicine(@ModelAttribute Medicine medicine){
+        log.info("********添加药品*********");
+        medicineDepartmentService.addMedicine(medicine);
+        return new ModelAndView("redirect:medicineManage");
+    }
+    @GetMapping("/delMedicine")
+    public ModelAndView delMedicine(@RequestParam String medicineId){
+        log.info("********删除药品*********");
+        medicineDepartmentService.deleteMedicineById(medicineId);
+        return new ModelAndView("redirect:medicineManage");
+    }
+    @GetMapping("/editMedicine")
+    public ModelAndView editMedicine(@RequestParam String medicineId){
+        log.info("********编辑药品*********");
+        return new ModelAndView("redirect:medicineManage");
+    }
+
+
     @GetMapping("/departmentManage")
     public ModelAndView departmentManage(){
         log.info("********管理员界面/科室管理*********");
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","科室管理");
+        if (departments != null && !departments.isEmpty()){
+            modelAndView.addObject("departments",departments);
+            log.info("[{}]",departments);
+        }
+        modelAndView.addObject("department",new Department());
         modelAndView.setViewName("admin/department");
         return modelAndView;
+    }
+    @PostMapping("/addDepartment")
+    public ModelAndView addDepartment(@ModelAttribute Department department){
+        log.info("********添加科室*********");
+        medicineDepartmentService.addDepartment(department);
+        return new ModelAndView("redirect:departmentManage");
+    }
+    @GetMapping("/delDepartment")
+    public ModelAndView delDepartment(@RequestParam String departmentId){
+        log.info("********删除科室*********");
+        medicineDepartmentService.deleteDepartmentById(departmentId);
+        return new ModelAndView("redirect:departmentManage");
+    }
+    @GetMapping("/editDepartment")
+    public ModelAndView editDepartment(@RequestParam String departmentId){
+        log.info("********编辑科室*********");
+        return new ModelAndView("redirect:departmentManage");
     }
 }

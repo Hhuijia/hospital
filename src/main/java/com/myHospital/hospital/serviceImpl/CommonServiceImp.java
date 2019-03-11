@@ -1,13 +1,7 @@
 package com.myHospital.hospital.serviceImpl;
 
-import com.myHospital.hospital.dao.AdminsDao;
-import com.myHospital.hospital.dao.DoctorsDao;
-import com.myHospital.hospital.dao.NursesDao;
-import com.myHospital.hospital.dao.UsersDao;
-import com.myHospital.hospital.entity.Admins;
-import com.myHospital.hospital.entity.Doctors;
-import com.myHospital.hospital.entity.Nurses;
-import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.dao.*;
+import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.CommonService;
 import com.myHospital.hospital.util.PasswordHelper;
 import org.slf4j.Logger;
@@ -37,9 +31,12 @@ public class CommonServiceImp implements CommonService {
 
     @Autowired
     private AdminsDao adminsDao;
+    
+    @Autowired
+    private RolePermissionDao rolePermissionDao;
 
     @Override
-    public void add(Users users, Object o, String type) {
+    public void add(Users users, Object o, List roleIds, String type) {
         log.info("******************add********************");
         if (usersDao.findUserByIDNum(users.getUserIDNum()) == null){
             String strUser = String.format("%04d", new Random().nextInt(1001));
@@ -48,6 +45,14 @@ public class CommonServiceImp implements CommonService {
             passwordHelper.encryptPassword(users);
             usersDao.addUser(users);
             String userId = usersDao.findUserIdByIDNum(users.getUserIDNum());
+            for (Object roleId : roleIds){
+                UserRole userRole = new UserRole();
+                String strUR = String.format("%04d", new Random().nextInt(1001));
+                userRole.setUrId( "USERROLE_" + strUR + "_" + System.currentTimeMillis());
+                userRole.setUserId(userId);
+                userRole.setRoleId(roleId.toString());
+                rolePermissionDao.addUserRole(userRole);
+            }
             switch (type) {
                 case "doctor":
                     log.info("******************addDoctor********************");

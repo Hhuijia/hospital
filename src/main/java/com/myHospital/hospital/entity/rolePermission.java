@@ -2,7 +2,7 @@ package com.myHospital.hospital.entity;
 
 /**
  * @author QUEENEY
- * @date 2019/2/27
+ * @date 2019/3/11
  */
 public class RolePermission {
     private String rpId;

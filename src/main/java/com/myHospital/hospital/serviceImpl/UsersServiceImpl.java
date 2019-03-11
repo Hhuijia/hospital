@@ -11,14 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 
 /**
- * @Description:
- * @Author: Queeney.Huang
- * @Date: 1/17/2019
+ * @author QUEENEY
+ * @date 2019/1/17
  */
 @Repository
 public class UsersServiceImpl implements UsersService {
@@ -32,18 +29,6 @@ public class UsersServiceImpl implements UsersService {
     public Users findUserByIDNum(String userIDNum){
         log.info("******************findUserByIDNum********************");
         return usersDao.findUserByIDNum(userIDNum);
-    }
-
-    @Override
-    public String findUserIdByIDNum(String userIDNum) {
-        log.info("******************findUserIdByIDNum********************");
-        return usersDao.findUserIdByIDNum(userIDNum);
-    }
-
-    @Override
-    public List<String> findRoleNameByIDNum(String userIDNum){
-        log.info("******************findRoleNameByIDNum********************");
-        return usersDao.findRoleNameByIDNum(userIDNum);
     }
 
     @Override
