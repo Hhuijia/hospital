@@ -32,6 +32,7 @@
 	    			<div class="widget-title"> 
 	    				<span class="icon"> <i class="icon-align-justify"></i> </span>
 	      				<h5>添加科室</h5>
+						<a th:href="@{/admin/importDepartment}" class="btn btn-primary btn-mini">批量导入科室信息</a>
 	    			</div>
 	    			<div class="widget-content nopadding">
 	    				<form action="#" class="form-horizontal" th:action="@{addDepartment}" method="post" th:object="${department}">

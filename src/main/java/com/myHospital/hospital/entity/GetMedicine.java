@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 public class GetMedicine {
     private String getMedicineId;
     private Timestamp getMedicineCreatedTime;
+    private String userId;
+    private String nurseId;
 
     public String getGetMedicineId() {
         return getMedicineId;
@@ -24,5 +26,21 @@ public class GetMedicine {
 
     public void setGetMedicineCreatedTime(Timestamp getMedicineCreatedTime) {
         this.getMedicineCreatedTime = getMedicineCreatedTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(String nurseId) {
+        this.nurseId = nurseId;
     }
 }

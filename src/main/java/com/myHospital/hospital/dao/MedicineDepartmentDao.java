@@ -36,6 +36,22 @@ public interface MedicineDepartmentDao {
     @Select("SELECT * FROM department")
     List<Department> findAllDepartment();
 
+    //查询所有科室名称
+    @Select("SELECT departmentName FROM department")
+    List<String> findAllDepartmentName();
+
+    //查询是否存在科室
+    @Select("SELECT count(*) FROM department WHERE departmentName = #{departmentName}")
+    int isExitDepartmentName(String departmentName);
+
+    //通过departmentId查找科室
+    @Select("SELECT * FROM department WHERE departmentId = #{departmentId}")
+    Department findDepartmentById(String departmentId);
+
+    //更新科室信息
+    @Update("UPDATE department SET departmentSystem = #{departmentSystem}, departmentInfo = #{departmentInfo}, departmentSymptom = #{departmentSymptom} WHERE departmentName = #{departmentName}")
+    void updateDepartment(Department department);
+
     //通过medicineId删除药品
     @Delete("DELETE FROM medicine WHERE medicineId = #{medicineId}")
     void deleteMedicineById(String medicineId);

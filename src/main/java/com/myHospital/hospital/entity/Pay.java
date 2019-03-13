@@ -13,6 +13,8 @@ public class Pay {
     private Integer payWay;
     private Timestamp payTime;
     private Timestamp payCreatedTime;
+    private String userId;
+    private String nurseId;
 
     public String getPayId() {
         return payId;
@@ -52,5 +54,21 @@ public class Pay {
 
     public void setPayCreatedTime(Timestamp payCreatedTime) {
         this.payCreatedTime = payCreatedTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(String nurseId) {
+        this.nurseId = nurseId;
     }
 }

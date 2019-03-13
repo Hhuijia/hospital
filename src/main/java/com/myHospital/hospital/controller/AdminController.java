@@ -2,14 +2,19 @@ package com.myHospital.hospital.controller;
 
 import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.*;
+import com.myHospital.hospital.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -28,19 +33,19 @@ public class AdminController {
     private UsersService usersService;
 
     @Autowired
-    private DepartmentService departmentService;
-
-    @Autowired
     private RolePermissionService rolePermissionService;
 
     @Autowired
     private MedicineDepartmentService medicineDepartmentService;
 
+    @Autowired
+    private RecordService recordService;
+
     @GetMapping("/doctorManage")
     public ModelAndView doctorManage(){
         log.info("********管理员界面/医生管理*********");
         List<Doctors> doctors = commonService.findAll("doctor");
-        List<String> departmentName= departmentService.findAlldepartmentName();
+        List<String> departmentName= medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","医生管理");
@@ -136,7 +141,7 @@ public class AdminController {
     public ModelAndView nurseManage(){
         log.info("********管理员界面/护士管理*********");
         List<Nurses> nurses = commonService.findAll("nurse");
-        List<String> departmentName = departmentService.findAlldepartmentName();
+        List<String> departmentName = medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","护士管理");
@@ -314,5 +319,50 @@ public class AdminController {
     public ModelAndView editDepartment(@RequestParam String departmentId){
         log.info("********编辑科室*********");
         return new ModelAndView("redirect:departmentManage");
+    }
+    @GetMapping("/importDepartment")
+    public ModelAndView importDepartment(@RequestParam MultipartFile file) throws Exception{
+        log.info("********excel批量上传科室信息*********");
+        String fileName = file.getOriginalFilename();
+        medicineDepartmentService.batchImport(fileName, file);
+        return new ModelAndView(("redirect:departmentManage"));
+    }
+
+    @GetMapping("/recordManage")
+    public ModelAndView recordManage(){
+        log.info("********记录管理*********");
+        List<Appointment> appointments = recordService.findAllAppointment();
+        List<Pay> pays = recordService.findAllPay();
+        List<GetMedicine> getMedicines = recordService.findAllGetMedicine();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("title","记录管理");
+        if (appointments != null && !appointments.isEmpty()){
+            modelAndView.addObject("appointments",appointments);
+            log.info("[{}]",appointments);
+        }
+        if (pays != null && !pays.isEmpty()){
+            modelAndView.addObject("pays",pays);
+            log.info("[{}]",pays);
+        }
+        if (getMedicines != null && !getMedicines.isEmpty()){
+            modelAndView.addObject("getMedicines",getMedicines);
+            log.info("[{}]",getMedicines);
+        }
+        modelAndView.setViewName("admin/record");
+        return modelAndView;
+    }
+    @GetMapping("/exportAppointment")
+    public void exportAppointment(HttpServletResponse response) throws IOException {
+        log.info("********excel导出科室信息*********");
+        List<Appointment> appointments = recordService.findAllAppointment();
+        List<String> columnNames = recordService.findColumnName("appointment");
+        ExcelUtil excelUtil = new ExcelUtil();
+        HSSFWorkbook hssfWorkbook = excelUtil.exportRecord(appointments,columnNames,"APPOINTMENT");
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        OutputStream outputStream = response.getOutputStream();
+        response.setHeader("Content-disposition","attachment;filename=appointment.xls");
+        hssfWorkbook.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 }
