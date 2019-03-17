@@ -58,18 +58,13 @@ public class RolePermissionServiceImp implements RolePermissionService {
     public List<Role> findAllRole() {
         log.info("******************findAllRole********************");
         List<Role> roles = rolePermissionDao.findAllRole();
+        StringBuilder str = new StringBuilder();
         for (Role role : roles){
-            StringBuilder str = new StringBuilder();
-            List<RolePermission> rolePermissions = role.getRolePermissions();
-            if (rolePermissions.size()==0){
-                role.setPerNameContain(" ");
-            }else {
-                for (RolePermission rolePermission : rolePermissions) {
-                    String permissionName = rolePermissionDao.findPerNameByPerId(rolePermission.getPermissionId());
-                    str.append(permissionName).append(",");
-                }
-                role.setPerNameContain(str.toString());
+            List<String> perNames = rolePermissionDao.findPermissionByRoleId(role.getRoleId());
+            for (String perName : perNames) {
+                str.append(perName).append(",");
             }
+            role.setPerNameContain(str.toString());
         }
         return roles;
     }

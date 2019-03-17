@@ -36,7 +36,10 @@ public interface MedicineDepartmentService {
     void deleteDepartmentById(String departmentId);
 
     //上传EXCEL文件
-    void batchImport(String fileName, MultipartFile file) throws Exception;
+    void batchImportDepartment(String fileName, MultipartFile file) throws Exception;
+
+    //上传EXCEL文件
+    void batchImportMedicine(String fileName, MultipartFile file) throws Exception;
 
     //更新科室信息
     void updateDepartment(Department department);

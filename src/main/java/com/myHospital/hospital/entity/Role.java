@@ -13,9 +13,6 @@ public class Role {
     private String roleName;
     private Timestamp roleCreateTime;
     private String perNameContain;
-    private String rpId;
-
-    private List<RolePermission> rolePermissions;
 
     public String getRoleId() {
         return roleId;
@@ -49,19 +46,4 @@ public class Role {
         this.perNameContain = perNameContain;
     }
 
-    public String getRpId() {
-        return rpId;
-    }
-
-    public void setRpId(String rpId) {
-        this.rpId = rpId;
-    }
-
-    public List<RolePermission> getRolePermissions() {
-        return rolePermissions;
-    }
-
-    public void setRolePermissions(List<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
-    }
 }

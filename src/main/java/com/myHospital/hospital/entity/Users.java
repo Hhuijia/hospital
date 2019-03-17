@@ -18,7 +18,6 @@ public class Users {
     private String userAddress;
     private Timestamp userCreateTime;
     private Timestamp userUpdateTime;
-    private String nurseId;
 
     public String getUserId() {
         return userId;
@@ -98,14 +97,6 @@ public class Users {
 
     public void setUserUpdateTime(Timestamp userUpdateTime) {
         this.userUpdateTime = userUpdateTime;
-    }
-
-    public String getNurseId() {
-        return nurseId;
-    }
-
-    public void setNurseId(String nurseId) {
-        this.nurseId = nurseId;
     }
 
     public String getSalt() {

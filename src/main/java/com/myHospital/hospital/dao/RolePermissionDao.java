@@ -31,13 +31,13 @@ public interface RolePermissionDao {
     @Insert("INSERT INTO permission(permissionId,permissionName) VALUES(#{permissionId},#{permissionName})")
     void addPermission(Permission permission);
 
-    //根据permissionId查询Name
-    @Select("SELECT permissionName FROM permission WHERE permissionId = #{permissionId}")
-    String findPerNameByPerId(String permissionName);
+//    //根据permissionId查询Name
+//    @Select("SELECT permissionName FROM permission WHERE permissionId = #{permissionId}")
+//    String findPerNameByPerId(String permissionName);
 
-    //查询所有权限
-    @Select("SELECT * FROM role_permission WHERE roleId = #{roleId}")
-    List<RolePermission> findAllPermissionByRoleId(String roleId);
+//    //查询所有权限
+//    @Select("SELECT * FROM role_permission WHERE roleId = #{roleId}")
+//    List<RolePermission> findAllPermissionByRoleId(String roleId);
 
     //查询所有权限
     @Select("SELECT * FROM permission")
@@ -45,10 +45,11 @@ public interface RolePermissionDao {
 
     //查询所有角色
     @Select("SELECT * FROM role")
-    @Results({
-            @Result(property = "rolePermissions",column = "roleId",many = @Many(select = "com.myHospital.hospital.dao.RolePermissionDao.findAllPermissionByRoleId"))
-    })
     List<Role> findAllRole();
+
+    //查询角色对应权限
+    @Select("SELECT p.permissionName FROM permission p WHERE permissionId IN (SELECT permissionId FROM role_permission rp WHERE rp.roleId = #{roleId)})")
+    List<String> findPermissionByRoleId(String roleId);
 
     //通过roleId删除角色
     @Delete("DELETE FROM role WHERE roleId = #{roleId}")

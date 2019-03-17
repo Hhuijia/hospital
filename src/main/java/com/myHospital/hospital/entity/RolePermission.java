@@ -8,7 +8,6 @@ public class RolePermission {
     private String rpId;
     private String roleId;
     private String permissionId;
-    private String kk;
 
     public String getRpId() {
         return rpId;

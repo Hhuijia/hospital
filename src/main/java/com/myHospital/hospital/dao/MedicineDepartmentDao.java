@@ -18,7 +18,7 @@ public interface MedicineDepartmentDao {
     void addMedicine(Medicine medicine);
 
     //添加科室
-    @Insert("INSERT INTO medicine(departmentId,departmentName,departmentSystem,departmentInfo,departmentSymptom) VALUES(#{departmentId},#{departmentName},#{departmentSystem},#{departmentInfo},#{departmentSymptom})")
+    @Insert("INSERT INTO department(departmentId,departmentName,departmentSystem,departmentInfo,departmentSymptom) VALUES(#{departmentId},#{departmentName},#{departmentSystem},#{departmentInfo},#{departmentSymptom})")
     void addDepartment(Department department);
 
     //查询某个科室的所有医生

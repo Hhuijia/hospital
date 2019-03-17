@@ -25,6 +25,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+    private ExcelUtil excelUtil = new ExcelUtil();
 
     @Autowired
     private CommonService commonService;
@@ -41,6 +42,7 @@ public class AdminController {
     @Autowired
     private RecordService recordService;
 
+    @SuppressWarnings("unchecked")
     @GetMapping("/doctorManage")
     public ModelAndView doctorManage(){
         log.info("********管理员界面/医生管理*********");
@@ -66,12 +68,12 @@ public class AdminController {
         modelAndView.setViewName("admin/doctors");
         return modelAndView;
     }
+    @SuppressWarnings("unchecked")
     @PostMapping("/addDoctor")
     public ModelAndView addDoctor(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String departmentName,
                                   @RequestParam String doctorTitle, @RequestParam String doctorProfession,
                                   @RequestParam int doctorMedicalServiceLife, @RequestParam String doctorIntroduction){
         log.info("********添加医生*********");
-        users.setUserPwd("huanghuijia");
         Doctors doctors = new Doctors();
         doctors.setDoctorName(users.getUserName());
         doctors.setDoctorTitle(doctorTitle);
@@ -93,8 +95,16 @@ public class AdminController {
         log.info("********编辑医生*********");
         return new ModelAndView("redirect:doctorManage");
     }
+    @PostMapping("/importDoctor")
+    public ModelAndView importDoctor(@RequestParam MultipartFile file) throws Exception{
+        log.info("********excel批量上传医生信息*********");
+        String fileName = file.getOriginalFilename();
+        commonService.batchImport(fileName, file, "doctor");
+        return new ModelAndView(("redirect:doctorManage"));
+    }
 
 
+    @SuppressWarnings("unchecked")
     @GetMapping("/adminManage")
     public ModelAndView adminManage(){
         log.info("********管理员界面/管理员管理*********");
@@ -114,10 +124,10 @@ public class AdminController {
         modelAndView.setViewName("admin/admins");
         return modelAndView;
     }
+    @SuppressWarnings("unchecked")
     @PostMapping("/addAdmin")
     public ModelAndView addAdmin(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String adminTitle){
         log.info("********添加管理员*********");
-        users.setUserPwd("huanghuijia");
         Admins admins = new Admins();
         admins.setAdminName(users.getUserName());
         admins.setAdminTitle(adminTitle);
@@ -135,8 +145,16 @@ public class AdminController {
         log.info("********编辑管理员*********");
         return new ModelAndView("redirect:adminManage");
     }
+    @PostMapping("/importAdmin")
+    public ModelAndView importAdmin(@RequestParam MultipartFile file) throws Exception{
+        log.info("********excel批量上传管理员信息*********");
+        String fileName = file.getOriginalFilename();
+        commonService.batchImport(fileName, file,"admin");
+        return new ModelAndView(("redirect:adminManage"));
+    }
 
 
+    @SuppressWarnings("unchecked")
     @GetMapping("/nurseManage")
     public ModelAndView nurseManage(){
         log.info("********管理员界面/护士管理*********");
@@ -162,11 +180,11 @@ public class AdminController {
         modelAndView.setViewName("admin/nurses");
         return modelAndView;
     }
+    @SuppressWarnings("unchecked")
     @PostMapping("/addNurse")
     public ModelAndView addNurse(@ModelAttribute Users users, @RequestParam List<String> roleIds,
                                  @RequestParam String nurseTitle, @RequestParam String nursePlace){
         log.info("********添加护士*********");
-        users.setUserPwd("huanghuijia");
         Nurses nurses = new Nurses();
         nurses.setNurseName(users.getUserName());
         nurses.setNurseTitle(nurseTitle);
@@ -184,6 +202,13 @@ public class AdminController {
     public ModelAndView editNurse(@RequestParam String nurseId){
         log.info("********编辑护士*********");
         return new ModelAndView("redirect:nurseManage");
+    }
+    @PostMapping("/importNurse")
+    public ModelAndView importNurse(@RequestParam MultipartFile file) throws Exception{
+        log.info("********excel批量上传护士信息*********");
+        String fileName = file.getOriginalFilename();
+        commonService.batchImport(fileName, file, "nurse");
+        return new ModelAndView(("redirect:nurseManage"));
     }
 
 
@@ -287,6 +312,13 @@ public class AdminController {
         log.info("********编辑药品*********");
         return new ModelAndView("redirect:medicineManage");
     }
+    @PostMapping("/importMedicine")
+    public ModelAndView importMedicine(@RequestParam MultipartFile file) throws Exception{
+        log.info("********excel批量上传药品信息*********");
+        String fileName = file.getOriginalFilename();
+        medicineDepartmentService.batchImportMedicine(fileName, file);
+        return new ModelAndView(("redirect:medicineManage"));
+    }
 
 
     @GetMapping("/departmentManage")
@@ -320,11 +352,11 @@ public class AdminController {
         log.info("********编辑科室*********");
         return new ModelAndView("redirect:departmentManage");
     }
-    @GetMapping("/importDepartment")
+    @PostMapping("/importDepartment")
     public ModelAndView importDepartment(@RequestParam MultipartFile file) throws Exception{
         log.info("********excel批量上传科室信息*********");
         String fileName = file.getOriginalFilename();
-        medicineDepartmentService.batchImport(fileName, file);
+        medicineDepartmentService.batchImportDepartment(fileName, file);
         return new ModelAndView(("redirect:departmentManage"));
     }
 
@@ -351,18 +383,28 @@ public class AdminController {
         modelAndView.setViewName("admin/record");
         return modelAndView;
     }
+    @SuppressWarnings("unchecked")
     @GetMapping("/exportAppointment")
     public void exportAppointment(HttpServletResponse response) throws IOException {
         log.info("********excel导出科室信息*********");
         List<Appointment> appointments = recordService.findAllAppointment();
         List<String> columnNames = recordService.findColumnName("appointment");
-        ExcelUtil excelUtil = new ExcelUtil();
-        HSSFWorkbook hssfWorkbook = excelUtil.exportRecord(appointments,columnNames,"APPOINTMENT");
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        OutputStream outputStream = response.getOutputStream();
-        response.setHeader("Content-disposition","attachment;filename=appointment.xls");
-        hssfWorkbook.write(outputStream);
-        outputStream.flush();
-        outputStream.close();
+        excelUtil.export(response,appointments,columnNames,"appointment");
+    }
+    @SuppressWarnings("unchecked")
+    @GetMapping("/exportPay")
+    public void exportPay(HttpServletResponse response) throws IOException {
+        log.info("********excel导出缴费信息*********");
+        List<Pay> pays = recordService.findAllPay();
+        List<String> columnNames = recordService.findColumnName("paym");
+        excelUtil.export(response,pays,columnNames,"pay");
+    }
+    @SuppressWarnings("unchecked")
+    @GetMapping("/exportGetMedicine")
+    public void exportGetMedicine(HttpServletResponse response) throws IOException {
+        log.info("********excel导出取药信息*********");
+        List<GetMedicine> getMedicines = recordService.findAllGetMedicine();
+        List<String> columnNames = recordService.findColumnName("getMedicine");
+        excelUtil.export(response,getMedicines,columnNames,"getMedicine");
     }
 }

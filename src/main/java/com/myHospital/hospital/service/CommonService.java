@@ -2,6 +2,7 @@ package com.myHospital.hospital.service;
 
 import com.myHospital.hospital.entity.Users;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface CommonService<T> {
 
     //通过Id删除信息
     void delete(String id, String type);
+
+    //上传EXCEL文件
+    void batchImport(String fileName, MultipartFile file, String type) throws Exception;
+
 }

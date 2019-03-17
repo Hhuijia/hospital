@@ -31,4 +31,8 @@ public interface RecordDao {
     //查询数据表列名
     @Select("SELECT column_name FROM information_schema.columns WHERE table_schema='hospital' AND table_name=#{tableName}")
     List<String> findColumnName(String tableName);
+
+    //通过医生ID查看个人预约记录(年月日)
+    @Select("SELECT * FROM appointment WHERE doctorId = #{doctorId} AND DATE_FORMAT(appointmentTime,'%Y%m%d') = #{appointmentTime}")
+    List<Appointment> findTodayAppointment(String doctorId, String appointmentTime);
 }
