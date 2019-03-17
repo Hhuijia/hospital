@@ -32,6 +32,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Users findUserByID(String userId) {
+        log.info("******************findUserByID********************");
+        return usersDao.findUserById(userId);
+    }
+
+    @Override
     public List<Role> findRoleByIDNum(String userIDNum){
         log.info("******************findRoleByIDNum********************");
         return usersDao.findRoleByIDNum(userIDNum);

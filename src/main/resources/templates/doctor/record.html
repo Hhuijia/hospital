@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>病历填写页面</title>
   <meta charset="UTF-8" />
@@ -29,35 +29,41 @@
             <h5>病历信息</h5>
           </div>
           <div class="widget-content nopadding">
-            <form action="#" method="get" class="form-horizontal">
+            <form action="#" class="form-horizontal" th:action="@{addRecordAndPrescription}" method="post">
               <div class="control-group">
                 <label class="control-label">姓名 :</label>
                 <div class="controls">
-                  <input type="text" class="span11" placeholder="Name" />
+                  <input type="text" disabled th:text="${users.userName}" />
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">年龄 :</label>
                 <div class="controls">
-                  <input type="text" class="span11" placeholder="Age" />
+                  <input type="text" disabled th:text="${users.userAge}"/>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">性别 :</label>
                 <div class="controls">
-                  <input type="text" class="span11" placeholder="Sex" />
+                  <input type="text" disabled th:text="${users.userSex}"/>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">手机号码 :</label>
                 <div class="controls">
-                  <input type="text" class="span11" placeholder="Phone" />
+                  <input type="text" disabled th:text="${users.userPhone}"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">联系地址 :</label>
+                <div class="controls">
+                  <input type="text" disabled th:text="${users.userAddress}"/>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">过敏史 :</label>
                 <div class="controls">
-                  <input type="text" class="span11" placeholder="Allergy History" />
+                  <input type="text" disabled th:text="${users.userAddress}"/>
                 </div>
               </div>
               <div class="control-group">
@@ -84,27 +90,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="odd gradeX">
+                    <tr>
                       <td>
-                        <select >
-                          <option></option>
-                          <option>First option</option>
-                          <option>Second option</option>
-                          <option>Third option</option>
-                          <option>Fourth option</option>
-                          <option>Fifth option</option>
-                          <option>Sixth option</option>
-                          <option>Seventh option</option>
-                          <option>Eighth option</option>
+                        <select title="" >
+                          <option th:each="medicine:${medicines}" th:value="${medicine.medicineId}" th:text="${medicine.medicineName}"></option>
                         </select>
                       </td>
                       <td>
-                        <select >
+                        <select title="">
                           <option></option>
                         </select>
                       </td>
                       <td>
-                        <select >
+                        <select title="">
                           <option></option>
                           <option>一天一次</option>
                           <option>一天两次</option>
@@ -138,16 +136,16 @@
               <tr>
                 <th>名称</th>
                 <th>药效</th>
-                <th>用量</th>
+                <th>剂量</th>
                 <th>剩余</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Trident</td>
-                <td>Internet Explorer 4.0</td>
-                <td>Internet Explorer 4.0</td>
-                <td>Internet Explorer 4.0</td>
+              <tr th:each="medicine:${medicines}">
+                <td th:text="${medicine.medicineName}"></td>
+                <td th:text="${medicine.medicineEfficacy}"></td>
+                <td th:text="${medicine.medicineDosage}"></td>
+                <td th:text="${medicine.medicineResidual}"></td>
               </tr>
               </tbody>
             </table>

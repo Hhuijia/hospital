@@ -10,6 +10,11 @@ public class Record {
     private String recordId;
     private String recordContent;
     private Timestamp recordCreatedTime;
+    private String userId;
+    private String doctorId;
+    private String prescriptionId;
+
+    private Prescription prescription;
 
     public String getRecordId() {
         return recordId;
@@ -33,5 +38,37 @@ public class Record {
 
     public void setRecordCreatedTime(Timestamp recordCreatedTime) {
         this.recordCreatedTime = recordCreatedTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getPrescriptionId() {
+        return prescriptionId;
+    }
+
+    public void setPrescriptionId(String prescriptionId) {
+        this.prescriptionId = prescriptionId;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
     }
 }
