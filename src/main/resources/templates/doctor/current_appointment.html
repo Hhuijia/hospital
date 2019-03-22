@@ -43,14 +43,14 @@
               </thead>
               <tbody>
               <tr th:each="appointment:${appointments}">
-                <td th:text="${appointment.}"></td>
-                <td th:text="${appointment.}"></td>
-                <td th:text="${appointment.}"></td>
-                <td th:text="${appointment.}"></td>
-                <td th:text="${appointment.}"></td>
-                <td th:text="${appointment.}"></td>
+                <td>1</td>
+                <td th:text="${appointment.getUsers().userName}"></td>
+                <td th:text="${appointment.getUsers().userAge}"></td>
+                <td th:text="${appointment.getUsers().userSex}"></td>
+                <td th:text="${appointment.getUsers().userPhone}"></td>
+                <td></td>
                 <td>
-                  <a href="#" class="btn btn-primary btn-mini">就诊</a>
+                  <a th:href="@{/doctor/showRecordPage(userId=${appointment.userId})}" class="btn btn-primary btn-mini">就诊</a>
                 </td>
               </tr>
               </tbody>

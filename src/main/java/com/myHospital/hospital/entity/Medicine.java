@@ -10,11 +10,13 @@ import java.sql.Timestamp;
 public class Medicine {
     private String medicineId;
     private String medicineName;
+    private Integer medicineCount;
+    private String medicineUnit;
     private BigDecimal medicinePrice;
     private String medicineResidual;
     private String medicineType;
-    private String medicineEfficacy;
     private String medicineDosage;
+    private String standardUsage;
     private Timestamp medicineCreateTime;
     private Timestamp medicineUpdateTime;
 
@@ -32,6 +34,22 @@ public class Medicine {
 
     public void setMedicineName(String medicineName) {
         this.medicineName = medicineName;
+    }
+
+    public Integer getMedicineCount() {
+        return medicineCount;
+    }
+
+    public void setMedicineCount(Integer medicineCount) {
+        this.medicineCount = medicineCount;
+    }
+
+    public String getMedicineUnit() {
+        return medicineUnit;
+    }
+
+    public void setMedicineUnit(String medicineUnit) {
+        this.medicineUnit = medicineUnit;
     }
 
     public BigDecimal getMedicinePrice() {
@@ -58,20 +76,20 @@ public class Medicine {
         this.medicineType = medicineType;
     }
 
-    public String getMedicineEfficacy() {
-        return medicineEfficacy;
-    }
-
-    public void setMedicineEfficacy(String medicineEfficacy) {
-        this.medicineEfficacy = medicineEfficacy;
-    }
-
     public String getMedicineDosage() {
         return medicineDosage;
     }
 
     public void setMedicineDosage(String medicineDosage) {
         this.medicineDosage = medicineDosage;
+    }
+
+    public String getStandardUsage() {
+        return standardUsage;
+    }
+
+    public void setStandardUsage(String standardUsage) {
+        this.standardUsage = standardUsage;
     }
 
     public Timestamp getMedicineCreateTime() {

@@ -128,18 +128,22 @@ public class MedicineDepartmentServiceImp implements MedicineDepartmentService {
                 if (row == null){continue;}
                 Medicine medicine = new Medicine();
                 String medicineName = row.getCell(0).getStringCellValue();
-                BigDecimal medicinePrice = new BigDecimal(row.getCell(1).getStringCellValue());
-                String medicineResidual = row.getCell(2).getStringCellValue();
-                String medicineType = row.getCell(3).getStringCellValue();
-                String medicineEfficacy = row.getCell(4).getStringCellValue();
-                String medicineDosage = row.getCell(5).getStringCellValue();
+                int medicineCount = (int) row.getCell(1).getNumericCellValue();
+                String medicineUnit = row.getCell(2).getStringCellValue();
+                BigDecimal medicinePrice = BigDecimal.valueOf(row.getCell(3).getNumericCellValue());
+                String medicineResidual = row.getCell(4).getStringCellValue();
+                String medicineType = row.getCell(5).getStringCellValue();
+                String medicineDosage = row.getCell(6).getStringCellValue();
+                String standardUsage = row.getCell(7).getStringCellValue();
 
                 medicine.setMedicineName(medicineName);
+                medicine.setMedicineCount(medicineCount);
+                medicine.setMedicineUnit(medicineUnit);
                 medicine.setMedicinePrice(medicinePrice);
                 medicine.setMedicineResidual(medicineResidual);
                 medicine.setMedicineType(medicineType);
-                medicine.setMedicineEfficacy(medicineEfficacy);
                 medicine.setMedicineDosage(medicineDosage);
+                medicine.setStandardUsage(standardUsage);
 
                 medicines.add(medicine);
             }

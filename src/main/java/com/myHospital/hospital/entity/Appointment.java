@@ -16,6 +16,9 @@ public class Appointment {
     private String doctorId;
     private String departmentId;
 
+    private Users users;
+    private Doctors doctors;
+
     public String getAppointmentId() {
         return appointmentId;
     }
@@ -78,6 +81,22 @@ public class Appointment {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Doctors getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Doctors doctors) {
+        this.doctors = doctors;
     }
 
     @Override

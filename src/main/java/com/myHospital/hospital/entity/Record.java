@@ -1,6 +1,7 @@
 package com.myHospital.hospital.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author QUEENEY
@@ -8,13 +9,13 @@ import java.sql.Timestamp;
  */
 public class Record {
     private String recordId;
-    private String recordContent;
+    private String diagnosticResult;
+    private String symptom;
     private Timestamp recordCreatedTime;
     private String userId;
     private String doctorId;
-    private String prescriptionId;
 
-    private Prescription prescription;
+    private List<Prescription> prescriptions;
 
     public String getRecordId() {
         return recordId;
@@ -24,12 +25,20 @@ public class Record {
         this.recordId = recordId;
     }
 
-    public String getRecordContent() {
-        return recordContent;
+    public String getDiagnosticResult() {
+        return diagnosticResult;
     }
 
-    public void setRecordContent(String recordContent) {
-        this.recordContent = recordContent;
+    public void setDiagnosticResult(String diagnosticResult) {
+        this.diagnosticResult = diagnosticResult;
+    }
+
+    public String getSymptom() {
+        return symptom;
+    }
+
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
     }
 
     public Timestamp getRecordCreatedTime() {
@@ -56,19 +65,11 @@ public class Record {
         this.doctorId = doctorId;
     }
 
-    public String getPrescriptionId() {
-        return prescriptionId;
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
     }
 
-    public void setPrescriptionId(String prescriptionId) {
-        this.prescriptionId = prescriptionId;
-    }
-
-    public Prescription getPrescription() {
-        return prescription;
-    }
-
-    public void setPrescription(Prescription prescription) {
-        this.prescription = prescription;
+    public void setPrescriptions(List<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
     }
 }

@@ -21,4 +21,12 @@ import java.util.Random;
 public class DoctorServiceImp implements DoctorService {
     private static final Logger log = LoggerFactory.getLogger(DoctorServiceImp.class);
 
+    @Autowired
+    private DoctorsDao doctorsDao;
+
+    @Override
+    public Doctors findDoctorByUserId(String userId) {
+        return doctorsDao.findDoctorByUserId(userId);
+    }
+
 }

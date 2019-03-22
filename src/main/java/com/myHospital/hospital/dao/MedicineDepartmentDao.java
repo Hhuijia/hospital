@@ -14,7 +14,7 @@ import java.util.List;
 public interface MedicineDepartmentDao {
 
     //添加药品
-    @Insert("INSERT INTO medicine(medicineId,medicineName,medicinePrice,medicineResidual,medicineType,medicineEfficacy,medicineDosage) VALUES(#{medicineId},#{medicineName},#{medicinePrice},#{medicineResidual},#{medicineType},#{medicineEfficacy},#{medicineDosage})")
+    @Insert("INSERT INTO medicine(medicineId,medicineName,medicineCount,medicineUnit,medicinePrice,medicineResidual,medicineType,medicineDosage,standardUsage) VALUES(#{medicineId},#{medicineName},#{medicineCount},#{medicineUnit},#{medicinePrice},#{medicineResidual},#{medicineType},#{medicineDosage},#{standardUsage})")
     void addMedicine(Medicine medicine);
 
     //添加科室

@@ -4,6 +4,33 @@
   <title>病历填写页面</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style type="text/css">
+    .under-line {
+      border-bottom: solid 1px black;
+      color: blue;
+      letter-spacing: 5px;
+      width: 120px;
+      text-align: center;
+    }
+    .td_header{
+      border: none;
+      width: 70px;
+      text-align: center;
+    }
+    #writehere{
+      height: 540px;
+      text-align: center;
+      padding-top: 70px;
+      font-size: 15px;
+      line-height: 30px;
+    }
+    #symptom{
+      resize: none;
+      width: -webkit-fill-available;
+      margin-bottom: 0px;
+      height: 150px;
+    }
+  </style>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
   <link rel="stylesheet" href="/static/css/uniform.css" />
@@ -21,140 +48,145 @@
     <h1>请填写病历信息</h1>
   </div>
   <div class="container-fluid">
-    <hr>
-    <div class="row-fluid">
-      <div class="span8">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h5>病历信息</h5>
+    <div class="quick-actions_homepage">
+      <ul class="quick-actions">
+        <li class="bg_lb"> <a href=""> <i class="icon-save"></i> 保存</a> </li>
+        <li class="bg_lb"> <a href=""> <i class="icon-print"></i> 打印</a> </li>
+        <li class="bg_lb"> <a href=""> <i class="icon-inbox"></i><span class="label label-success">10</span> 存为套组 </a> </li>
+        <li class="bg_lb"> <a href=""> <i class="icon-folder-open"></i> 病历</a> </li>
+        <li class="bg_lb"> <a href=""> <i class="icon-question-sign"></i> 帮助</a> </li>
+      </ul>
+    </div>
+  </div>
+    <div class="container-fluid">
+      <hr>
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>个人套组</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <button type="button" class="btn btn-default">抗生素</button>
+              <button type="button" class="btn btn-default">心血管</button>
+              <button type="button" class="btn btn-default">呼吸</button>
+              <button type="button" class="btn btn-default">消化</button>
+              <button type="button" class="btn btn-default">解热镇痛</button>
+              <button type="button" class="btn btn-default">维生素激素</button>
+              <button type="button" class="btn btn-default">外用</button>
+              <button type="button" class="btn btn-default">用法</button>
+            </div>
           </div>
-          <div class="widget-content nopadding">
-            <form action="#" class="form-horizontal" th:action="@{addRecordAndPrescription}" method="post">
-              <div class="control-group">
-                <label class="control-label">姓名 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userName}" />
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">年龄 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userAge}"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">性别 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userSex}"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">手机号码 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userPhone}"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">联系地址 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userAddress}"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">过敏史 :</label>
-                <div class="controls">
-                  <input type="text" disabled th:text="${users.userAddress}"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">症状描述 :</label>
-                <div class="controls">
-                  <textarea class="span11" rows="20" placeholder="Please describe the patient's main symptoms in detail..." ></textarea>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">添加医嘱 :</label>
-                <div class="controls">
-                  <textarea class="span11" rows="20" placeholder="Please add medical advice, special precautions or medicine for the patient..." ></textarea>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">添加药品 ：</label>
-                <div class="controls">
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>药品名称</th>
-                      <th>药品用量</th>
-                      <th>服用时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td>
-                        <select title="" >
-                          <option th:each="medicine:${medicines}" th:value="${medicine.medicineId}" th:text="${medicine.medicineName}"></option>
-                        </select>
-                      </td>
-                      <td>
-                        <select title="">
-                          <option></option>
-                        </select>
-                      </td>
-                      <td>
-                        <select title="">
-                          <option></option>
-                          <option>一天一次</option>
-                          <option>一天两次</option>
-                          <option>一天三次</option>
-                          <option>睡前服用</option>
-                          <option>饭后服用</option>
-                          <option>饭前服用</option>
-                          <option>间隔四小时服用</option>
-                        </select>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-success">确定无误</button>
-              </div>
-            </form>
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>主要症状</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <textarea id="symptom"></textarea>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>药品查询</h5>
+        <div class="span5">
+          <div class="widget-box">
+            <div class="widget-content nopadding">
+              <h3 class="text-center" style="letter-spacing:30px;">珠海市某某某医院</h3>
+              <h4 class="text-center" style="letter-spacing:30px;">处方笺</h4>
+              <table style="border-collapse: inherit;width: -webkit-fill-available;padding-right: 15px;padding-bottom: 15px;">
+                <tr>
+                  <td class="td_header">姓名:</td>
+                  <td id="userN" class="under-line" th:value="${users.userId}" th:text="${users.userName}"></td>
+                  <td class="td_header">性别:</td>
+                  <td class="under-line" th:text="${users.userSex}"></td>
+                  <td class="td_header">年龄:</td>
+                  <td class="under-line" th:text="${users.userAge}"></td>
+                </tr>
+                <tr>
+                  <td class="td_header">地址(电话):</td>
+                  <td colspan="3" class="under-line" th:text="${users.userAddress}"></td>
+                  <td class="td_header">日期:</td>
+                  <td class="under-line">2019-03-19</td>
+                </tr>
+                <tr>
+                  <td class="td_header">诊断:</td>
+                  <td colspan="3" class="under-line">
+                    <input id="diagnostic" type="text" title="诊断"/>
+                  </td>
+                  <td class="td_header">过敏:</td>
+                  <td class="under-line">未发现</td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;vertical-align: top;"><h3>Rp</h3></td>
+                  <td colspan="5" style="vertical-align: initial;" id="writehere"></td>
+                </tr>
+                <tr>
+                  <td class="td_header">医师:</td>
+                  <td class="under-line" th:text="${username}"></td>
+                  <td class="td_header">配药:</td>
+                  <td class="under-line"></td>
+                  <td class="td_header">复核:</td>
+                  <td class="under-line"></td>
+                </tr>
+                <tr>
+                  <td class="td_header">药费:</td>
+                  <td class="under-line"></td>
+                  <td class="td_header">其它:</td>
+                  <td class="under-line"></td>
+                  <td class="td_header">合计:</td>
+                  <td class="under-line"></td>
+                </tr>
+              </table>
+            </div>
           </div>
-          <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
-              <thead>
-              <tr>
-                <th>名称</th>
-                <th>药效</th>
-                <th>剂量</th>
-                <th>剩余</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="medicine:${medicines}">
-                <td th:text="${medicine.medicineName}"></td>
-                <td th:text="${medicine.medicineEfficacy}"></td>
-                <td th:text="${medicine.medicineDosage}"></td>
-                <td th:text="${medicine.medicineResidual}"></td>
-              </tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="span5">
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>药品查询</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>药物名称</th>
+                  <th>数量</th>
+                  <th>单位</th>
+                  <th>单价</th>
+                  <th>金额</th>
+                  <th>类型</th>
+                  <th>库存</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyhere"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>药品查询</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <table class="table table-bordered data-table" id="tablehere">
+                <thead>
+                <tr>
+                  <th>药物名称</th>
+                  <th>药物剂量</th>
+                  <th hidden="hidden">标准用法</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="medicine:${medicines}" th:id="${medicine.medicineId}">
+                  <td th:text="${medicine.medicineName}"></td>
+                  <td th:text="${medicine.medicineDosage}"></td>
+                  <td th:text="${medicine.standardUsage}" hidden="hidden"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/jquery.ui.custom.js"></script>
@@ -165,5 +197,45 @@
 <script src="/static/js/matrix.js"></script>
 <script src="/static/js/matrix.tables.js"></script>
 <script src="/static/js/matrix.form_common.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('#tablehere tr').dblclick(function(){
+            var td = $('#writehere');
+            var str = toString($(this).attr("id")) + "<br/>" + "<br/>";
+            td.append(str);
+
+            $.ajax({
+                type:"post",
+                url:"/findMedicine",
+                data:{
+                    medicineId:$(this).attr("id")
+                },
+                success:function (data) {
+                    med = data;
+
+                    var str = "<tr>"+
+                        "<td>"+optionJson.totalNumber+"</td>"+
+                        "<td>"+optionJson.actualNumber+"</td>"+
+                        "<td>"+optionJson.highScore+"</td>"+
+                        "<td>"+optionJson.lowScore+"</td>"+
+                        "<td>"+optionJson.avgScore+"</td>"+
+                        "<td>"+optionJson.variance+"</td>"+
+                        "<td>"+optionJson.variance+"</td>"+
+                        "</tr>";
+                    str.appendTo($('#tbodyhere'));
+                }
+            })
+        });
+    });
+
+    function toString(id){
+        var tdArr = $("#"+id).children();
+        var str = tdArr.eq(0).text() + "&nbsp;" + tdArr.eq(1).text() + "<br/>" +
+            "&nbsp;&nbsp;用法：&nbsp;" + tdArr.eq(2).text()+ "&nbsp;" +tdArr.eq(3).text()+ "&nbsp;" +tdArr.eq(4).text();
+        return str;
+    }
+
+</script>
 </body>
 </html>

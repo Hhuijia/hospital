@@ -21,6 +21,10 @@ public interface DoctorsDao {
     @Select("SELECT userId FROM doctors WHERE doctorId = #{doctorId}")
     String findUserIdById(String doctorId);
 
+    //通过doctorId查询对应在用户表的信息
+    @Select("SELECT * FROM doctors WHERE doctorId = #{doctorId}")
+    String findDoctorById(String doctorId);
+
     //通过userId查询对应在医生表的信息
     @Select("SELECT * FROM doctors WHERE userId = #{userId}")
     Doctors findDoctorByUserId(String userId);

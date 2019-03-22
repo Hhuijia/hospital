@@ -12,5 +12,6 @@ import java.util.List;
  */
 @Repository
 public interface DoctorService {
-
+    //通过userId查询对应在医生表的信息
+    Doctors findDoctorByUserId(String userId);
 }
