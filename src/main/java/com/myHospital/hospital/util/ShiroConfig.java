@@ -67,7 +67,7 @@ public class ShiroConfig {
     public EnceladusShiroRealm getEnceladusShiroRealm(EhCacheManager ehCacheManager){
         log.info("##################enceladusShiroRealm##################");
         EnceladusShiroRealm enceladusShiroRealm = new EnceladusShiroRealm();
-//        enceladusShiroRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
+        enceladusShiroRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
         enceladusShiroRealm.setCacheManager(ehCacheManager);
         return enceladusShiroRealm;
     }

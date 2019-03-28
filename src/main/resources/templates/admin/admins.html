@@ -134,7 +134,6 @@
 			        <table class="table table-bordered data-table">
 			        	<thead>
 				            <tr>
-				              <th>编号</th>
 				              <th>权限</th>
 				              <th>职称</th>
 				              <th>姓名</th>
@@ -147,7 +146,6 @@
 			          	</thead>
 			          	<tbody>
 							<tr th:each="admin:${admins}">
-								<td th:text="${admin.adminId}"></td>
 								<td th:text="${admin.adminName}"></td>
 								<td th:text="${admin.adminTitle}"></td>
 								<td th:text="${admin.adminName}"></td>
@@ -156,8 +154,8 @@
 								<td th:text="${admin.getUsers().userPhone}"></td>
 								<td>离职</td>
 								<td>
-			        				<a th:href="@{/admin/editAdmin(adminId=${admin.getAdminId()})}" class="btn btn-primary btn-mini">Edit</a>
-			        				<a th:href="@{/admin/delAdmin(adminId=${admin.getAdminId()})}" class="btn btn-danger btn-mini">Delete</a>
+			        				<a th:href="@{/admin/editAdmin(adminId=${admin.getAdminId()})}" class="btn btn-primary btn-mini">编辑</a>
+			        				<a th:href="@{/admin/delAdmin(adminId=${admin.getAdminId()})}" class="btn btn-danger btn-mini">删除</a>
 				            	</td>
 				            </tr>
 			          	</tbody>

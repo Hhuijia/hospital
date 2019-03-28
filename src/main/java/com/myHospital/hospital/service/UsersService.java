@@ -1,5 +1,6 @@
 package com.myHospital.hospital.service;
 
+import com.myHospital.hospital.entity.Appointment;
 import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
@@ -24,4 +25,10 @@ public interface UsersService {
 
     //查询所有用户（不包括医生护士管理员）
     List<Users> checkAllUser();
+
+    //添加预约
+    void makeAppointment(Appointment appointment);
+
+    //查询预约记录
+    List<Appointment> findAllAppointmentOfOneByUserId(String userId);
 }

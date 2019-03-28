@@ -26,6 +26,9 @@ public interface MedicineDepartmentService {
     //查询所有科室
     List<Department> findAllDepartment();
 
+    //通过departmentId查找科室
+    Department findDepartmentById(String departmentId);
+
     //查询所有科室名称
     List<String> findAllDepartmentName();
 

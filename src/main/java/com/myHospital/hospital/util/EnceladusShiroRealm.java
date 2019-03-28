@@ -66,7 +66,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
         Users users = Optional.ofNullable(usersService.findUserByIDNum(userIDNum)).orElseThrow(UnknownAccountException::new);
         log.info("userPassword:[{}]",users.getUserPwd());
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(users.getUserIDNum(), users.getUserPwd(), getName());
-//        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(users.getUserName()+users.getSalt()));
+        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(users.getUserName()+users.getSalt()));
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("USER_SESSION", users);
 

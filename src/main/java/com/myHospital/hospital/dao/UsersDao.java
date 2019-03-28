@@ -1,5 +1,6 @@
 package com.myHospital.hospital.dao;
 
+import com.myHospital.hospital.entity.Appointment;
 import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
@@ -49,4 +50,12 @@ public interface UsersDao {
     //通过userId删除用户信息
     @Delete("DELETE FROM users WHERE userId = #{userId}")
     void deleteUserById(String userId);
+
+    //添加预约
+    @Insert("INSERT INTO appointment(appointmentId,emergencyContact,emergContPhone,appointmentTime,userId,doctorId,departmentId) VALUES(#{appointmentId},#{emergencyContact},#{emergContPhone},#{appointmentTime},#{userId},#{doctorId},#{departmentId})")
+    void makeAppointment(Appointment appointment);
+
+    //查询预约记录
+    @Select("SELECT * FROM appointment WHERE userId = #{userId}")
+    List<Appointment> findAllAppointmentOfOneByUserId(String userId);
 }

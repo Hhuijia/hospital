@@ -58,6 +58,12 @@ public class MedicineDepartmentServiceImp implements MedicineDepartmentService {
     }
 
     @Override
+    public Department findDepartmentById(String departmentId) {
+        log.info("******************findDepartmentById********************");
+        return medicineDepartmentDao.findDepartmentById(departmentId);
+    }
+
+    @Override
     public List<String> findAllDepartmentName() {
         log.info("******************findAlldepartmentName********************");
         return medicineDepartmentDao.findAllDepartmentName();

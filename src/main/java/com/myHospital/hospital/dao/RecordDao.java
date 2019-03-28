@@ -4,6 +4,7 @@ import com.myHospital.hospital.entity.Appointment;
 import com.myHospital.hospital.entity.GetMedicine;
 import com.myHospital.hospital.entity.Pay;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -32,10 +33,10 @@ public interface RecordDao {
     List<String> findColumnName(String tableName);
 
     //通过医生ID查看个人预约记录(年月日)
-    @Select("SELECT * FROM appointment WHERE doctorId = #{doctorId} AND DATE_FORMAT(appointmentTime,'%Y%m%d') = #{appointmentTime}")
+    @Select("SELECT * FROM appointment WHERE doctorId=#{doctorId} AND DATE_FORMAT(appointmentTime,'%Y%m%d')=#{appointmentTime}")
     @Results({
             @Result(property = "doctors",column = "doctorId",one = @One(select = "com.myHospital.hospital.dao.DoctorsDao.findDoctorById")),
             @Result(property = "users", column = "userId",one = @One(select = "com.myHospital.hospital.dao.UsersDao.findUserById"))
     })
-    List<Appointment> findTodayAppointment(String doctorId, String appointmentTime);
+    List<Appointment> findTodayAppointment(@Param("doctorId") String doctorId,  @Param("appointmentTime") String appointmentTime);
 }

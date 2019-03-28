@@ -1,12 +1,19 @@
 package com.myHospital.hospital.controller;
 
+import com.myHospital.hospital.entity.Department;
+import com.myHospital.hospital.entity.Role;
+import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.service.MedicineDepartmentService;
+import com.myHospital.hospital.service.UsersService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +32,12 @@ import java.util.List;
 @RequestMapping("/common")
 public class CommonController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+
+    @Autowired
+    private UsersService usersService;
+
+    @Autowired
+    private MedicineDepartmentService medicineDepartmentService;
 
     @GetMapping(value = "/index")
     public ModelAndView index() {
@@ -62,10 +75,25 @@ public class CommonController {
     @PostMapping("/login")
     public ModelAndView login(@RequestParam String userIDNum, @RequestParam String userPwd){
         Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
         UsernamePasswordToken token = new UsernamePasswordToken(userIDNum, userPwd);
         ModelAndView modelAndView = new ModelAndView();
         try {
             subject.login(token);
+            log.info("********登录成功*********");
+            Users user = (Users) session.getAttribute("USER_SESSION");
+            List<Role> roles = usersService.findRoleByIDNum(userIDNum);
+            if (roles.contains("user")){
+                List<Department> departments = medicineDepartmentService.findAllDepartment();
+                modelAndView.addObject("departments",departments);
+                modelAndView.addObject("title","珠海某某某医院");
+                modelAndView.addObject("username",user.getUserName());
+                modelAndView.setViewName("guest/index");
+            }else {
+                modelAndView.setViewName("common/index");
+                modelAndView.addObject("title","医院后台管理系统");
+                modelAndView.addObject("username",user.getUserName());
+            }
         }catch (IncorrectCredentialsException ice){
             log.info("********登录失败*********");
             log.info("对用户[{}]进行登录验证,验证未通过,密码错误",userIDNum);
@@ -79,10 +107,6 @@ public class CommonController {
             modelAndView.addObject("errorMsg","对用户"+userIDNum+"进行登录验证,验证未通过,用户不存在");
             token.clear();
         }
-        log.info("********登录成功*********");
-        modelAndView.setViewName("common/index");
-        modelAndView.addObject("title","医院后台管理系统");
-        modelAndView.addObject("username",userIDNum.substring(0,4));
         return modelAndView;
     }
 

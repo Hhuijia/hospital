@@ -4,6 +4,8 @@ import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.*;
 import com.myHospital.hospital.util.ExcelUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -46,24 +47,17 @@ public class AdminController {
     @GetMapping("/doctorManage")
     public ModelAndView doctorManage(){
         log.info("********管理员界面/医生管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Doctors> doctors = commonService.findAll("doctor");
         List<String> departmentName= medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","医生管理");
-//        modelAndView.addObject("username",userIDNum.substring(0,4));
-        if (doctors != null && !doctors.isEmpty()){
-            modelAndView.addObject("doctors",doctors);
-            log.info("[{}]",doctors);
-        }
-        if (departmentName != null && !departmentName.isEmpty()){
-            modelAndView.addObject("departmentName",departmentName);
-            log.info("[{}]",departmentName);
-        }
-        if (roles != null && !roles.isEmpty()){
-            modelAndView.addObject("roles",roles);
-            log.info("[{}]",roles);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("doctors",doctors);log.info("[{}]",doctors);
+        modelAndView.addObject("departmentName",departmentName);log.info("[{}]",departmentName);
+        modelAndView.addObject("roles",roles);log.info("[{}]",roles);
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/doctors");
         return modelAndView;
@@ -108,18 +102,15 @@ public class AdminController {
     @GetMapping("/adminManage")
     public ModelAndView adminManage(){
         log.info("********管理员界面/管理员管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Admins> admins = commonService.findAll("admin");
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","管理员管理");
-        if (admins != null && !admins.isEmpty()){
-            modelAndView.addObject("admins",admins);
-            log.info("[{}]",admins);
-        }
-        if (roles != null && !roles.isEmpty()){
-            modelAndView.addObject("roles",roles);
-            log.info("[{}]",roles);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("admins",admins);log.info("[{}]",admins);
+        modelAndView.addObject("roles",roles);log.info("[{}]",roles);
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/admins");
         return modelAndView;
@@ -158,24 +149,20 @@ public class AdminController {
     @GetMapping("/nurseManage")
     public ModelAndView nurseManage(){
         log.info("********管理员界面/护士管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Nurses> nurses = commonService.findAll("nurse");
         List<String> departmentName = medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","护士管理");
-//        modelAndView.addObject("username",userIDNum.substring(0,4));
-        if (nurses != null && !nurses.isEmpty()){
-            modelAndView.addObject("nurses",nurses);
-            log.info("[{}]",nurses);
-        }
-        if (departmentName != null && !departmentName.isEmpty()){
-            modelAndView.addObject("departmentName",departmentName);
-            log.info("[{}]",departmentName);
-        }
-        if (roles != null && !roles.isEmpty()){
-            modelAndView.addObject("roles",roles);
-            log.info("[{}]",roles);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("nurses",nurses);
+        log.info("[{}]",nurses);
+        modelAndView.addObject("departmentName",departmentName);
+        log.info("[{}]",departmentName);
+        modelAndView.addObject("roles",roles);
+        log.info("[{}]",roles);
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/nurses");
         return modelAndView;
@@ -215,19 +202,17 @@ public class AdminController {
     @GetMapping("/userManage")
     public ModelAndView userManage(){
         log.info("********管理员界面/用户管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Users> users = usersService.checkAllUser();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","用户管理");
-//        modelAndView.addObject("username",userIDNum.substring(0,4));
-        if (users != null && !users.isEmpty()){
-            modelAndView.addObject("users",users);
-            log.info("[{}]",users);
-        }
-        if (roles != null && !roles.isEmpty()){
-            modelAndView.addObject("roles",roles);
-            log.info("[{}]",roles);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("users",users);
+        log.info("[{}]",users);
+        modelAndView.addObject("roles",roles);
+        log.info("[{}]",roles);
         modelAndView.setViewName("admin/users");
         return modelAndView;
     }
@@ -236,18 +221,17 @@ public class AdminController {
     @GetMapping("/rolePermissionManage")
     public ModelAndView rolePermissionManage(){
         log.info("********管理员界面/角色权限管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
         List<Permission> permissions = rolePermissionService.findAllPermission();
         List<Role> roles = rolePermissionService.findAllRole();
         modelAndView.addObject("title","角色权限管理");
-        if (permissions != null && !permissions.isEmpty()){
-            modelAndView.addObject("permissions",permissions);
-            log.info("[{}]",permissions);
-        }
-        if (roles != null && !roles.isEmpty()){
-            modelAndView.addObject("roles",roles);
-            log.info("[{}]",roles);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("permissions",permissions);
+        log.info("[{}]",permissions);
+        modelAndView.addObject("roles",roles);
+        log.info("[{}]",roles);
         modelAndView.setViewName("admin/rolePermission");
         return modelAndView;
     }
@@ -284,13 +268,14 @@ public class AdminController {
     @GetMapping("/medicineManage")
     public ModelAndView medicineManage(){
         log.info("********管理员界面/药品管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","药品管理");
-        if (medicines != null && !medicines.isEmpty()){
-            modelAndView.addObject("medicines",medicines);
-            log.info("[{}]",medicines);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("medicines",medicines);
+        log.info("[{}]",medicines);
         modelAndView.addObject("medicine",new Medicine());
         modelAndView.setViewName("admin/medicine");
         return modelAndView;
@@ -324,13 +309,14 @@ public class AdminController {
     @GetMapping("/departmentManage")
     public ModelAndView departmentManage(){
         log.info("********管理员界面/科室管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Department> departments = medicineDepartmentService.findAllDepartment();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","科室管理");
-        if (departments != null && !departments.isEmpty()){
-            modelAndView.addObject("departments",departments);
-            log.info("[{}]",departments);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("departments",departments);
+        log.info("[{}]",departments);
         modelAndView.addObject("department",new Department());
         modelAndView.setViewName("admin/department");
         return modelAndView;
@@ -363,23 +349,20 @@ public class AdminController {
     @GetMapping("/recordManage")
     public ModelAndView recordManage(){
         log.info("********记录管理*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Appointment> appointments = recordService.findAllAppointment();
         List<Pay> pays = recordService.findAllPay();
         List<GetMedicine> getMedicines = recordService.findAllGetMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","记录管理");
-        if (appointments != null && !appointments.isEmpty()){
-            modelAndView.addObject("appointments",appointments);
-            log.info("[{}]",appointments);
-        }
-        if (pays != null && !pays.isEmpty()){
-            modelAndView.addObject("pays",pays);
-            log.info("[{}]",pays);
-        }
-        if (getMedicines != null && !getMedicines.isEmpty()){
-            modelAndView.addObject("getMedicines",getMedicines);
-            log.info("[{}]",getMedicines);
-        }
+        modelAndView.addObject("username",user.getUserName());
+        modelAndView.addObject("appointments",appointments);
+        log.info("[{}]",appointments);
+        modelAndView.addObject("pays",pays);
+        log.info("[{}]",pays);
+        modelAndView.addObject("getMedicines",getMedicines);
+        log.info("[{}]",getMedicines);
         modelAndView.setViewName("admin/record");
         return modelAndView;
     }

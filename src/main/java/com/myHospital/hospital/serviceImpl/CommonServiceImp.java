@@ -118,16 +118,19 @@ public class CommonServiceImp implements CommonService {
         switch (type) {
             case "doctor":
                 userId = doctorsDao.findUserIdById(id);
+                rolePermissionDao.deleteURByUserId(userId);
                 usersDao.deleteUserById(userId);
                 doctorsDao.deleteDoctorById(id);
                 break;
             case "nurse":
                 userId = nursesDao.findUserIdById(id);
+                rolePermissionDao.deleteURByUserId(userId);
                 usersDao.deleteUserById(userId);
                 nursesDao.deleteNurseById(id);
                 break;
             case "admin":
                 userId = adminsDao.findUserIdById(id);
+                rolePermissionDao.deleteURByUserId(userId);
                 usersDao.deleteUserById(userId);
                 adminsDao.deleteAdminById(id);
                 break;
@@ -164,7 +167,12 @@ public class CommonServiceImp implements CommonService {
                 users.setUserPhone(userPhone);
                 users.setUserAddress(userAddress);
 
-                List<String> roleIds = Arrays.asList(row.getCell(6).getStringCellValue().split(","));
+                List<String> roleNames = Arrays.asList(row.getCell(6).getStringCellValue().split(","));
+                List<String> roleIds = new ArrayList<>();
+                for (String roleName : roleNames){
+                    String roleId = rolePermissionDao.findIdByName(roleName);
+                    roleIds.add(roleId);
+                }
 
                 switch (type) {
                     case "doctor":

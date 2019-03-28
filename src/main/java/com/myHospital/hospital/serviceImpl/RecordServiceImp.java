@@ -7,6 +7,8 @@ import com.myHospital.hospital.entity.Doctors;
 import com.myHospital.hospital.entity.GetMedicine;
 import com.myHospital.hospital.entity.Pay;
 import com.myHospital.hospital.service.RecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Repository
 public class RecordServiceImp implements RecordService {
+    private static final Logger log = LoggerFactory.getLogger(RecordServiceImp.class);
 
     @Autowired
     private RecordDao recordDao;
@@ -30,29 +33,34 @@ public class RecordServiceImp implements RecordService {
 
     @Override
     public List<Appointment> findAllAppointment() {
+        log.info("******************findAllAppointment********************");
         return recordDao.findAllAppointment();
     }
 
     @Override
     public List<Pay> findAllPay() {
+        log.info("******************findAllPay********************");
         return recordDao.findAllPay();
     }
 
     @Override
     public List<GetMedicine> findAllGetMedicine() {
+        log.info("******************findAllGetMedicine********************");
         return recordDao.findAllGetMedicine();
     }
 
     @Override
     public List<String> findColumnName(String tableName) {
+        log.info("******************findColumnName********************");
         return recordDao.findColumnName(tableName);
     }
 
     @Override
-    public List<Appointment> findTodayAppointment(String userId) {
+    public List<Appointment> findTodayAppointment(String doctorId) {
+        log.info("******************findTodayAppointment********************");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDateTime = simpleDateFormat.format(new Date());
-        Doctors doctors = doctorsDao.findDoctorByUserId(userId);
-        return recordDao.findTodayAppointment(doctors.getDoctorId(), currentDateTime);
+        log.info("*******[{}]-[{}]******",doctorId,currentDateTime);
+        return recordDao.findTodayAppointment(doctorId, currentDateTime);
     }
 }

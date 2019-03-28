@@ -142,7 +142,6 @@
 			        <table class="table table-bordered data-table">
 			        	<thead>
 				            <tr>
-				              <th>编号</th>
 				              <th>权限</th>
 				              <th>科室</th>
 				              <th>姓名</th>
@@ -155,7 +154,6 @@
 			          	</thead>
 			          	<tbody>
 				            <tr th:each="nurse:${nurses}">
-								<td th:text="${nurse.nurseId}"></td>
 								<td th:text="${nurse.nurseName}"></td>
 								<td th:text="${nurse.nursePlace}"></td>
 								<td th:text="${nurse.nurseName}"></td>

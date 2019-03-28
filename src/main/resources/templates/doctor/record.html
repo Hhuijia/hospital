@@ -215,13 +215,13 @@
                     med = data;
 
                     var str = "<tr>"+
-                        "<td>"+optionJson.totalNumber+"</td>"+
-                        "<td>"+optionJson.actualNumber+"</td>"+
-                        "<td>"+optionJson.highScore+"</td>"+
-                        "<td>"+optionJson.lowScore+"</td>"+
-                        "<td>"+optionJson.avgScore+"</td>"+
-                        "<td>"+optionJson.variance+"</td>"+
-                        "<td>"+optionJson.variance+"</td>"+
+                        "<td>"+med.medicineName+"</td>"+
+                        "<td>"+med.medicineCount+"</td>"+
+                        "<td>"+med.medicineUnit+"</td>"+
+                        "<td>"+med.medicinePrice+"</td>"+
+                        "<td>"+med.medicineCount*med.medicinePrice+"</td>"+
+                        "<td>"+med.medicineType+"</td>"+
+                        "<td>"+med.medicineResidual+"</td>"+
                         "</tr>";
                     str.appendTo($('#tbodyhere'));
                 }

@@ -47,6 +47,10 @@ public interface RolePermissionDao {
     @Select("SELECT * FROM role")
     List<Role> findAllRole();
 
+    //通过roleName查询roleId
+    @Select("SELECT roleId FROM role WHERE roleName = #{roleName}")
+    String findIdByName(String roleName);
+
     //查询角色对应权限
     @Select("SELECT p.permissionName FROM permission p WHERE permissionId IN (SELECT permissionId FROM role_permission rp WHERE rp.roleId = #{roleId)})")
     List<String> findPermissionByRoleId(String roleId);
@@ -58,6 +62,10 @@ public interface RolePermissionDao {
     //通过roleId删除角色
     @Delete("DELETE FROM user_role WHERE roleId = #{roleId}")
     void deleteURByRoleId(String roleId);
+
+    //通过userId删除角色
+    @Delete("DELETE FROM user_role WHERE userId = #{userId}")
+    void deleteURByUserId(String userId);
 
     //通过roleId删除角色-权限
     @Delete("DELETE FROM role_permission WHERE roleId = #{roleId}")

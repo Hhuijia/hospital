@@ -1,6 +1,7 @@
 package com.myHospital.hospital.serviceImpl;
 
 import com.myHospital.hospital.dao.UsersDao;
+import com.myHospital.hospital.entity.Appointment;
 import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
@@ -53,5 +54,17 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> checkAllUser() {
         log.info("******************checkAllUser********************");
         return usersDao.checkAllUser();
+    }
+
+    @Override
+    public void makeAppointment(Appointment appointment) {
+        log.info("******************makeAppointment********************");
+        usersDao.makeAppointment(appointment);
+    }
+
+    @Override
+    public List<Appointment> findAllAppointmentOfOneByUserId(String userId) {
+        log.info("******************findAllAppointmentOfOneByUserId********************");
+        return findAllAppointmentOfOneByUserId(userId);
     }
 }
