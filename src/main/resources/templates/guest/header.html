@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>header</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/responsive.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/responsive.css">
 </head>
 <body>
     <!-- header -->
@@ -18,11 +18,15 @@
                         <div class="header-phone" style="border-right: none"><i class="fa fa-phone"></i> <a href="#"> 010-114/116114电话预约</a></div>
                     </div>
                     <div class="col-lg-7 col-md-8 col-sm-8 col-xs-12">
-                        <div class="header-social pull-right">
-                            <a href="#"><i class="fa fa-sign-in"></i> 登录</a>
-                            <a href="#"><i class="fa fa-user-plus"></i> 注册</a>
+                        <div class="header-social pull-right" shiro:guest="">
+                            <a th:href="@{/common/login}"><i class="fa fa-sign-in"></i> 登录</a>
+                            <a th:href="@{/guest/resign}"><i class="fa fa-user-plus"></i> 注册</a>
                             <a href="#"><i class="fa fa-question-circle-o"></i> 帮助</a>
-                            <a href="#"><i class="fa fa-sign-out"></i> 退出</a>
+                        </div>
+                        <div class="header-social pull-right" shiro:hasRole="user">
+                            <a href="#">欢迎<shiro:principal property="userName" /></a>
+                            <a href="#"><i class="fa fa-question-circle-o"></i> 帮助</a>
+                            <a href="/common/loginOut"><i class="fa fa-sign-out"></i> 退出</a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +37,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-3">
-                            <div class="logo"><a href="index.html" class="navbar-brand page-scroll"><img src="/static/images/logo/logo.png" alt="logo"></a></div>
+                            <div class="logo"><a href="index.html" class="navbar-brand page-scroll"><img src="/static/assets/images/logo/logo.png" alt="logo"></a></div>
                         </div>
                         <div class="col-lg-9">
                             <div class="navbar-header">
@@ -41,9 +45,9 @@
                             </div>
                             <div class="collapse navbar-collapse navbar-main-collapse">
                                 <ul class="nav navbar-nav navbar-right">
-                                    <li><a href="index.html">首页</a></li>
-                                    <li><a href="about-us.html">按科室挂号</a></li>
-                                    <li><a href="contacts.html">按疾病挂号</a></li>
+                                    <li><a href="/common/index">首页</a></li>
+                                    <li><a href="/guest/makeAppointmentByDepartment">按科室挂号</a></li>
+                                    <li><a href="/users/ShowAppointmentPage1">按疾病挂号</a></li>
                                     <li><a href="best-rooms.html">最新公告</a></li>
                                     <li><a href="best-rooms-detail.html">个人信息</a></li>
                                 </ul>
@@ -56,16 +60,16 @@
     </header>
     <!-- /header -->
     <!-- Scripts -->
-    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/tether.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/static/js/moment.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.smartmenus.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.parallax.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.shuffle.min.js"></script>
-    <script type="text/javascript" src="/static/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/static/js/main.js"></script>
+    <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/tether.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/jquery.smartmenus.js"></script>
+    <script type="text/javascript" src="/static/assets/js/jquery.parallax.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/jquery.shuffle.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/main.js"></script>
     <!-- /Scripts -->
 </body>
 </html>

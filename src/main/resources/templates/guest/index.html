@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title th:text="${title}">首页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/responsive.css">
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <link rel="stylesheet" href="/static/assets/css/responsive.css">
 </head>
 <body>
   <!-- main wrapper -->
@@ -77,13 +77,13 @@
               <ul class="row best-room_ul">
                 <li class="col-lg-3 col-md-3 col-sm-3 col-xs-12 best-room_li" th:each="department:${departments}">
                   <div class="best-room_img">
-                    <a th:href="@{/users/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"><img src="/static/images/best-rooms/1.jpg" alt=""></a>
+                    <a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"><img src="/static/assets/images/best-rooms/1.jpg" alt=""></a>
                     <div class="best-room_overlay">
-                      <div class="overlay_icn"><a th:href="@{/users/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"></a></div>
+                      <div class="overlay_icn"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"></a></div>
                     </div>
                   </div>
                   <div class="best-room-info" style="padding: 10px;">
-                    <div class="best-room_t"><a th:href="@{/users/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"></a></div>
+                    <div class="best-room_t"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"></a></div>
                   </div>
                 </li>
               </ul>
@@ -112,16 +112,16 @@
   </div>
   <!-- /main wrapper -->
   <!-- Scripts -->
-  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/js/tether.min.js"></script>
-  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/static/js/moment.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.smartmenus.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.parallax.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.shuffle.min.js"></script>
-  <script type="text/javascript" src="/static/js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/tether.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/moment.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.smartmenus.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.parallax.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.shuffle.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/main.js"></script>
   <!-- /Scripts -->
 </body>
 </html>

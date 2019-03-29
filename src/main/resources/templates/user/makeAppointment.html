@@ -1,18 +1,19 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>预约</title>
+  <title th:text="${title}">预约</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/responsive.css">
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <link rel="stylesheet" href="/static/assets/css/responsive.css">
 </head>
 <body>
   <!-- main wrapper -->
   <div class="wrapper">
+    <div class="headerPart" th:replace="guest/header::header"></div>
     <!-- breadcrumbs -->
-    <section class="breadcrumbs">
+    <section class="breadcrumbs" style="background-image: url(/static/assets/images/breadcrumbs/best-room.jpg)">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -20,7 +21,7 @@
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb">
-              <li><a href="#">首页</a><i class="fa fa-angle-right"></i></li>
+              <li><a href="/common/index">首页</a><i class="fa fa-angle-right"></i></li>
               <li class="active">预约</li>
             </ol>
           </div>
@@ -35,53 +36,54 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2">请填写预约信息</h2></div> 
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
             <div class="col-lg-8 col-md-8 col-sm-11 col-xs-11">
-              <form action="" method="POST" class="form-horizontal form-wizzard">
+              <form action="" class="form-horizontal form-wizzard" th:action="@{/users/addAppointment}" method="post" th:object="${appointment}">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userName" class="form-control" placeholder="姓名" disabled>
+                      <input type="text" name="userName" class="form-control" placeholder="姓名" disabled th:text="${user.userName}" th:value="${user.userId}" th:field="*{userId}">
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userSex" class="form-control" placeholder="性别" disabled>
+                      <input type="text" name="userSex" class="form-control" placeholder="性别" disabled th:text="${user.userSex}">
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userAge" class="form-control" placeholder="年龄" disabled>
+                      <input type="text" name="userAge" class="form-control" placeholder="年龄" disabled th:text="${user.userAge}">
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="tel" name="userPhone" class="form-control" placeholder="电话" disabled>
+                      <input type="tel" name="userPhone" class="form-control" placeholder="电话" disabled th:text="${user.userPhone}">
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userAddress" class="form-control" placeholder="住址" disabled>
+                      <input type="text" name="userAddress" class="form-control" placeholder="住址" disabled th:text="${user.userAddress}">
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="emergencyContact" class="form-control" placeholder="紧急联系人">
+                      <input type="text" name="emergencyContact" class="form-control" placeholder="紧急联系人" th:field="*{emergencyContact}">
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="tel" name="emergContPhone" class="form-control" placeholder="紧急联系人电话">
+                      <input type="tel" name="emergContPhone" class="form-control" placeholder="紧急联系人电话" th:field="*{emergContPhone}">
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="form-group">
                     <div class="theme-select">
-                      <select class="form-control __plannerSelect" title="科室">
-                        <option value="">请选择一个科室</option>
+                      <select id="selectDepartment" class="form-control __plannerSelect" title="科室" th:field="*{departmentId}">
+                        <option value="0">请选择一个科室</option>
+                        <option th:each="department:${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
                       </select>
                     </div>
                   </div>
@@ -89,8 +91,9 @@
                 <div class="row">
                   <div class="form-group">
                     <div class="theme-select">
-                      <select class="form-control __plannerSelect">
-                        <option value="">请选择一个医生</option>
+                      <select id="selectDoctor" class="form-control __plannerSelect" th:field="*{doctorId}">
+                        <option value="0">请选择一个医生</option>
+                        <option th:each="doctor:${doctors}" th:value="${doctor.doctorId}" th:text="${doctor.doctorName}"></option>
                       </select>
                     </div>
                   </div>
@@ -98,8 +101,8 @@
                 <div class="row">
                   <div class="form-group">
                     <div class="theme-select">
-                      <select class="form-control __plannerSelect">
-                        <option value="">请选择一个时间</option>
+                      <select id="selectDateTime" class="form-control __plannerSelect" th:field="*{appointmentTime}">
+                        <option value="0">请选择一个时间</option>
                       </select>
                     </div>
                   </div>
@@ -115,18 +118,65 @@
       </div>
     </section>
   <!-- /main wrapper -->
+    <div class="footerPart" th:replace="guest/footer::footer"></div>
   </div>
   <!-- Scripts -->
-  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/js/tether.min.js"></script>
-  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/static/js/moment.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.smartmenus.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.parallax.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.shuffle.min.js"></script>
-  <script type="text/javascript" src="/static/js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/tether.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/moment.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.smartmenus.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.parallax.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/jquery.shuffle.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/main.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $("#selectDepartment").change(function () {
+              doctorVal();
+          });
+      });
+      function doctorVal() {
+          var departmentId = $('#selectDepartment').val();
+          $.ajax({
+              async:false,
+              url: '/user/findDoctor',
+              data: {
+                  departmentId: departmentId
+              },
+              type: 'post',
+              dataType: 'TEXT',
+              success: function (data) {
+                  var str = "";
+                  $.each(data,function (n,datelist) {
+                      str = str + "<option value='"+datelist.doctorId+"'>"+datelist.doctorName+"</option>";
+                  });
+                  $("#selectDoctor").html(str);
+              },
+              error: function (err) {}
+          });
+      }
+      function dateTimeVal() {
+          var doctorId = $('#selectDoctor').val();
+          $.ajax({
+              async: false,
+              url: '/user/findDateTime',
+              date: {
+                  doctorId : doctorId
+              },
+              type: 'post',
+              dateType: 'TEXT',
+              success: function (data) {
+                  var str = "";
+                  $.each(data,function (n,datalist) {
+                      str = str + "<option value='"+datelist.doctorId+"'>"+datelist.doctorName+"</option>";
+                  });
+                  $("#selectDateTime").html(str);
+              }
+          })
+      }
+  </script>
   <!-- /Scripts -->
 </body>
 </html>

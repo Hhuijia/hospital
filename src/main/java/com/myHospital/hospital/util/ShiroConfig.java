@@ -127,12 +127,12 @@ public class ShiroConfig {
      */
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean) {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/guest/**", "anon"); //游客身份
-        filterChainDefinitionMap.put("/user/**", "roles[user]"); //用户身份，需要角色权限 “user”
+        filterChainDefinitionMap.put("/common/**","anon");//开放首页
+        filterChainDefinitionMap.put("/guest/**","anon");//游客
+        filterChainDefinitionMap.put("/users/**", "roles[user]"); //用户身份，需要角色权限 “user”
         filterChainDefinitionMap.put("/doctor/**", "roles[doctor]"); //医生身份，需要角色权限 “doctor”
         filterChainDefinitionMap.put("/nurse/**", "roles[nurse]"); //护士身份，需要角色权限 “nurse”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]"); //管理员身份，需要角色权限 “admin”
-        filterChainDefinitionMap.put("/common/login", "anon"); //开放登录窗口
 
         filterChainDefinitionMap.put("/static/**", "anon");
 

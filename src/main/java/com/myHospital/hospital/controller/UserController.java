@@ -2,8 +2,10 @@ package com.myHospital.hospital.controller;
 
 import com.myHospital.hospital.entity.Appointment;
 import com.myHospital.hospital.entity.Department;
+import com.myHospital.hospital.entity.Doctors;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.CommonService;
+import com.myHospital.hospital.service.DoctorService;
 import com.myHospital.hospital.service.MedicineDepartmentService;
 import com.myHospital.hospital.service.UsersService;
 import org.apache.ibatis.annotations.Param;
@@ -39,16 +41,11 @@ public class UserController {
     private MedicineDepartmentService medicineDepartmentService;
 
     /**
-     * 获取表单值进行用户注册
-     * @param users 用户
-     * @return 登录界面
+     * 快速查询
+     * @param appointmentDate 预约日期
+     * @param departmentId 科室Id
+     * @return 预约界面
      */
-    @PostMapping("/resign")
-    public ModelAndView resignUser(@ModelAttribute Users users, @RequestParam List<String> roleIds){
-        commonService.add(users,null,roleIds,"user");
-        return new ModelAndView("users/login");
-    }
-
     @GetMapping("/ShowAppointmentPage")
     public ModelAndView ShowAppointmentPage(@RequestParam String appointmentDate, @RequestParam String departmentId){
         log.info("********用户界面/预约*********");
@@ -61,11 +58,28 @@ public class UserController {
             Department department = medicineDepartmentService.findDepartmentById(departmentId);
             modelAndView.addObject("department",department);
         }
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
         modelAndView.addObject("title","预约");
-        modelAndView.addObject("username",user.getUserName());
-        Users users = usersService.findUserByID(user.getUserId());
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("users/makeAppointment");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("appointment",new Appointment());
+        modelAndView.setViewName("user/makeAppointment");
+        return modelAndView;
+    }
+
+    @GetMapping("/ShowAppointmentPage1")
+    public ModelAndView ShowAppointmentPage1(){
+        log.info("********用户界面/预约*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        ModelAndView modelAndView = new ModelAndView();
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
+        List<Doctors> doctors = commonService.findAll("doctor");
+        modelAndView.addObject("title","预约");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("departments",departments);
+        modelAndView.addObject("doctors",doctors);
+        modelAndView.addObject("appointment",new Appointment());
+        modelAndView.setViewName("user/makeAppointment");
         return modelAndView;
     }
 
@@ -84,34 +98,17 @@ public class UserController {
     /**
      * 取消预约
      * @param AppointmentId 预约Id
-     * @return
+     * @return 个人预约界面
      */
     @GetMapping("/cancelAppointment")
     public ModelAndView cancelAppointment(@RequestParam String AppointmentId){
         return new ModelAndView("redirect:checkMyAppointment");
     }
 
-    /**
-     * 显示科室详情
-     * @param departmentId
-     * @return
-     */
-    @GetMapping("/showDepartmentDetail")
-    public  ModelAndView showDepartmentDetail(@RequestParam String departmentId){
-        log.info("********用户界面/科室详情*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
-        ModelAndView modelAndView = new ModelAndView();
-        Department department = medicineDepartmentService.findDepartmentById(departmentId);
-        modelAndView.addObject("title","科室详情");
-        modelAndView.addObject("username",user.getUserName());
-        modelAndView.addObject("department",department);
-        return modelAndView;
-    }
 
     /**
      * 查看个人信息
-     * @return
+     * @return 个人信息页面
      */
     @GetMapping("/checkMyInfo")
     public ModelAndView checkMyInfo(){
@@ -119,16 +116,15 @@ public class UserController {
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","查看个人信息");
-        modelAndView.addObject("username",user.getUserName());
         Users users = usersService.findUserByID(user.getUserId());
         modelAndView.addObject("users", users);
-        modelAndView.setViewName("users/myPage");
+        modelAndView.setViewName("user/myPage");
         return modelAndView;
     }
 
     /**
      * 查看我的预约
-     * @return
+     * @return 个人预约界面
      */
     @GetMapping("/checkMyAppointment")
     public ModelAndView checkMyAppointment(){
@@ -136,11 +132,8 @@ public class UserController {
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","查看我的预约");
-        modelAndView.addObject("username",user.getUserName());
         List<Appointment> appointments = usersService.findAllAppointmentOfOneByUserId(user.getUserId());
         modelAndView.addObject("appointments", appointments);
         return modelAndView;
     }
-
-
 }

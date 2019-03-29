@@ -32,6 +32,9 @@ public interface MedicineDepartmentService {
     //查询所有科室名称
     List<String> findAllDepartmentName();
 
+    //查询所有科室科系
+    List<String> findAllDepartmentSystem();
+
     //删除药品
     void deleteMedicineById(String medicineId);
 

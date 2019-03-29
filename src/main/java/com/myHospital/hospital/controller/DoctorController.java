@@ -42,14 +42,11 @@ public class DoctorController {
     @PostMapping("/showRecordPage")
     public ModelAndView showRecordPage(String userId){
         log.info("********医生界面/预约就诊*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         Users users = usersService.findUserByID(userId);
         List<Record> records = prescriptionRecordService.findAllRecordAndPrescription(userId);//病历
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","预约就诊");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("users",users);log.info("[{}]",users);
         modelAndView.addObject("records",records);log.info("[{}]",records);
         modelAndView.addObject("medicines",medicines);log.info("[{}]",medicines);
@@ -86,7 +83,6 @@ public class DoctorController {
         List<Appointment> appointments = recordService.findTodayAppointment(doctors.getDoctorId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","今天预约");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("appointments",appointments);log.info("[{}]",appointments);
         modelAndView.setViewName("doctor/current_appointment");
         return modelAndView;

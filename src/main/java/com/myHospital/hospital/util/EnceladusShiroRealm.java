@@ -39,8 +39,9 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.info("################权限验证####################");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        String userIDNum = (String) principalCollection.getPrimaryPrincipal();
-        List<Role> roles = usersService.findRoleByIDNum(userIDNum);
+//        String userIDNum = (String) principalCollection.getPrimaryPrincipal();
+        Users users = (Users) principalCollection.getPrimaryPrincipal();
+        List<Role> roles = usersService.findRoleByIDNum(users.getUserIDNum());
 
         for (Role role : roles){
             authorizationInfo.addRole(role.getRoleName());
@@ -65,7 +66,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
         log.info("userPassword:[{}]",userIDNum);
         Users users = Optional.ofNullable(usersService.findUserByIDNum(userIDNum)).orElseThrow(UnknownAccountException::new);
         log.info("userPassword:[{}]",users.getUserPwd());
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(users.getUserIDNum(), users.getUserPwd(), getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(users, users.getUserPwd(), getName());
         authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(users.getUserName()+users.getSalt()));
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("USER_SESSION", users);

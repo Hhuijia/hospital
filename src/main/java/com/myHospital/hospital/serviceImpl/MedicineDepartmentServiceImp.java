@@ -70,6 +70,12 @@ public class MedicineDepartmentServiceImp implements MedicineDepartmentService {
     }
 
     @Override
+    public List<String> findAllDepartmentSystem() {
+        log.info("******************findAllDepartmentSystem********************");
+        return medicineDepartmentDao.findAllDepartmentSystem();
+    }
+
+    @Override
     public void deleteMedicineById(String medicineId) {
         log.info("******************deleteMedicineById********************");
         medicineDepartmentDao.deleteMedicineById(medicineId);

@@ -47,14 +47,11 @@ public class AdminController {
     @GetMapping("/doctorManage")
     public ModelAndView doctorManage(){
         log.info("********管理员界面/医生管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Doctors> doctors = commonService.findAll("doctor");
         List<String> departmentName= medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","医生管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("doctors",doctors);log.info("[{}]",doctors);
         modelAndView.addObject("departmentName",departmentName);log.info("[{}]",departmentName);
         modelAndView.addObject("roles",roles);log.info("[{}]",roles);
@@ -68,6 +65,7 @@ public class AdminController {
                                   @RequestParam String doctorTitle, @RequestParam String doctorProfession,
                                   @RequestParam int doctorMedicalServiceLife, @RequestParam String doctorIntroduction){
         log.info("********添加医生*********");
+        users.setUserPwd("huanghuijia");
         Doctors doctors = new Doctors();
         doctors.setDoctorName(users.getUserName());
         doctors.setDoctorTitle(doctorTitle);
@@ -102,13 +100,10 @@ public class AdminController {
     @GetMapping("/adminManage")
     public ModelAndView adminManage(){
         log.info("********管理员界面/管理员管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Admins> admins = commonService.findAll("admin");
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","管理员管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("admins",admins);log.info("[{}]",admins);
         modelAndView.addObject("roles",roles);log.info("[{}]",roles);
         modelAndView.addObject("users",new Users());
@@ -119,6 +114,7 @@ public class AdminController {
     @PostMapping("/addAdmin")
     public ModelAndView addAdmin(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String adminTitle){
         log.info("********添加管理员*********");
+        users.setUserPwd("huanghuijia");
         Admins admins = new Admins();
         admins.setAdminName(users.getUserName());
         admins.setAdminTitle(adminTitle);
@@ -149,14 +145,11 @@ public class AdminController {
     @GetMapping("/nurseManage")
     public ModelAndView nurseManage(){
         log.info("********管理员界面/护士管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Nurses> nurses = commonService.findAll("nurse");
         List<String> departmentName = medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","护士管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("nurses",nurses);
         log.info("[{}]",nurses);
         modelAndView.addObject("departmentName",departmentName);
@@ -172,6 +165,7 @@ public class AdminController {
     public ModelAndView addNurse(@ModelAttribute Users users, @RequestParam List<String> roleIds,
                                  @RequestParam String nurseTitle, @RequestParam String nursePlace){
         log.info("********添加护士*********");
+        users.setUserPwd("huanghuijia");
         Nurses nurses = new Nurses();
         nurses.setNurseName(users.getUserName());
         nurses.setNurseTitle(nurseTitle);
@@ -202,13 +196,10 @@ public class AdminController {
     @GetMapping("/userManage")
     public ModelAndView userManage(){
         log.info("********管理员界面/用户管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Users> users = usersService.checkAllUser();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","用户管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("users",users);
         log.info("[{}]",users);
         modelAndView.addObject("roles",roles);
@@ -221,13 +212,10 @@ public class AdminController {
     @GetMapping("/rolePermissionManage")
     public ModelAndView rolePermissionManage(){
         log.info("********管理员界面/角色权限管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
         List<Permission> permissions = rolePermissionService.findAllPermission();
         List<Role> roles = rolePermissionService.findAllRole();
         modelAndView.addObject("title","角色权限管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("permissions",permissions);
         log.info("[{}]",permissions);
         modelAndView.addObject("roles",roles);
@@ -268,12 +256,9 @@ public class AdminController {
     @GetMapping("/medicineManage")
     public ModelAndView medicineManage(){
         log.info("********管理员界面/药品管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","药品管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("medicines",medicines);
         log.info("[{}]",medicines);
         modelAndView.addObject("medicine",new Medicine());
@@ -309,12 +294,9 @@ public class AdminController {
     @GetMapping("/departmentManage")
     public ModelAndView departmentManage(){
         log.info("********管理员界面/科室管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Department> departments = medicineDepartmentService.findAllDepartment();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","科室管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("departments",departments);
         log.info("[{}]",departments);
         modelAndView.addObject("department",new Department());
@@ -349,14 +331,11 @@ public class AdminController {
     @GetMapping("/recordManage")
     public ModelAndView recordManage(){
         log.info("********记录管理*********");
-        Session session = SecurityUtils.getSubject().getSession();
-        Users user = (Users) session.getAttribute("USER_SESSION");
         List<Appointment> appointments = recordService.findAllAppointment();
         List<Pay> pays = recordService.findAllPay();
         List<GetMedicine> getMedicines = recordService.findAllGetMedicine();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","记录管理");
-        modelAndView.addObject("username",user.getUserName());
         modelAndView.addObject("appointments",appointments);
         log.info("[{}]",appointments);
         modelAndView.addObject("pays",pays);

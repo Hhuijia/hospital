@@ -40,6 +40,10 @@ public interface MedicineDepartmentDao {
     @Select("SELECT departmentName FROM department")
     List<String> findAllDepartmentName();
 
+    //查询所有科室科系
+    @Select("SELECT departmentSystem FROM department GROUP BY departmentSystem")
+    List<String> findAllDepartmentSystem();
+
     //查询是否存在科室
     @Select("SELECT count(*) FROM department WHERE departmentName = #{departmentName}")
     int isExitDepartmentName(String departmentName);

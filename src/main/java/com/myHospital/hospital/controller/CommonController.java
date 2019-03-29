@@ -41,12 +41,13 @@ public class CommonController {
 
     @GetMapping(value = "/index")
     public ModelAndView index() {
-        log.info("********登录成功*********");
-        ModelAndView index = new ModelAndView();
-        String title = " ";
-       index.setViewName("common/index");
-        index.addObject("title",title);
-        return index;
+        log.info("********游客首页*********");
+        ModelAndView modelAndView = new ModelAndView();
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
+        modelAndView.addObject("departments",departments);
+        modelAndView.addObject("title","珠海某某某医院");
+        modelAndView.setViewName("guest/index");
+        return modelAndView;
     }
 
     @GetMapping("/notLogin")
@@ -75,24 +76,27 @@ public class CommonController {
     @PostMapping("/login")
     public ModelAndView login(@RequestParam String userIDNum, @RequestParam String userPwd){
         Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
         UsernamePasswordToken token = new UsernamePasswordToken(userIDNum, userPwd);
         ModelAndView modelAndView = new ModelAndView();
         try {
             subject.login(token);
             log.info("********登录成功*********");
-            Users user = (Users) session.getAttribute("USER_SESSION");
             List<Role> roles = usersService.findRoleByIDNum(userIDNum);
-            if (roles.contains("user")){
+            boolean isUser = false;
+            for (Role role : roles){
+                if (role.getRoleName().contains("user")){
+                    isUser = true;
+                    break;
+                }
+            }
+            if (isUser){
                 List<Department> departments = medicineDepartmentService.findAllDepartment();
                 modelAndView.addObject("departments",departments);
                 modelAndView.addObject("title","珠海某某某医院");
-                modelAndView.addObject("username",user.getUserName());
                 modelAndView.setViewName("guest/index");
             }else {
                 modelAndView.setViewName("common/index");
                 modelAndView.addObject("title","医院后台管理系统");
-                modelAndView.addObject("username",user.getUserName());
             }
         }catch (IncorrectCredentialsException ice){
             log.info("********登录失败*********");
