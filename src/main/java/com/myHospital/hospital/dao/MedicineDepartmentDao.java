@@ -21,13 +21,6 @@ public interface MedicineDepartmentDao {
     @Insert("INSERT INTO department(departmentId,departmentName,departmentSystem,departmentInfo,departmentSymptom) VALUES(#{departmentId},#{departmentName},#{departmentSystem},#{departmentInfo},#{departmentSymptom})")
     void addDepartment(Department department);
 
-    //查询某个科室的所有医生
-    @Select("SELECT * FROM department where departmentId = #{departmentId}")
-    @Results({
-            @Result(property = "doctors",column = "departmentId",many = @Many(select = "com.myHospital.hospital.dao.DoctorsDao.findDoctorInSameDepartment"))
-    })
-    Department findDepartmentMsg(String departmentId);
-
     //查询所有药品
     @Select("SELECT * FROM medicine")
     List<Medicine> findAllMedicine();

@@ -38,31 +38,36 @@
             <div class="col-lg-8 col-md-8 col-sm-11 col-xs-11">
               <form action="" class="form-horizontal form-wizzard" th:action="@{/users/addAppointment}" method="post" th:object="${appointment}">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" hidden>
                     <div class="form-group">
-                      <input type="text" name="userName" class="form-control" placeholder="姓名" disabled th:text="${user.userName}" th:value="${user.userId}" th:field="*{userId}">
+                      <input type="text" name="userName" class="form-control" th:value="${user.userId}" th:field="*{userId}">
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userSex" class="form-control" placeholder="性别" disabled th:text="${user.userSex}">
+                      <input type="text" name="userName" class="form-control" th:value="${user.userName}" disabled>
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userAge" class="form-control" placeholder="年龄" disabled th:text="${user.userAge}">
+                      <input type="text" name="userSex" class="form-control" th:value="${user.userSex}" disabled>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <input type="text" name="userAge" class="form-control" th:value="${user.userAge}" disabled>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="tel" name="userPhone" class="form-control" placeholder="电话" disabled th:text="${user.userPhone}">
+                      <input type="tel" name="userPhone" class="form-control" th:value="${user.userPhone}" disabled>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <input type="text" name="userAddress" class="form-control" placeholder="住址" disabled th:text="${user.userAddress}">
+                      <input type="text" name="userAddress" class="form-control" th:value="${user.userAddress}" disabled>
                     </div>
                   </div>
                 </div>
@@ -78,35 +83,28 @@
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="form-group">
-                    <div class="theme-select">
-                      <select id="selectDepartment" class="form-control __plannerSelect" title="科室" th:field="*{departmentId}">
-                        <option value="0">请选择一个科室</option>
-                        <option th:each="department:${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group">
-                    <div class="theme-select">
-                      <select id="selectDoctor" class="form-control __plannerSelect" th:field="*{doctorId}">
-                        <option value="0">请选择一个医生</option>
-                        <option th:each="doctor:${doctors}" th:value="${doctor.doctorId}" th:text="${doctor.doctorName}"></option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group">
-                    <div class="theme-select">
-                      <select id="selectDateTime" class="form-control __plannerSelect" th:field="*{appointmentTime}">
-                        <option value="0">请选择一个时间</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
+                <!--<div class="row">-->
+                  <!--<div class="form-group">-->
+                    <!--<div class="theme-select">-->
+                      <!--<select id="selectDepartment" class="form-control __plannerSelect" title="科室" th:field="*{departmentId}">-->
+                        <!--<option value="0">请选择一个科室</option>-->
+                        <!--<option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}"></option>-->
+                      <!--</select>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<table class="table table-striped">-->
+                  <!--<thead>-->
+                    <!--<tr>-->
+                      <!--<td>姓名</td>-->
+                      <!--<td>主治</td>-->
+                      <!--<td>从医年限</td>-->
+                      <!--<td>职位</td>-->
+                      <!--<td>介绍</td>-->
+                    <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody id="tbodyData"></tbody>-->
+                <!--</table>-->
                 <div class="form-group text-center">
                   <input type="submit" value="确定" class="btn btn-default">
                 </div>
@@ -138,43 +136,29 @@
           });
       });
       function doctorVal() {
-          var departmentId = $('#selectDepartment').val();
+          var departmentName = $('#selectDepartment').val();
           $.ajax({
-              async:false,
-              url: '/user/findDoctor',
+              url: '/users/findDoctor',
               data: {
-                  departmentId: departmentId
+                  departmentName: departmentName
               },
               type: 'post',
               dataType: 'TEXT',
               success: function (data) {
                   var str = "";
-                  $.each(data,function (n,datelist) {
-                      str = str + "<option value='"+datelist.doctorId+"'>"+datelist.doctorName+"</option>";
+                  $.each($.parseJSON(data), function (n,datelist) {
+                      str+="<tr>"+
+                          "<td>"+datelist.doctorName+"</td>"+
+                          "<td>"+datelist.doctorProfession+"</td>"+
+                          "<td>"+datelist.doctorMedicalServiceLife+"</td>"+
+                          "<td>"+datelist.doctorTitle+"</td>"+
+                          "<td>"+datelist.doctorIntroduction+"</td>"+
+                          "</tr>";
                   });
-                  $("#selectDoctor").html(str);
+                  document.getElementById("tbodyData").innerHTML=str;
               },
               error: function (err) {}
           });
-      }
-      function dateTimeVal() {
-          var doctorId = $('#selectDoctor').val();
-          $.ajax({
-              async: false,
-              url: '/user/findDateTime',
-              date: {
-                  doctorId : doctorId
-              },
-              type: 'post',
-              dateType: 'TEXT',
-              success: function (data) {
-                  var str = "";
-                  $.each(data,function (n,datalist) {
-                      str = str + "<option value='"+datelist.doctorId+"'>"+datelist.doctorName+"</option>";
-                  });
-                  $("#selectDateTime").html(str);
-              }
-          })
       }
   </script>
   <!-- /Scripts -->

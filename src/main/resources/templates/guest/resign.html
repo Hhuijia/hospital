@@ -19,8 +19,8 @@
             <input type="text" th:field="*{userName}" id="inputName" class="form-control" placeholder="姓名" required autofocus>
             <label for="inputPassword" class="sr-only">密码</label>
             <input type="password" th:field="*{userPwd}" id="inputPassword" class="form-control" placeholder="密码" required>
-            <input type="radio" th:field="*{userSex}" name="inputSex" value="0" class="form-control" checked>男
-            <input type="radio" th:field="*{userSex}" name="inputSex" value="1" class="form-control">女
+            <input type="radio" th:field="*{userSex}" name="inputSex" value="男" class="form-control" checked>男
+            <input type="radio" th:field="*{userSex}" name="inputSex" value="女" class="form-control">女
             <label for="inputAge" class="sr-only">年龄</label>
             <input type="text" th:field="*{userAge}" id="inputAge" class="form-control" placeholder="年龄" required>
             <label for="inputPhone" class="sr-only">手机号码</label>

@@ -38,6 +38,9 @@ public class UserController {
     private UsersService usersService;
 
     @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
     private MedicineDepartmentService medicineDepartmentService;
 
     /**
@@ -81,6 +84,14 @@ public class UserController {
         modelAndView.addObject("appointment",new Appointment());
         modelAndView.setViewName("user/makeAppointment");
         return modelAndView;
+    }
+
+    @PostMapping("/findDoctor")
+    @ResponseBody
+    public List<Doctors> findDoctor(@RequestParam String departmentName){
+        log.info("********二级联动找医生*********");
+        log.info("***********[{}]*******",doctorService.findDoctorInSameDepartment(departmentName));
+        return doctorService.findDoctorInSameDepartment(departmentName);
     }
 
     /**

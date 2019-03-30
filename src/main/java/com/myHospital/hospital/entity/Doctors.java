@@ -1,6 +1,7 @@
 package com.myHospital.hospital.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Random;
 
 public class Doctors {
@@ -16,6 +17,7 @@ public class Doctors {
     private String departmentName;
 
     private Users users;
+    private List<Schedule> schedules;
 
     public String getDoctorId() {
         return doctorId;
@@ -103,5 +105,13 @@ public class Doctors {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }
