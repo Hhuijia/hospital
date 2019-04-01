@@ -50,6 +50,9 @@ public class CommonServiceImp implements CommonService {
         if (usersDao.findUserByIDNum(users.getUserIDNum()) == null){
             String strUser = String.format("%04d", new Random().nextInt(1001));
             users.setUserId( "USER_" + strUser + "_" + System.currentTimeMillis());
+            if (!type.equals("user")){
+                users.setUserPwd("huanghuijia");
+            }
             PasswordHelper passwordHelper = new PasswordHelper();
             passwordHelper.encryptPassword(users);
             usersDao.addUser(users);

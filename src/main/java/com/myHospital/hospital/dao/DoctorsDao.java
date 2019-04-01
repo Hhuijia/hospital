@@ -14,10 +14,6 @@ public interface DoctorsDao {
     @Insert("INSERT INTO doctors(doctorId,doctorName,doctorTitle,doctorProfession,doctorMedicalServiceLife,doctorIntroduction,userId,departmentName) VALUES(#{doctorId},#{doctorName},#{doctorTitle},#{doctorProfession},#{doctorMedicalServiceLife},#{doctorIntroduction},#{userId},#{departmentName})")
     void addDoctor(Doctors doctors);
 
-    //添加排班信息
-    @Insert("INSERT INTO schedule(scheduleId,workTime,workDate,doctorId) VALUES(#{scheduleId},#{workTime},#{workDate},#{doctorId})")
-    void addSchedule(Schedule schedule);
-
 //    //通过doctorNo更新医生信息
 //    @Update("UPDATE doctors SET doctorName=#{doctorName},doctorSex=#{doctorSex},doctorAge=#{doctorAge},doctorPhone=#{doctorPhone},departmentNo=#{departmentNo},doctorTitle=#{doctorTitle},doctorProfession=#{doctorProfession},doctorMedicalServiceLife=#{doctorMedicalServiceLife},doctorIntroduction=#{doctorIntroduction} WHERE userNo=#{userNo}")
 //    int updateUserByNo(Doctors doctors);
@@ -41,20 +37,13 @@ public interface DoctorsDao {
     })
     List<Doctors> findAllDoctor();
 
-    //查询所有医生信息
-    @Select("SELECT * FROM doctors")
-    @Results({
-            @Result(property = "schedules",column = "doctorId",many = @Many(select = "com.myHospital.hospital.dao.DoctorsDao.findScheduleByDoctorId"))
-    })
-    List<Doctors> findAllDoctorWithSchedule();
-
     //查询某个科室的所有医生
     @Select("SELECT * FROM doctors where departmentName = #{departmentName}")
     List<Doctors> findDoctorInSameDepartment(String departmentName);
 
-    //查询某个医生的所有排班
-    @Select("SELECT * FROM schedule where doctorId = #{doctorId}")
-    List<Schedule> findScheduleByDoctorId(String doctorId);
+    //查询某个科室的当天值班的医生
+    @Select("SELECT * FROM doctors WHERE departmentName=#{departmentName} AND doctorId IN (SELECT doctorId FROM schedule WHERE DATE_FORMAT(workDate,'%y%m%d')=#{currentDate})")
+    List<Doctors> findDoctorToday(@Param("departmentName") String departmentName,  @Param("currentDate") String currentDate);
 
     //通过doctorId删除医生信息
     @Delete("DELETE FROM doctors WHERE doctorId = #{doctorId}")

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +36,13 @@ public class DoctorServiceImp implements DoctorService {
     public List<Doctors> findDoctorInSameDepartment(String departmentName) {
         log.info("******************findDoctorInSameDepartment********************");
         return doctorsDao.findDoctorInSameDepartment(departmentName);
+    }
+
+    @Override
+    public List<Doctors> findDoctorToday(String departmentName, String currentDate) {
+        log.info("******************findDoctorToday********************");
+        log.info("*******[{}]-[{}]******",departmentName,currentDate);
+        return doctorsDao.findDoctorToday(departmentName,currentDate);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.myHospital.hospital.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -8,8 +9,9 @@ import java.sql.Timestamp;
  */
 public class Schedule {
     private String scheduleId;
-    private Timestamp workTime;
-    private Timestamp workDate;
+    private int workTime;
+    private Date workDate;
+    private int remain;
     private String doctorId;
     private Timestamp scheduleCreateTime;
     private Timestamp scheduleUpdateTime;
@@ -22,20 +24,28 @@ public class Schedule {
         this.scheduleId = scheduleId;
     }
 
-    public Timestamp getWorkTime() {
+    public int getWorkTime() {
         return workTime;
     }
 
-    public void setWorkTime(Timestamp workTime) {
+    public void setWorkTime(int workTime) {
         this.workTime = workTime;
     }
 
-    public Timestamp getWorkDate() {
+    public Date getWorkDate() {
         return workDate;
     }
 
-    public void setWorkDate(Timestamp workDate) {
+    public void setWorkDate(Date workDate) {
         this.workDate = workDate;
+    }
+
+    public int getRemain() {
+        return remain;
+    }
+
+    public void setRemain(int remain) {
+        this.remain = remain;
     }
 
     public String getDoctorId() {

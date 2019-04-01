@@ -48,7 +48,7 @@
   <!--sidebar-menu-->
   <div id="sidebar">
     <ul>
-      <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+      <li class="active"><a href="/common/otherIndex"><i class="icon icon-home"></i> <span>首页</span></a> </li>
       <li shiro:hasRole="admin" class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>人员管理</span> </a>
         <ul>
           <li> <a href="/admin/doctorManage"> <span>医生管理</span></a> </li>
@@ -63,6 +63,7 @@
           <li> <a href="/admin/departmentManage"> <span>科室管理</span></a></li>
         </ul>
       </li>
+      <li shiro:hasRole="admin"><a href="/admin/doctorScheduleManage"><i class="icon icon-edit"></i> <span>医生排班</span> </a></li>
       <li shiro:hasRole="admin"><a href="/admin/rolePermissionManage"><i class="icon icon-lock"></i> <span>角色权限</span> </a></li>
       <li shiro:hasRole="admin"><a href="/admin/recordManage"><i class="icon icon-file"></i> <span>查看记录</span> </a></li>
       <li shiro:hasRole="doctor"><a href="/doctor/current_appointment"><i class="icon icon-tint"></i> <span>我的预约</span></a></li>

@@ -39,7 +39,7 @@ public class CommonController {
     @Autowired
     private MedicineDepartmentService medicineDepartmentService;
 
-    @GetMapping(value = "/index")
+    @GetMapping("/index")
     public ModelAndView index() {
         log.info("********游客首页*********");
         ModelAndView modelAndView = new ModelAndView();
@@ -47,6 +47,15 @@ public class CommonController {
         modelAndView.addObject("departments",departments);
         modelAndView.addObject("title","珠海某某某医院");
         modelAndView.setViewName("guest/index");
+        return modelAndView;
+    }
+
+    @GetMapping("/otherIndex")
+    public ModelAndView otherIndex() {
+        log.info("********游客首页*********");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("title","医院后台管理系统");
+        modelAndView.setViewName("common/index");
         return modelAndView;
     }
 

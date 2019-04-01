@@ -65,7 +65,6 @@ public class AdminController {
                                   @RequestParam String doctorTitle, @RequestParam String doctorProfession,
                                   @RequestParam int doctorMedicalServiceLife, @RequestParam String doctorIntroduction){
         log.info("********添加医生*********");
-        users.setUserPwd("huanghuijia");
         Doctors doctors = new Doctors();
         doctors.setDoctorName(users.getUserName());
         doctors.setDoctorTitle(doctorTitle);
@@ -114,7 +113,6 @@ public class AdminController {
     @PostMapping("/addAdmin")
     public ModelAndView addAdmin(@ModelAttribute Users users, @RequestParam List<String> roleIds, @RequestParam String adminTitle){
         log.info("********添加管理员*********");
-        users.setUserPwd("huanghuijia");
         Admins admins = new Admins();
         admins.setAdminName(users.getUserName());
         admins.setAdminTitle(adminTitle);
@@ -165,7 +163,6 @@ public class AdminController {
     public ModelAndView addNurse(@ModelAttribute Users users, @RequestParam List<String> roleIds,
                                  @RequestParam String nurseTitle, @RequestParam String nursePlace){
         log.info("********添加护士*********");
-        users.setUserPwd("huanghuijia");
         Nurses nurses = new Nurses();
         nurses.setNurseName(users.getUserName());
         nurses.setNurseTitle(nurseTitle);
@@ -368,5 +365,18 @@ public class AdminController {
         List<GetMedicine> getMedicines = recordService.findAllGetMedicine();
         List<String> columnNames = recordService.findColumnName("getMedicine");
         excelUtil.export(response,getMedicines,columnNames,"getMedicine");
+    }
+
+    @GetMapping("/doctorScheduleManage")
+    public ModelAndView doctorScheduleManage(){
+        log.info("********管理员界面/医生排班管理*********");
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("title","科室管理");
+        modelAndView.addObject("departments",departments);
+        log.info("[{}]",departments);
+        modelAndView.addObject("department",new Department());
+        modelAndView.setViewName("admin/department");
+        return modelAndView;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>405错误页面</title>
 <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<div class="headerPart" th:replace="common/header::header"></div>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">错误</a> </div>
@@ -30,14 +30,14 @@
               <h1>405</h1>
               <h3>Something is wrong here. Method not allowed!</h3>
               <p>Access to this page is forbidden</p>
-              <a class="btn btn-warning btn-big"  href="index.html">返回首页</a> </div>
+              <a class="btn btn-warning btn-big"  href="/common/otherIndex">返回首页</a> </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
+<div class="footerPart" th:replace="common/footer::footer"></div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/jquery.ui.custom.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>

@@ -17,4 +17,7 @@ public interface DoctorService {
 
     //查询某个科室的所有医生
     List<Doctors> findDoctorInSameDepartment(String departmentName);
+
+    //查询某个科室的当天值班的医生
+    List<Doctors> findDoctorToday(String departmentName, String currentDate);
 }

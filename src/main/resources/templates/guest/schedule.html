@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>科室</title>
+  <title th:text="${title}">科室</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/assets/css/style.css">
@@ -12,18 +12,19 @@
 <body>
   <!-- main wrapper -->
   <div class="wrapper">
+    <div class="headerPart" th:replace="guest/header::header"></div>
     <!-- breadcrumbs -->
     <section class="breadcrumbs" style="background-image: url(/static/assets/images/breadcrumbs/best-room.jpg)">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h1 class="h1">选择科室</h1>
+            <h1 class="h1">选择医生和预约时间</h1>
           </div>
           <div class="col-md-6">
             <ol class="breadcrumb">
               <li><a href="#">首页</a><i class="fa fa-angle-right"></i></li>
               <li><a href="#">科室</a><i class="fa fa-angle-right"></i></li>
-              <li class="active">感染内科</li>
+              <li class="active" th:text="${department.departmentName}"></li>
             </ol>
           </div>
         </div>
@@ -32,475 +33,69 @@
     <!-- /breadcrumbs -->
     <section class="gallery best-room">
       <div class="container">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2">感染内科</h2></div> 
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2" id="GetDepartName" th:text="${department.departmentName}"></h2></div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
           <ul id="myTab" class="nav nav-tabs" style="border-bottom: 1px solid #dddddd;">
-            <li class="active">
-              <a href="#dateTimeSelect" data-toggle="tab">按时间</a>
-            </li>
+            <li class="active"><a href="#dateTimeSelect" data-toggle="tab">按时间</a></li>
             <li><a href="#doctorSelect" data-toggle="tab">按医生</a></li>
           </ul>
           <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade in active" id="dateTimeSelect">
               <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
               <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                <ul id="myTab1" class="nav nav-tabs">
-                  <li class="active"><a href="#date1" data-toggle="tab">4月1日</a></li>
-                  <li><a href="#date2" data-toggle="tab">4月2日</a></li>
-                  <li><a href="#date3" data-toggle="tab">4月3日</a></li>
-                  <li><a href="#date4" data-toggle="tab">4月4日</a></li>
-                  <li><a href="#date5" data-toggle="tab">4月5日</a></li>
-                  <li><a href="#date6" data-toggle="tab">4月6日</a></li>
-                  <li><a href="#date7" data-toggle="tab">4月7日</a></li>
+                <ul id="dateSelectMyTab" class="nav nav-tabs">
+                  <li class="active"><a href="#date1" id="dateSelectMyTab_date1" data-toggle="tab" th:value="featureDaysList.get(0)" th:text="${#strings.substring(featureDaysList.get(0),9)}"></a></li>
+                  <li><a href="#date2" id="dateSelectMyTab_date2" data-toggle="tab" th:value="featureDaysList.get(1)" th:text="${#strings.substring(featureDaysList.get(1),9)}"></a></li>
+                  <li><a href="#date3" id="dateSelectMyTab_date3" data-toggle="tab" th:value="featureDaysList.get(2)" th:text="${#strings.substring(featureDaysList.get(2),9)}"></a></li>
+                  <li><a href="#date4" id="dateSelectMyTab_date4" data-toggle="tab" th:value="featureDaysList.get(3)" th:text="${#strings.substring(featureDaysList.get(3),9)}"></a></li>
+                  <li><a href="#date5" id="dateSelectMyTab_date5" data-toggle="tab" th:value="featureDaysList.get(4)" th:text="${#strings.substring(featureDaysList.get(4),9)}"></a></li>
+                  <li><a href="#date6" id="dateSelectMyTab_date6" data-toggle="tab" th:value="featureDaysList.get(5)" th:text="${#strings.substring(featureDaysList.get(5),9)}"></a></li>
+                  <li><a href="#date7" id="dateSelectMyTab_date7" data-toggle="tab" th:value="featureDaysList.get(6)" th:text="${#strings.substring(featureDaysList.get(6),9)}"></a></li>
                 </ul>
-                <div id="myTabContent1" class="tab-content">
+                <div id="dateSelectMyTabContent" class="tab-content">
                   <div class="tab-pane fade in active" id="date1">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
+                    <div class="panel-group" id="accordion_data1">
+                      <div class="panel panel-default" th:each="doctor:${doctors}">
                         <div class="panel-heading">
                           <h4 class="panel-title">
                             <div class="media">
-                              <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
+                              <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                               <div class="media-body">
-                                <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
-                                <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">查看排班</a>
+                                <h4 class="media-heading" th:text="${doctor.doctorName}"><span style="font-size: 10px;margin-left: 15px;" th:text="${doctor.doctorTitle}"></span></h4>
+                                <p class="media-content" th:text="'擅长：'+${doctor.doctorProfession}"></p>
+                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${doctor.doctorId}+'_'+${featureDaysList.get(0)}">查看排班</a>
                               </div>
                             </div>
                           </h4>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                          </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <div class="media">
-                              <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
-                              <div class="media-body">
-                                <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
-                                <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">查看排班</a>
-                              </div>
-                            </div>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <div class="media">
-                              <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
-                              <div class="media-body">
-                                <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4>
-                                <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">查看排班</a>
-                              </div>
-                            </div>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
+                        <div th:id="${doctor.doctorId}+'_'+${featureDaysList.get(0)}" class="panel-collapse collapse">
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date2">
-                    <div class="panel-group" id="accordion2">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion2" 
-                               href="#collapseOne2">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne2" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion2" 
-                               href="#collapseTwo2">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo2" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion2" 
-                               href="#collapseThree2">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree2" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data2">
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date3">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseOne">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseTwo">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseThree">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data3">
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date4">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseOne">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseTwo">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseThree">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data4">
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date5">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseOne">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseTwo">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseThree">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data5">
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date6">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseOne">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseTwo">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseThree">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data6">
                     </div>
                   </div>
                   <div class="tab-pane fade" id="date7">
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseOne">
-                              点击我进行展开，再次点击我进行折叠。第 1 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseTwo">
-                              点击我进行展开，再次点击我进行折叠。第 2 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" 
-                               href="#collapseThree">
-                              点击我进行展开，再次点击我进行折叠。第 3 部分
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                            cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                            vice lomo.
-                          </div>
-                        </div>
-                      </div>
+                    <div class="panel-group" id="accordion_data7">
                     </div>
                   </div>
                 </div>
@@ -515,7 +110,7 @@
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <div class="media">
-                          <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
+                          <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                           <div class="media-body">
                             <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
                             <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
@@ -936,7 +531,7 @@
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <div class="media">
-                          <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
+                          <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                           <div class="media-body">
                             <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
                             <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
@@ -957,7 +552,7 @@
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <div class="media">
-                          <a href="#" class="pull-left"><img src="assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
+                          <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                           <div class="media-body">
                             <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4>
                             <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
@@ -984,10 +579,75 @@
       </div>
     </section>
     <!-- /choose best rooms -->
+    <div class="footerPart" th:replace="guest/footer::footer"></div>
   </div>
   <!-- Scripts -->
   <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $("#dateSelectMyTab_date1").click(function () {
+              doctorVal("dateSelectMyTab_date1");
+          });
+          $("#dateSelectMyTab_date2").click(function () {
+              doctorVal("dateSelectMyTab_date2");
+          });
+          $("#dateSelectMyTab_date3").click(function () {
+              doctorVal("dateSelectMyTab_date3");
+          });
+          $("#dateSelectMyTab_date4").click(function () {
+              doctorVal("dateSelectMyTab_date4");
+          });
+          $("#dateSelectMyTab_date5").click(function () {
+              doctorVal("dateSelectMyTab_date5");
+          });
+          $("#dateSelectMyTab_date6").click(function () {
+              doctorVal("dateSelectMyTab_date6");
+          });
+          $("#dateSelectMyTab_date7").click(function () {
+              doctorVal("dateSelectMyTab_date7");
+          });
+      });
+      function doctorVal(id) {
+          var dateText = $("#"+id).val().substr(0,8);
+          var departmentName = $('#GetDepartName').text();
+          $.ajax({
+              url: '/guest/initDoctorMsg',
+              data: {
+                  dateText: dateText,
+                  departmentName: departmentName
+              },
+              type: 'post',
+              dataType: 'TEXT',
+              success: function (data) {
+                  var str = "";
+                  $.each($.parseJSON(data), function (n,datelist) {
+                    str += "<div class='panel panel-default'>"+
+                            "<div class='panel-heading'>"+
+                              "<h4 class='panel-title'>"+
+                                "<div class='media'>"+
+                                  "<a href='#' class='pull-left'><img src='/static/assets/images/best-rooms/2.jpg' style='width: 100px;height: 100px;' class='media-object' alt='' /></a>"+
+                                  "<div class='media-body'>"+
+                                    "<h4 class='media-heading'>"+datelist.doctorName+"<span style='font-size: 10px;margin-left: 15px;'>"+datelist.doctorTitle+"</span></h4>"+
+                                    "<p class='media-content'>"+"擅长："+datelist.doctorProfession+"</p>"+
+                                    "<a class='pull-right' data-toggle='collapse' data-parent='#accordion' href='#"+datelist.doctorId+"_"+dateText+"'>查看排班</a>"+
+                                  "</div>"+
+                                "</div>"+
+                              "</h4>"+
+                            "</div>"+
+                            "<div class='panel-collapse collapse' id='"+datelist.doctorId+"_"+dateText+"'>"+
+                            "</div>"+
+                          "</div>";
+                  });
+                  var targetId = "accordion_"+id.substr(16);
+                  document.getElementById(targetId).innerHTML=str;
+              },
+              error: function (err) {
+                  alert("error!!")
+              }
+          });
+      }
+  </script>
   <!-- /Scripts -->
 </body>
 </html>

@@ -17,6 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -34,10 +38,20 @@ public class HospitalApplicationTests {
 	private RolePermissionService rolePermissionService;
 	@Test
 	public void contextLoads() {
-		final List<Appointment> appointments = recordService.findAllAppointment();
-		log.info("[{}]",appointments);
-		final List<Users> users = usersService.checkAllUser();
-		log.info("[{}]",users);
+		ArrayList<String> featureDaysList = new ArrayList<>();
+		for (int i = 0; i <7; i++) {
+			featureDaysList.add(getFeatureDate(i));
+		}
+		for (String date : featureDaysList) {
+			System.out.println(date);
+		}
+	}
+	public static String getFeatureDate(int past) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + past);
+		Date today = calendar.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd EEE");
+		return format.format(today);
 	}
 }
 
