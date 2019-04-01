@@ -14,7 +14,7 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<div class="headerPart" th:replace="common/header::header"></div>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">医生排班</a> </div>
@@ -30,12 +30,12 @@
             <h5>EXCEL导入添加排班信息</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" th:action="@{importDoctor}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" th:action="@{importSchedule}" method="post" enctype="multipart/form-data">
               <div class="control-group">
                 <label class="control-label">科室 :</label>
                 <div class="controls">
-                  <select title="" name="departmentName">
-                    <option value="男">男</option>
+                  <select title="" name="departmentName" id="getDepartment">
+                    <option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}"></option>
                   </select>
                 </div>
               </div>
@@ -60,126 +60,21 @@
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
-                <tr>
+                <tr id="theadDate">
                   <th rowspan="2">姓名</th>
-                  <th colspan="6">4月1日</th>
-                  <th colspan="6">4月2日</th>
-                  <th colspan="6">4月3日</th>
-                  <th colspan="6">4月4日</th>
-                  <th colspan="6">4月5日</th>
-                  <th colspan="6">4月6日</th>
-                  <th colspan="6">4月7日</th>
+                  <th colspan="6" th:each="featureDay:${featureDaysList}" th:id="${#strings.substring(featureDay,0,8)}" th:text="${#strings.substring(featureDay,0,8)}"></th>
                 </tr>
                 <tr>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
-                  <th>1</th>
-                  <th>2</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>5</th>
-                  <th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+                  <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                  <td><i class="icon-ok"></i></td>
-                  <td></td>
-                </tr>
+              <tbody id="tbodyDoctor">
               </tbody>
             </table>
           </div>
@@ -188,7 +83,7 @@
     </div>
   </div>
 </div>
-
+<div class="footerPart" th:replace="common/footer::footer"></div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/jquery.ui.custom.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -197,5 +92,76 @@
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/matrix.js"></script>
 <script src="/static/js/matrix.tables.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#getDepartment").change(function () {
+            setTrTd();
+            // doctorVal();
+        });
+    });
+    function setTrTd() {
+        var departmentName = $('#getDepartment').val();
+        var tdArr = $("#theadDate").children();
+        var date1 = tdArr.eq(1).attr("id");
+        var date2 = tdArr.eq(2).attr("id");
+        var date3 = tdArr.eq(3).attr("id");
+        var date4 = tdArr.eq(4).attr("id");
+        var date5 = tdArr.eq(5).attr("id");
+        var date6 = tdArr.eq(6).attr("id");
+        var date7 = tdArr.eq(7).attr("id");
+        $.ajax({
+            url: '/admin/findDoctorNum',
+            data: {
+                departmentName: departmentName
+            },
+            type: 'post',
+            dataType: 'TEXT',
+            success: function (data) {
+                var str = "";
+                $.each($.parseJSON(data), function (n,datalist) {
+                    str+="<tr id='"+datalist.doctorId+"'>"+
+                        "<td>"+datalist.doctorName+"</td>"+
+                        "<td id='"+date1+"_1'></td><td id='"+date1+"_2'></td><td id='"+date1+"_3'></td>" +
+                        "<td id='"+date1+"_4'></td><td id='"+date1+"_5'></td><td id='"+date1+"_6'></td>"+
+                        "<td id='"+date2+"_1'></td><td id='"+date2+"_2'></td><td id='"+date2+"_3'></td>" +
+                        "<td id='"+date2+"_4'></td><td id='"+date2+"_5'></td><td id='"+date2+"_6'></td>"+
+                        "<td id='"+date3+"_1'></td><td id='"+date3+"_2'></td><td id='"+date3+"_3'></td>" +
+                        "<td id='"+date3+"_4'></td><td id='"+date3+"_5'></td><td id='"+date3+"_6'></td>"+
+                        "<td id='"+date4+"_1'></td><td id='"+date4+"_2'></td><td id='"+date4+"_3'></td>" +
+                        "<td id='"+date4+"_4'></td><td id='"+date4+"_5'></td><td id='"+date4+"_6'></td>"+
+                        "<td id='"+date5+"_1'></td><td id='"+date5+"_2'></td><td id='"+date5+"_3'></td>" +
+                        "<td id='"+date5+"_4'></td><td id='"+date5+"_5'></td><td id='"+date5+"_6'></td>"+
+                        "<td id='"+date6+"_1'></td><td id='"+date6+"_2'></td><td id='"+date6+"_3'></td>" +
+                        "<td id='"+date6+"_4'></td><td id='"+date6+"_5'></td><td id='"+date6+"_6'></td>"+
+                        "<td id='"+date7+"_1'></td><td id='"+date7+"_2'></td><td id='"+date7+"_3'></td>" +
+                        "<td id='"+date7+"_4'></td><td id='"+date7+"_5'></td><td id='"+date7+"_6'></td>"+
+                        "</tr>";
+                });
+                document.getElementById("tbodyDoctor").innerHTML=str;
+            },
+            error: function (err) {}
+        })
+    }
+    function doctorVal() {
+        var departmentName = $('#getDepartment').val();
+        $.ajax({
+            url: '/admin/findDoctor',
+            data: {
+                departmentName: departmentName
+            },
+            type: 'post',
+            dataType: 'TEXT',
+            success: function (data) {
+                $.each($.parseJSON(data), function (n,datelist) {
+                    if (datelist.doctorId.equals()) {
+
+                    }
+                });
+                document.getElementById("tbodyDoctor").innerHTML=str;
+            },
+            error: function (err) {}
+        });
+    }
+</script>
 </body>
 </html>

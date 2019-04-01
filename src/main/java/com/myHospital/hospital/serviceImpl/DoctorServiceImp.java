@@ -1,7 +1,9 @@
 package com.myHospital.hospital.serviceImpl;
 
 import com.myHospital.hospital.dao.DoctorsDao;
+import com.myHospital.hospital.dao.ScheduleDao;
 import com.myHospital.hospital.entity.Doctors;
+import com.myHospital.hospital.entity.Schedule;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.DoctorService;
 import com.myHospital.hospital.service.UsersService;
@@ -26,6 +28,9 @@ public class DoctorServiceImp implements DoctorService {
     @Autowired
     private DoctorsDao doctorsDao;
 
+    @Autowired
+    private ScheduleDao scheduleDao;
+
     @Override
     public Doctors findDoctorByUserId(String userId) {
         log.info("******************findDoctorByUserId********************");
@@ -39,10 +44,20 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
+    public List<String> findDoctorIdInSameDepartment(String departmentName) {
+        return doctorsDao.findDoctorIdInSameDepartment(departmentName);
+    }
+
+    @Override
     public List<Doctors> findDoctorToday(String departmentName, String currentDate) {
         log.info("******************findDoctorToday********************");
         log.info("*******[{}]-[{}]******",departmentName,currentDate);
-        return doctorsDao.findDoctorToday(departmentName,currentDate);
+        List<Doctors> doctors = doctorsDao.findDoctorToday(departmentName,currentDate);
+        for (Doctors doctor : doctors){
+            List<Schedule> schedules = scheduleDao.findScheduleCurrentDay(currentDate,doctor.getDoctorId());
+            doctor.setSchedules(schedules);
+        }
+        return doctors;
     }
 
 }

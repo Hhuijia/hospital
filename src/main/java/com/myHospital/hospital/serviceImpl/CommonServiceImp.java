@@ -151,7 +151,7 @@ public class CommonServiceImp implements CommonService {
             Sheet sheet = excelUtil.initImport(fileName, file);
             for (int i = 0; i < sheet.getLastRowNum() + 1; i++) {
                 Row row = sheet.getRow(i);
-                if (row == null) {
+                if (row == null || row.getCell(0) == null) {
                     continue;
                 }
                 Users users = new Users();

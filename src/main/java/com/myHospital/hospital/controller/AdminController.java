@@ -3,9 +3,6 @@ package com.myHospital.hospital.controller;
 import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.*;
 import com.myHospital.hospital.util.ExcelUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.myHospital.hospital.util.getFeatureDayUtil.getFeatureDate;
 
 /**
  * @author QUEENEY
@@ -42,6 +42,12 @@ public class AdminController {
 
     @Autowired
     private RecordService recordService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @SuppressWarnings("unchecked")
     @GetMapping("/doctorManage")
@@ -372,11 +378,28 @@ public class AdminController {
         log.info("********管理员界面/医生排班管理*********");
         List<Department> departments = medicineDepartmentService.findAllDepartment();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("title","科室管理");
         modelAndView.addObject("departments",departments);
-        log.info("[{}]",departments);
-        modelAndView.addObject("department",new Department());
-        modelAndView.setViewName("admin/department");
+        ArrayList<String> featureDaysList = new ArrayList<>();
+        for (int i = 0; i <7; i++) {
+            featureDaysList.add(getFeatureDate(i));
+        }
+        modelAndView.addObject("featureDaysList",featureDaysList);
+        modelAndView.setViewName("common/schedule");
         return modelAndView;
+    }
+
+    @PostMapping("/importSchedule")
+    public ModelAndView importSchedule(@RequestParam MultipartFile file) throws Exception {
+        log.info("********管理员界面/上传排版文件*********");
+        String fileName = file.getOriginalFilename();
+        scheduleService.batchImportSchedule(fileName, file);
+        return new ModelAndView(("redirect:doctorScheduleManage"));
+    }
+
+    @PostMapping("/findDoctorNum")
+    @ResponseBody
+    public List<Doctors> findDoctorNum(@RequestParam String departmentName){
+        log.info("********管理员界面/findDoctorNum*********");
+        return doctorService.findDoctorInSameDepartment(departmentName);
     }
 }

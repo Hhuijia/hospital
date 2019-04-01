@@ -13,6 +13,8 @@ public class Schedule {
     private Date workDate;
     private int remain;
     private String doctorId;
+    private String doctorName;
+    private String departmentName;
     private Timestamp scheduleCreateTime;
     private Timestamp scheduleUpdateTime;
 
@@ -54,6 +56,22 @@ public class Schedule {
 
     public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public Timestamp getScheduleCreateTime() {

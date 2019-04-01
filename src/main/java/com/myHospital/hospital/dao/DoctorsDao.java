@@ -1,10 +1,8 @@
 package com.myHospital.hospital.dao;
 
 import com.myHospital.hospital.entity.Doctors;
-import com.myHospital.hospital.entity.Schedule;
 import org.apache.ibatis.annotations.*;
 
-import javax.print.Doc;
 import java.util.List;
 
 @Mapper
@@ -30,6 +28,10 @@ public interface DoctorsDao {
     @Select("SELECT * FROM doctors WHERE userId = #{userId}")
     Doctors findDoctorByUserId(String userId);
 
+    //通过科室和医生姓名寻找医生Id
+    @Select("SELECT doctorId FROM doctors WHERE departmentName = #{departmentName} AND doctorName = #{doctorName}")
+    String findDoctorByName(@Param("departmentName") String departmentName, @Param("doctorName") String doctorName);
+
     //查询所有医生信息
     @Select("SELECT * FROM doctors")
     @Results({
@@ -40,6 +42,10 @@ public interface DoctorsDao {
     //查询某个科室的所有医生
     @Select("SELECT * FROM doctors where departmentName = #{departmentName}")
     List<Doctors> findDoctorInSameDepartment(String departmentName);
+
+    //查询某个科室的所有医生
+    @Select("SELECT doctorId FROM doctors where departmentName = #{departmentName}")
+    List<String> findDoctorIdInSameDepartment(String departmentName);
 
     //查询某个科室的当天值班的医生
     @Select("SELECT * FROM doctors WHERE departmentName=#{departmentName} AND doctorId IN (SELECT doctorId FROM schedule WHERE DATE_FORMAT(workDate,'%y%m%d')=#{currentDate})")

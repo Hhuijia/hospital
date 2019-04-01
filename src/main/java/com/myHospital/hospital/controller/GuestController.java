@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.myHospital.hospital.util.getFeatureDayUtil.getFeatureDate;
+
 /**
  * @author QUEENEY
  * @date 2019/3/29
@@ -122,12 +124,6 @@ public class GuestController {
         return doctorService.findDoctorToday(departmentName,dateText);
     }
 
-    private static String getFeatureDate(int past) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + past);
-        Date today = calendar.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-EEE");
-        return format.format(today);
-    }
+
 
 }
