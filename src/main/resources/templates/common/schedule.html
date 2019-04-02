@@ -58,7 +58,7 @@
             <h5>查看该科室排班信息</h5>
           </div>
           <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
+            <table class="table table-bordered table-striped">
               <thead>
                 <tr id="theadDate">
                   <th rowspan="2">姓名</th>
@@ -96,7 +96,7 @@
     $(document).ready(function() {
         $("#getDepartment").change(function () {
             setTrTd();
-            // doctorVal();
+            doctorVal();
         });
     });
     function setTrTd() {
@@ -145,7 +145,7 @@
     function doctorVal() {
         var departmentName = $('#getDepartment').val();
         $.ajax({
-            url: '/admin/findDoctor',
+            url: '/admin/findSchedule',
             data: {
                 departmentName: departmentName
             },
@@ -153,13 +153,18 @@
             dataType: 'TEXT',
             success: function (data) {
                 $.each($.parseJSON(data), function (n,datelist) {
-                    if (datelist.doctorId.equals()) {
-
-                    }
+                    var workDate = datelist.workDate.replace(new RegExp('-','g'),'');
+                    var trId = "#"+datelist.doctorId;
+                    var tdId = workDate+"_"+datelist.workTime;
+                    // alert(trId+" "+tdId);
+                    // $("#"+datelist.doctorId+" #"+workDate+"_"+datelist.workTime)[0].innerHTML("<i class='icon-ok'></i>");
+                    $(trId +" td[id="+tdId+"]").html("<i class='icon-ok'></i>");
                 });
-                document.getElementById("tbodyDoctor").innerHTML=str;
+
             },
-            error: function (err) {}
+            error: function (err) {
+                alert(err);
+            }
         });
     }
 </script>

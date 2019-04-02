@@ -42,13 +42,13 @@ public interface DoctorsDao {
     //查询某个科室的所有医生
     @Select("SELECT * FROM doctors where departmentName = #{departmentName}")
     List<Doctors> findDoctorInSameDepartment(String departmentName);
-
-    //查询某个科室的所有医生
-    @Select("SELECT doctorId FROM doctors where departmentName = #{departmentName}")
-    List<String> findDoctorIdInSameDepartment(String departmentName);
-
+//
+//    //查询某个科室的所有医生
+//    @Select("SELECT doctorId FROM doctors where departmentName = #{departmentName}")
+//    List<String> findDoctorIdInSameDepartment(String departmentName);
+//
     //查询某个科室的当天值班的医生
-    @Select("SELECT * FROM doctors WHERE departmentName=#{departmentName} AND doctorId IN (SELECT doctorId FROM schedule WHERE DATE_FORMAT(workDate,'%y%m%d')=#{currentDate})")
+    @Select("SELECT * FROM doctors WHERE departmentName=#{departmentName} AND doctorId IN (SELECT doctorId FROM schedule WHERE DATE_FORMAT(workDate,'%Y%m%d')=#{currentDate})")
     List<Doctors> findDoctorToday(@Param("departmentName") String departmentName,  @Param("currentDate") String currentDate);
 
     //通过doctorId删除医生信息

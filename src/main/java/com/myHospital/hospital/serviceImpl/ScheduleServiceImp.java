@@ -36,9 +36,15 @@ public class ScheduleServiceImp implements ScheduleService {
     private DoctorsDao doctorsDao;
 
     @Override
-    public List<Schedule> findScheduleByDoctorId(String doctorId) {
+    public List<Schedule> findScheduleByDoctorId(String doctorId, String currentDay) {
         log.info("******************findScheduleByDoctorId********************");
-        return scheduleDao.findScheduleByDoctorId(doctorId);
+        return scheduleDao.findScheduleByDoctorId(doctorId,currentDay);
+    }
+
+    @Override
+    public List<Schedule> findScheduleCurrentDay(String currentDay, String departmentName) {
+        log.info("******************findScheduleCurrentDay********************");
+        return scheduleDao.findScheduleCurrentDay(currentDay,departmentName);
     }
 
     @Override

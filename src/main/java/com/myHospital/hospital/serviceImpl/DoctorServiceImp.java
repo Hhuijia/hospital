@@ -42,22 +42,17 @@ public class DoctorServiceImp implements DoctorService {
         log.info("******************findDoctorInSameDepartment********************");
         return doctorsDao.findDoctorInSameDepartment(departmentName);
     }
-
-    @Override
-    public List<String> findDoctorIdInSameDepartment(String departmentName) {
-        return doctorsDao.findDoctorIdInSameDepartment(departmentName);
-    }
+//
+//    @Override
+//    public List<String> findDoctorIdInSameDepartment(String departmentName) {
+//        return doctorsDao.findDoctorIdInSameDepartment(departmentName);
+//    }
 
     @Override
     public List<Doctors> findDoctorToday(String departmentName, String currentDate) {
         log.info("******************findDoctorToday********************");
         log.info("*******[{}]-[{}]******",departmentName,currentDate);
-        List<Doctors> doctors = doctorsDao.findDoctorToday(departmentName,currentDate);
-        for (Doctors doctor : doctors){
-            List<Schedule> schedules = scheduleDao.findScheduleCurrentDay(currentDate,doctor.getDoctorId());
-            doctor.setSchedules(schedules);
-        }
-        return doctors;
+        return doctorsDao.findDoctorToday(departmentName,currentDate);
     }
 
 }

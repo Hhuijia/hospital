@@ -119,11 +119,17 @@ public class GuestController {
     }
 
     @PostMapping("/initDoctorMsg")
-    public List<Doctors> initDoctorMsg(@RequestParam String dateText, @RequestParam String departmentName){
-        log.info("********用户界面/加载页面信息*********");
-        return doctorService.findDoctorToday(departmentName,dateText);
+    @ResponseBody
+    public List<Doctors> initDoctorMsg(@RequestParam String currentDay, @RequestParam String departmentName){
+        log.info("********用户界面/加载医生信息*********");
+        return doctorService.findDoctorToday(departmentName,currentDay);
     }
 
-
-
+    @PostMapping("/initScheduleMsg")
+    @ResponseBody
+    public List<Schedule> initScheduleMsg(@RequestParam String currentDay, @RequestParam String doctorId){
+        log.info("********用户界面/加载排班信息*********");
+        log.info("********[{}]-[{}]*********",doctorId,currentDay);
+        return scheduleService.findScheduleByDoctorId(doctorId,currentDay);
+    }
 }

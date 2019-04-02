@@ -45,13 +45,9 @@
               <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
               <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                 <ul id="dateSelectMyTab" class="nav nav-tabs">
-                  <li class="active"><a href="#date1" id="dateSelectMyTab_date1" data-toggle="tab" th:value="featureDaysList.get(0)" th:text="${#strings.substring(featureDaysList.get(0),9)}"></a></li>
-                  <li><a href="#date2" id="dateSelectMyTab_date2" data-toggle="tab" th:value="featureDaysList.get(1)" th:text="${#strings.substring(featureDaysList.get(1),9)}"></a></li>
-                  <li><a href="#date3" id="dateSelectMyTab_date3" data-toggle="tab" th:value="featureDaysList.get(2)" th:text="${#strings.substring(featureDaysList.get(2),9)}"></a></li>
-                  <li><a href="#date4" id="dateSelectMyTab_date4" data-toggle="tab" th:value="featureDaysList.get(3)" th:text="${#strings.substring(featureDaysList.get(3),9)}"></a></li>
-                  <li><a href="#date5" id="dateSelectMyTab_date5" data-toggle="tab" th:value="featureDaysList.get(4)" th:text="${#strings.substring(featureDaysList.get(4),9)}"></a></li>
-                  <li><a href="#date6" id="dateSelectMyTab_date6" data-toggle="tab" th:value="featureDaysList.get(5)" th:text="${#strings.substring(featureDaysList.get(5),9)}"></a></li>
-                  <li><a href="#date7" id="dateSelectMyTab_date7" data-toggle="tab" th:value="featureDaysList.get(6)" th:text="${#strings.substring(featureDaysList.get(6),9)}"></a></li>
+                  <li th:each="featureDay:${featureDaysList}" th:class="${featureDayStat.first}?'active'">
+                    <a th:href="'#date'+${featureDayStat.count}" th:id="${#strings.substring(featureDay,0,8)}" data-toggle="tab" th:value="${#strings.substring(featureDay,0,8)}" th:text="${#strings.substring(featureDay,9)}"></a>
+                  </li>
                 </ul>
                 <div id="dateSelectMyTabContent" class="tab-content">
                   <div class="tab-pane fade in active" id="date1">
@@ -62,42 +58,25 @@
                             <div class="media">
                               <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                               <div class="media-body">
-                                <h4 class="media-heading" th:text="${doctor.doctorName}"><span style="font-size: 10px;margin-left: 15px;" th:text="${doctor.doctorTitle}"></span></h4>
+                                <h3 class="media-heading" th:text="${doctor.doctorName}"></h3>
+                                <h5 class="media-heading" style="font-size: 10px;margin-left: 15px;" th:text="${doctor.doctorTitle}"></h5>
                                 <p class="media-content" th:text="'擅长：'+${doctor.doctorProfession}"></p>
-                                <a class="pull-right" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${doctor.doctorId}+'_'+${featureDaysList.get(0)}">查看排班</a>
+                                <a class="pull-right media_body_a" data-toggle="collapse" data-parent="#accordion_data1" th:href="'#'+${doctor.doctorId}+'_'+${#strings.substring(featureDaysList.get(0),0,8)}">查看排班</a>
                               </div>
                             </div>
                           </h4>
                         </div>
-                        <div th:id="${doctor.doctorId}+'_'+${featureDaysList.get(0)}" class="panel-collapse collapse">
+                        <div th:id="${doctor.doctorId}+'_'+${#strings.substring(featureDaysList.get(0),0,8)}" class="panel-collapse collapse">
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="date2">
-                    <div class="panel-group" id="accordion_data2">
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="date3">
-                    <div class="panel-group" id="accordion_data3">
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="date4">
-                    <div class="panel-group" id="accordion_data4">
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="date5">
-                    <div class="panel-group" id="accordion_data5">
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="date6">
-                    <div class="panel-group" id="accordion_data6">
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="date7">
-                    <div class="panel-group" id="accordion_data7">
-                    </div>
-                  </div>
+                  <div class="tab-pane fade" id="date2"></div>
+                  <div class="tab-pane fade" id="date3"></div>
+                  <div class="tab-pane fade" id="date4"></div>
+                  <div class="tab-pane fade" id="date5"></div>
+                  <div class="tab-pane fade" id="date6"></div>
+                  <div class="tab-pane fade" id="date7"></div>
                 </div>
               </div>
               <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
@@ -586,41 +565,30 @@
   <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
   <script type="text/javascript">
       $(document).ready(function() {
-          $("#dateSelectMyTab_date1").click(function () {
-              doctorVal("dateSelectMyTab_date1");
+          $("#dateSelectMyTab > li").click(function () {
+              var aValue = $(this).children().attr("value");
+              var aHref = $(this).children().attr("href");
+              alert(aValue+aHref);
+              doctorVal(aValue,aHref);
           });
-          $("#dateSelectMyTab_date2").click(function () {
-              doctorVal("dateSelectMyTab_date2");
-          });
-          $("#dateSelectMyTab_date3").click(function () {
-              doctorVal("dateSelectMyTab_date3");
-          });
-          $("#dateSelectMyTab_date4").click(function () {
-              doctorVal("dateSelectMyTab_date4");
-          });
-          $("#dateSelectMyTab_date5").click(function () {
-              doctorVal("dateSelectMyTab_date5");
-          });
-          $("#dateSelectMyTab_date6").click(function () {
-              doctorVal("dateSelectMyTab_date6");
-          });
-          $("#dateSelectMyTab_date7").click(function () {
-              doctorVal("dateSelectMyTab_date7");
-          });
+          $("#dateSelectMyTabContent").on('click','.media-body',function () {
+              var hrefVal = $(this).children(".media_body_a").attr("href");
+              var count = $(this).attr("id");
+              scheduleVal(hrefVal);
+          })
       });
-      function doctorVal(id) {
-          var dateText = $("#"+id).val().substr(0,8);
+      function doctorVal(aValue,aHref) {
           var departmentName = $('#GetDepartName').text();
           $.ajax({
               url: '/guest/initDoctorMsg',
               data: {
-                  dateText: dateText,
+                  currentDay: aValue,
                   departmentName: departmentName
               },
               type: 'post',
               dataType: 'TEXT',
               success: function (data) {
-                  var str = "";
+                  var str = "<div class='panel-group' id='accordion_"+aValue+"'>";
                   $.each($.parseJSON(data), function (n,datelist) {
                     str += "<div class='panel panel-default'>"+
                             "<div class='panel-heading'>"+
@@ -630,17 +598,75 @@
                                   "<div class='media-body'>"+
                                     "<h4 class='media-heading'>"+datelist.doctorName+"<span style='font-size: 10px;margin-left: 15px;'>"+datelist.doctorTitle+"</span></h4>"+
                                     "<p class='media-content'>"+"擅长："+datelist.doctorProfession+"</p>"+
-                                    "<a class='pull-right' data-toggle='collapse' data-parent='#accordion' href='#"+datelist.doctorId+"_"+dateText+"'>查看排班</a>"+
+                                    "<a class='pull-right media_body_a' data-toggle='collapse' data-parent='accordion_"+aValue+"' href='#"+datelist.doctorId+"_"+aValue+"'>查看排班</a>"+
                                   "</div>"+
                                 "</div>"+
                               "</h4>"+
                             "</div>"+
-                            "<div class='panel-collapse collapse' id='"+datelist.doctorId+"_"+dateText+"'>"+
+                            "<div class='panel-collapse collapse' id='"+datelist.doctorId+"_"+aValue+"'>"+
                             "</div>"+
                           "</div>";
                   });
-                  var targetId = "accordion_"+id.substr(16);
-                  document.getElementById(targetId).innerHTML=str;
+                  str += "</div>"
+                  $(aHref).html(str);
+                  // $(".media-body").on('click',function () {
+                  //     var hrefVal = $(this).children(".media_body_a").attr("href");
+                  //     scheduleVal(hrefVal);
+                  // })
+              },
+              error: function (err) {
+                  alert("error!!")
+              }
+          });
+      }
+      function scheduleVal(hrefVal) {
+          var doctorId = hrefVal.substr(1,hrefVal.lastIndexOf("_")-1);
+          var currentDay = hrefVal.substr(hrefVal.lastIndexOf("_")+1);
+          $.ajax({
+              url: '/guest/initScheduleMsg',
+              data: {
+                  currentDay: currentDay,
+                  doctorId: doctorId
+              },
+              type: 'post',
+              dataType: 'TEXT',
+              success: function (data) {
+                  var str = "<div class='panel-body'>"+
+                      "<table class='table table-hover' contenteditable='true'>"+
+                        "<thead><th>时间</th><th>剩余</th><th>操作</th></thead>"+
+                        "<tbody>";
+                  $.each($.parseJSON(data), function (n,datelist) {
+                      var timeStr = "";
+                      switch (datelist.workTime){
+                          case 1:
+                              timeStr = "9:00-10:00";
+                              break;
+                          case 2:
+                              timeStr = "10:00-11:00";
+                              break;
+                          case 3:
+                              timeStr = "11:00-12:00";
+                              break;
+                          case 4:
+                              timeStr = "14:00-15:00";
+                              break;
+                          case 5:
+                              timeStr = "15:00-16:00";
+                              break;
+                          case 6:
+                              timeStr = "16:00-17:00";
+                              break;
+                          default:
+                              break;
+                      }
+                      str +="<tr>"+
+                              "<td>"+timeStr+"</td>"+
+                              "<td><p style='margin-bottom: 0;'><span class='badge' contenteditable='true'>"+datelist.remain+"</span></p></td>"+
+                              "<td><a href='/users/addDoctor(doctorId="+datelist.doctorId+")' type='submit' class='btn btn-min'>预约</a></td>"+
+                            "</tr>";
+                  });
+                  str += "</tbody></table></div>";
+                  $(hrefVal).html(str);
               },
               error: function (err) {
                   alert("error!!")

@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 import static com.myHospital.hospital.util.getFeatureDayUtil.getFeatureDate;
 
@@ -401,5 +401,28 @@ public class AdminController {
     public List<Doctors> findDoctorNum(@RequestParam String departmentName){
         log.info("********管理员界面/findDoctorNum*********");
         return doctorService.findDoctorInSameDepartment(departmentName);
+    }
+
+    @PostMapping("/findSchedule")
+    @ResponseBody
+    public List<Schedule> findSchedule(@RequestParam String departmentName) throws Exception{
+        log.info("********管理员界面/findSchedule*********");
+        ArrayList<String> featureDaysList = new ArrayList<>();
+        for (int i = 0; i <7; i++) {
+            featureDaysList.add(getFeatureDate(i).substring(0,8));
+        }
+        List<Schedule> schedules = new ArrayList<>();
+        for (String featureDay : featureDaysList){
+            schedules.addAll(scheduleService.findScheduleCurrentDay(featureDay,departmentName));
+        }
+//        Date date;
+//        Calendar calendar = new GregorianCalendar();
+//        for (Schedule schedule : schedules){
+//            calendar.setTime(schedule.getWorkDate());
+//            calendar.add(calendar.DATE,1);
+//            date = calendar.getTime();
+//            schedule.setWorkDate(date);
+//        }
+        return schedules;
     }
 }

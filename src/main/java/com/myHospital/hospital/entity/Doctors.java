@@ -17,7 +17,6 @@ public class Doctors {
     private String departmentName;
 
     private Users users;
-    private List<Schedule> schedules;
 
     public String getDoctorId() {
         return doctorId;
@@ -105,13 +104,5 @@ public class Doctors {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
-    }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
     }
 }

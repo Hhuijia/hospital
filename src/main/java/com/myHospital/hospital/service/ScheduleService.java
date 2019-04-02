@@ -4,7 +4,6 @@ import com.myHospital.hospital.entity.Schedule;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -14,8 +13,11 @@ import java.util.List;
 @Repository
 public interface ScheduleService {
 
-    //查询某个医生的所有排班
-    List<Schedule> findScheduleByDoctorId(String doctorId);
+    //查询某个医生的某天排班
+    List<Schedule> findScheduleByDoctorId(String doctorId, String currentDay);
+
+    //查询某一天的某个科室的所有值班医生
+    List<Schedule> findScheduleCurrentDay(String currentDay, String departmentName);
 
     //上传排班文件
     void batchImportSchedule(String fileName, MultipartFile file) throws Exception;
