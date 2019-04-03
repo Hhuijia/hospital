@@ -16,13 +16,13 @@ public interface DoctorsDao {
 //    @Update("UPDATE doctors SET doctorName=#{doctorName},doctorSex=#{doctorSex},doctorAge=#{doctorAge},doctorPhone=#{doctorPhone},departmentNo=#{departmentNo},doctorTitle=#{doctorTitle},doctorProfession=#{doctorProfession},doctorMedicalServiceLife=#{doctorMedicalServiceLife},doctorIntroduction=#{doctorIntroduction} WHERE userNo=#{userNo}")
 //    int updateUserByNo(Doctors doctors);
 
-    //通过doctorId查询对应在用户表的信息
+    //通过doctorId查询userId
     @Select("SELECT userId FROM doctors WHERE doctorId = #{doctorId}")
     String findUserIdById(String doctorId);
 
-    //通过doctorId查询对应在用户表的信息
+    //通过doctorId查询对应在医生表的信息
     @Select("SELECT * FROM doctors WHERE doctorId = #{doctorId}")
-    String findDoctorById(String doctorId);
+    Doctors findDoctorById(String doctorId);
 
     //通过userId查询对应在医生表的信息
     @Select("SELECT * FROM doctors WHERE userId = #{userId}")

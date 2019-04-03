@@ -6,13 +6,13 @@ import com.myHospital.hospital.entity.Permission;
 import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.UsersService;
-import com.myHospital.hospital.util.PasswordHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author QUEENEY
@@ -20,11 +20,16 @@ import java.util.List;
  */
 @Repository
 public class UsersServiceImpl implements UsersService {
-
     private static final Logger log = LoggerFactory.getLogger(UsersServiceImpl.class);
 
     @Autowired
     private UsersDao usersDao;
+
+    @Override
+    public int updateUserByIdNum(Users user) {
+        log.info("******************updateUserByIdNum********************");
+        return usersDao.updateUserByIdNum(user);
+    }
 
     @Override
     public Users findUserByIDNum(String userIDNum){
@@ -59,12 +64,20 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void makeAppointment(Appointment appointment) {
         log.info("******************makeAppointment********************");
+        String strAppoint = String.format("%04d", new Random().nextInt(1001));
+        appointment.setAppointmentId( "APPOINTMENT_" + strAppoint + "_" + System.currentTimeMillis());
         usersDao.makeAppointment(appointment);
     }
 
     @Override
     public List<Appointment> findAllAppointmentOfOneByUserId(String userId) {
         log.info("******************findAllAppointmentOfOneByUserId********************");
-        return findAllAppointmentOfOneByUserId(userId);
+        return usersDao.findAllAppointmentOfOneByUserId(userId);
+    }
+
+    @Override
+    public void updateStatusById(String appointmentId) {
+        log.info("******************updateStatusById********************");
+        usersDao.updateStatusById(appointmentId);
     }
 }

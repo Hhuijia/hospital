@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <link rel="stylesheet" href="/static/assets/css/responsive.css">
+  <style type="text/css">
+    .table td, th{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- main wrapper -->
+  <div class="wrapper">
+    <div class="headerPart" th:replace="guest/header::header"></div>
+    <!-- breadcrumbs -->
+    <section class="breadcrumbs" style="background-image: url(/static/assets/images/breadcrumbs/best-room.jpg)">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="h1">我的信息</h1>
+          </div>
+          <div class="col-md-6">
+            <ol class="breadcrumb">
+              <li><a href="/common/index">首页</a><i class="fa fa-angle-right"></i></li>
+              <li><a href="#">个人信息</a><i class="fa fa-angle-right"></i></li>
+              <li class="active">我的信息</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /breadcrumbs -->
+    <section class="contact-block">
+      <div class="container">
+        <div class="contact-block_form">
+          <div class="row marg50">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2">我的个人信息</h2></div>
+            <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+            <div class="col-lg-8 col-md-8 col-sm-11 col-xs-11">
+              <table class="table table-striped">
+                <tbody>
+                <tr class="trCount"><th id="userName">姓名：</th><td class="editAble" th:text="${users.userName}"></td></tr>
+                <tr class="trCount"><th id="userSex">性别：</th><td class="editAble" th:text="${users.userSex}"></td></tr>
+                <tr class="trCount"><th id="userAge">年龄：</th><td class="editAble" th:text="${users.userAge}"></td></tr>
+                <tr class="trCount"><th id="userPhone">电话：</th><td class="editAble" th:text="${users.userPhone}"></td></tr>
+                <tr class="trCount"><th id="userIDNum">身份证号：</th><td th:text="${users.userIDNum}"></td></tr>
+                <tr class="trCount"><th id="userAddress">住址：</th><td class="editAble" th:text="${users.userAddress}"></td></tr>
+                <tr><td colspan="2">
+                  <button id="editMyInfo" class="btn btn-info">编辑</button>
+                  <button id='submitChange' class='btn btn-success' hidden="hidden">确定</button>
+                </td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  <!-- /main wrapper -->
+    <div class="footerPart" th:replace="guest/footer::footer"></div>
+  </div>
+  <!-- Scripts -->
+  <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $("#editMyInfo").on("click",function () {
+            alert("请直接在表格中修改个人信息（注：身份证号不得修改！）")
+            $(".editAble").attr("contenteditable",true);
+            $("#submitChange").show();
+            $(this).hide();
+        });
+        $("#submitChange").on("click",function () {
+            var userMap = new Map;
+            $(".trCount").each(function () {
+                userMap.set($(this).children("th").attr("id"),$(this).children("td").text());
+                alert(userMap.get($(this).children("th").attr("id")));
+            });
+            let obj= Object.create(null);
+            for (let[k,v] of userMap) {
+                obj[k] = v;
+            }
+            $.ajax({
+                url: '/users/updateMyInfo',
+                type: 'post',
+                dataType: 'json',
+                contentType : 'application/json;charset=utf-8',
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    $(".trCount").each(function () {
+                        var key = $(this).children("th").attr("id");
+                        $(this).children("td").text(data[key]);
+                    });
+                    $("#editMyInfo").show();
+                    $("#submitChange").hide();
+                },
+                error: function (err) {
+                    alert("error!!")
+                }
+            });
+        });
+    })
+  </script>
+  <!-- /Scripts -->
+</body>
+</html>

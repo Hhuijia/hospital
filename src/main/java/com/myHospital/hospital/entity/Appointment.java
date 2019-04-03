@@ -8,10 +8,9 @@ import java.sql.Timestamp;
  */
 public class Appointment {
     private String appointmentId;
-    private String emergencyContact;
-    private String emergContPhone;
-    private Timestamp appointmentTime;
+    private String appointmentTime;
     private Timestamp appointmentCreatedTime;
+    private int appointmentStatus;
     private String userId;
     private String doctorId;
     private String departmentId;
@@ -27,27 +26,11 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    public String getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
-    }
-
-    public String getEmergContPhone() {
-        return emergContPhone;
-    }
-
-    public void setEmergContPhone(String emergContPhone) {
-        this.emergContPhone = emergContPhone;
-    }
-
-    public Timestamp getAppointmentTime() {
+    public String getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(Timestamp appointmentTime) {
+    public void setAppointmentTime(String appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 
@@ -57,6 +40,14 @@ public class Appointment {
 
     public void setAppointmentCreatedTime(Timestamp appointmentCreatedTime) {
         this.appointmentCreatedTime = appointmentCreatedTime;
+    }
+
+    public int getAppointmentStatus() {
+        return appointmentStatus;
+    }
+
+    public void setAppointmentStatus(int appointmentStatus) {
+        this.appointmentStatus = appointmentStatus;
     }
 
     public String getUserId() {
@@ -102,7 +93,6 @@ public class Appointment {
     @Override
     public String toString() {
         String str = this.appointmentId+","+this.userId+","+this.doctorId+","+this.departmentId+","+
-                this.emergencyContact+","+this.emergContPhone+","+
                 this.appointmentTime+","+this.appointmentCreatedTime;
         return str;
     }

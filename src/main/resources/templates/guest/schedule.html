@@ -85,29 +85,26 @@
               <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
               <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                 <div class="panel-group" id="accordion">
-                  <div class="panel panel-default">
+                  <div class="panel panel-default" th:each="doctor1:${doctors1}">
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <div class="media">
                           <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                           <div class="media-body">
-                            <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
-                            <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                            <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#doctor1">查看排班</a>
+                            <h3 class="media-heading" th:text="${doctor1.departmentName}"></h3>
+                            <h5 class="media-heading" style="font-size: 10px;margin-left: 15px;" th:text="${doctor1.doctorTitle}"></h5>
+                            <p class="media-content" th:text="'擅长：'+${doctor1.doctorProfession}"></p>
+                            <a class="pull-right media_body_a" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${doctor1.doctorId}">查看排班</a>
                           </div>
                         </div>
                       </h4>
                     </div>
-                    <div id="doctor1" class="panel-collapse collapse">
+                    <div th:id="${doctor1.doctorId}" class="panel-collapse collapse">
                       <div class="panel-body">
                         <ul id="myTab1" class="nav nav-tabs">
-                          <li class="active"><a href="#ddate1" data-toggle="tab">4月1日</a></li>
-                          <li><a href="#ddate2" data-toggle="tab">4月2日</a></li>
-                          <li><a href="#ddate3" data-toggle="tab">4月3日</a></li>
-                          <li><a href="#ddate4" data-toggle="tab">4月4日</a></li>
-                          <li><a href="#ddate5" data-toggle="tab">4月5日</a></li>
-                          <li><a href="#ddate6" data-toggle="tab">4月6日</a></li>
-                          <li><a href="#ddate7" data-toggle="tab">4月7日</a></li>
+                          <li th:each="featureDay:${featureDaysList}" th:class="${featureDayStat.first}?'active'">
+                            <a th:href="'#ddate'+${featureDayStat.count}" data-toggle="tab" th:value="${#strings.substring(featureDay,0,8)}" th:text="${#strings.substring(featureDay,9)}"></a>
+                          </li>
                         </ul>
                         <div id="myTabContent1" class="tab-content">
                           <div class="tab-pane fade in active" id="ddate1">
@@ -506,48 +503,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <div class="media">
-                          <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
-                          <div class="media-body">
-                            <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4> 
-                            <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                            <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#doctor2">查看排班</a>
-                          </div>
-                        </div>
-                      </h4>
-                    </div>
-                    <div id="doctor2" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                        vice lomo.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <div class="media">
-                          <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
-                          <div class="media-body">
-                            <h4 class="media-heading">哈哈哈 <span style="font-size: 10px;margin-left: 15px;">ssssss</span></h4>
-                            <p class="media-content">请尽量使用HTML5兼容的视频格式和视频代码实现视频播放, 以达到更好的体验效果.</p>
-                            <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">查看排班</a>
-                          </div>
-                        </div>
-                      </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
-                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
-                        vice lomo.
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
@@ -632,7 +587,7 @@
               dataType: 'TEXT',
               success: function (data) {
                   var str = "<div class='panel-body'>"+
-                      "<table class='table table-hover' contenteditable='true'>"+
+                      "<table class='table table-hover' contenteditable='false'>"+
                         "<thead><th>时间</th><th>剩余</th><th>操作</th></thead>"+
                         "<tbody>";
                   $.each($.parseJSON(data), function (n,datelist) {
@@ -662,7 +617,7 @@
                       str +="<tr>"+
                               "<td>"+timeStr+"</td>"+
                               "<td><p style='margin-bottom: 0;'><span class='badge' contenteditable='true'>"+datelist.remain+"</span></p></td>"+
-                              "<td><a href='/users/addDoctor(doctorId="+datelist.doctorId+")' type='submit' class='btn btn-min'>预约</a></td>"+
+                              "<td><a href='/users/ShowAppointmentPage?doctorId="+datelist.doctorId+"&departmentName="+datelist.departmentName+"&appointmentTime="+datelist.workDate+"_"+datelist.workTime+"' class='btn btn-success'>预约</a></td>"+
                             "</tr>";
                   });
                   str += "</tbody></table></div>";

@@ -15,9 +15,9 @@ public interface UsersDao {
     @Insert("INSERT INTO users(userId,userName,userPwd,salt,userSex,userAge,userIDNum,userPhone,userAddress) VALUES(#{userId},#{userName},#{userPwd},#{salt},#{userSex},#{userAge},#{userIDNum},#{userPhone},#{userAddress})")
     void addUser(Users user);
 
-//    //通过userNo更新用户信息
-//    @Update("UPDATE users SET userName=#{userName},userSex=#{userSex},userAge=#{userAge},userAddress=#{userAddress} WHERE userNo=#{userId}")
-//    int updateUserById(Users user);
+    //通过userIDNum更新用户信息
+    @Update("UPDATE users SET userName=#{userName},userSex=#{userSex},userAge=#{userAge},userPhone=#{userPhone},userAddress=#{userAddress} WHERE userIDNum=#{userIDNum}")
+    int updateUserByIdNum(Users user);
 
     //通过userIDNum查询用户信息
     @Select("SELECT * FROM users WHERE userIDNum = #{userIDNum}")
@@ -52,10 +52,18 @@ public interface UsersDao {
     void deleteUserById(String userId);
 
     //添加预约
-    @Insert("INSERT INTO appointment(appointmentId,emergencyContact,emergContPhone,appointmentTime,userId,doctorId,departmentId) VALUES(#{appointmentId},#{emergencyContact},#{emergContPhone},#{appointmentTime},#{userId},#{doctorId},#{departmentId})")
+    @Insert("INSERT INTO appointment(appointmentId,appointmentTime,userId,doctorId,departmentId) VALUES(#{appointmentId},#{appointmentTime},#{userId},#{doctorId},#{departmentId})")
     void makeAppointment(Appointment appointment);
 
     //查询预约记录
     @Select("SELECT * FROM appointment WHERE userId = #{userId}")
+    @Results({
+            @Result(property = "doctors",column = "doctorId",one = @One(select = "com.myHospital.hospital.dao.DoctorsDao.findDoctorById")),
+            @Result(property = "users", column = "userId",one = @One(select = "com.myHospital.hospital.dao.UsersDao.findUserById"))
+    })
     List<Appointment> findAllAppointmentOfOneByUserId(String userId);
+
+    //通过appointmentId更新预约状态
+    @Update("UPDATE appointment SET appointmentStatus=2 WHERE appointmentId=#{appointmentId}")
+    void updateStatusById(String appointmentId);
 }

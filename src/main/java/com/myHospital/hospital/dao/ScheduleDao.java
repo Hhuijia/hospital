@@ -26,4 +26,8 @@ public interface ScheduleDao {
     //查询某一天的某个科室的所有值班医生
     @Select("SELECT * FROM schedule WHERE departmentName=#{departmentName} AND DATE_FORMAT(workDate,'%Y%m%d')=#{currentDay}")
     List<Schedule> findScheduleCurrentDay(@Param("currentDay") String currentDay, @Param("departmentName") String departmentName);
+
+    //查找某个医生7天内有排班的日期
+    @Select("SELECT s.workDate FROM (SELECT * FROM schedule WHERE doctorId=#{doctorId}) AS s GROUP BY s.workDate HAVING s.workDate BETWEEN #{currentDate} AND #{after7Day}")
+    List<Schedule> findScheduleBetweenOneWeek(@Param("doctorId") String doctorId, @Param("currentDate") String currentDate, @Param("after7Day") String after7Day);
 }

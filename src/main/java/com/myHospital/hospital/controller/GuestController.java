@@ -103,17 +103,22 @@ public class GuestController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","选择医生时间");
         Department department = medicineDepartmentService.findDepartmentById(departmentId);
+        //按时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDate = simpleDateFormat.format(new Date());
         log.info("*******[{}]-[{}]******",department.getDepartmentName(),currentDate);
         List<Doctors> doctors = doctorService.findDoctorToday(department.getDepartmentName(),currentDate);
-        modelAndView.addObject("department",department);
         modelAndView.addObject("doctors",doctors);
         ArrayList<String> featureDaysList = new ArrayList<>();
         for (int i = 0; i <7; i++) {
             featureDaysList.add(getFeatureDate(i));
         }
         modelAndView.addObject("featureDaysList",featureDaysList);
+        //按医生
+        List<Doctors> doctors1 = doctorService.findDoctorInSameDepartment(department.getDepartmentName());
+        modelAndView.addObject("doctors1",doctors1);
+
+        modelAndView.addObject("department",department);
         modelAndView.setViewName("guest/schedule");
         return modelAndView;
     }

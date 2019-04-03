@@ -41,6 +41,10 @@ public interface MedicineDepartmentDao {
     @Select("SELECT count(*) FROM department WHERE departmentName = #{departmentName}")
     int isExitDepartmentName(String departmentName);
 
+    //通过departmentName查找科室
+    @Select("SELECT * FROM department WHERE departmentName = #{departmentName}")
+    Department findDepartmentByName(String departmentName);
+
     //通过departmentId查找科室
     @Select("SELECT * FROM department WHERE departmentId = #{departmentId}")
     Department findDepartmentById(String departmentId);

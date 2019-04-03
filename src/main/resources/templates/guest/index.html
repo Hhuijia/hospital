@@ -73,21 +73,42 @@
             <div class="title-main">
               <h2 class="h2">优秀科室<span class="title-secondary">科室简介</span></h2>
             </div>
-            <div class="best-room-carousel">
-              <ul class="row best-room_ul">
-                <li class="col-lg-3 col-md-3 col-sm-3 col-xs-12 best-room_li" th:each="department:${departments}">
-                  <div class="best-room_img">
-                    <a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"><img src="/static/assets/images/best-rooms/1.jpg" alt=""></a>
-                    <div class="best-room_overlay">
-                      <div class="overlay_icn"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"></a></div>
-                    </div>
-                  </div>
-                  <div class="best-room-info" style="padding: 10px;">
-                    <div class="best-room_t"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"></a></div>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <th:block th:each="i:${#numbers.sequence(0,0)}">
+              <div class="best-room-carousel">
+                <ul class="row best-room_ul">
+                  <th:block th:each="k:${#numbers.sequence(0,7)}">
+                    <th:block th:if="${#lists.size(departments) gt k+(i*8)}">
+                      <li class="col-lg-3 col-md-3 col-sm-3 col-xs-12 best-room_li">
+                        <div class="best-room_img">
+                          <a th:href="@{/guest/showDepartmentDetail(departmentId=${departments[k+(i*8)].getDepartmentId()})}"><img src="/static/assets/images/best-rooms/1.jpg" alt=""></a>
+                          <div class="best-room_overlay">
+                            <div class="overlay_icn"><a th:href="@{/guest/showDepartmentDetail(departmentId=${departments[k+(i*8)].getDepartmentId()})}"></a></div>
+                          </div>
+                        </div>
+                        <div class="best-room-info" style="padding: 10px;">
+                          <div class="best-room_t"><a th:href="@{/guest/showDepartmentDetail(departmentId=${departments[k+(i*8)].getDepartmentId()})}" th:text="${departments[k+(i*8)].departmentName}"></a></div>
+                        </div>
+                      </li>
+                    </th:block>
+                  </th:block>
+                </ul>
+              </div>
+            </th:block>
+            <!--<div class="best-room-carousel">-->
+              <!--<ul class="row best-room_ul">-->
+                <!--<li class="col-lg-3 col-md-3 col-sm-3 col-xs-12 best-room_li" th:each="department:${departments}">-->
+                  <!--<div class="best-room_img">-->
+                    <!--<a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"><img src="/static/assets/images/best-rooms/1.jpg" alt=""></a>-->
+                    <!--<div class="best-room_overlay">-->
+                      <!--<div class="overlay_icn"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"></a></div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="best-room-info" style="padding: 10px;">-->
+                    <!--<div class="best-room_t"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}" th:text="${department.departmentName}"></a></div>-->
+                  <!--</div>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</div>-->
           </div>
           <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="title-main"><h2 class="h2">最新公告<span class="title-secondary">即时. 准确. 优惠.</span></h2></div>

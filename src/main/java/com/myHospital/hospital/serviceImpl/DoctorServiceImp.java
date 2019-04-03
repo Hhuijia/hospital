@@ -38,6 +38,12 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
+    public Doctors findDoctorById(String doctorId) {
+        log.info("******************findDoctorById********************");
+        return doctorsDao.findDoctorById(doctorId);
+    }
+
+    @Override
     public List<Doctors> findDoctorInSameDepartment(String departmentName) {
         log.info("******************findDoctorInSameDepartment********************");
         return doctorsDao.findDoctorInSameDepartment(departmentName);

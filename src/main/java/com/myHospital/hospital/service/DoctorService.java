@@ -15,6 +15,9 @@ public interface DoctorService {
     //通过userId查询对应在医生表的信息
     Doctors findDoctorByUserId(String userId);
 
+    //通过doctorId查询对应在医生表的信息
+    Doctors findDoctorById(String doctorId);
+
     //查询某个科室的所有医生
     List<Doctors> findDoctorInSameDepartment(String departmentName);
 //

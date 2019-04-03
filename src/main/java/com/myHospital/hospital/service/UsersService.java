@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface UsersService {
 
+    //通过userIDNum更新用户信息
+    int updateUserByIdNum(Users user);
+
     //通过userIDNum查找用户信息
     Users findUserByIDNum(String userIDNum);
 
@@ -31,4 +34,7 @@ public interface UsersService {
 
     //查询预约记录
     List<Appointment> findAllAppointmentOfOneByUserId(String userId);
+
+    //通过appointmentId更新预约状态
+    void updateStatusById(String appointmentId);
 }

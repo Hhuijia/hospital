@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/static/assets/css/style.css">
   <link rel="stylesheet" href="/static/assets/css/responsive.css">
+  <style type="text/css">
+    .table td, th{
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <!-- main wrapper -->
@@ -33,56 +38,22 @@
       <div class="container">
         <div class="contact-block_form">
           <div class="row marg50">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2">请填写预约信息</h2></div> 
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 class="h2">请确认预约信息</h2></div>
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
             <div class="col-lg-8 col-md-8 col-sm-11 col-xs-11">
-              <form action="" class="form-horizontal form-wizzard" th:action="@{/users/addAppointment}" method="post" th:object="${appointment}">
-                <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" hidden>
-                    <div class="form-group">
-                      <input type="text" name="userName" class="form-control" th:value="${user.userId}" th:field="*{userId}">
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="text" name="userName" class="form-control" th:value="${user.userName}" disabled>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="text" name="userSex" class="form-control" th:value="${user.userSex}" disabled>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="text" name="userAge" class="form-control" th:value="${user.userAge}" disabled>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="tel" name="userPhone" class="form-control" th:value="${user.userPhone}" disabled>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="text" name="userAddress" class="form-control" th:value="${user.userAddress}" disabled>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="text" name="emergencyContact" class="form-control" placeholder="紧急联系人" th:field="*{emergencyContact}">
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                      <input type="tel" name="emergContPhone" class="form-control" placeholder="紧急联系人电话" th:field="*{emergContPhone}">
-                    </div>
-                  </div>
-                </div>
+              <table class="table table-striped">
+                <tbody>
+                <tr><th>姓名：</th><td th:text="${user.userName}"></td></tr>
+                <tr><th>性别：</th><td th:text="${user.userSex}"></td></tr>
+                <tr><th>年龄：</th><td th:text="${user.userAge}"></td></tr>
+                <tr><th>电话：</th><td th:text="${user.userPhone}"></td></tr>
+                <tr><th>住址：</th><td th:text="${user.userAddress}"></td></tr>
+                <tr><th>科室：</th><td th:text="${department.departmentName}"></td></tr>
+                <tr><th>医生：</th><td th:text="${doctor.doctorName}"></td></tr>
+                <tr><th>预约时间：</th><td th:text="${appoint}"></td></tr>
+                <tr><td colspan="2"><a th:href="@{/users/makeAppointment(userId=${user.userId},doctorId=${doctor.doctorId},departmentId=${department.departmentId},appointmentTime=${appoint})}" class="btn btn-default">确定</a></td></tr>
+                </tbody>
+              </table>
                 <!--<div class="row">-->
                   <!--<div class="form-group">-->
                     <!--<div class="theme-select">-->
@@ -105,10 +76,6 @@
                   <!--</thead>-->
                   <!--<tbody id="tbodyData"></tbody>-->
                 <!--</table>-->
-                <div class="form-group text-center">
-                  <input type="submit" value="确定" class="btn btn-default">
-                </div>
-              </form>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
           </div>
@@ -120,15 +87,7 @@
   </div>
   <!-- Scripts -->
   <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/tether.min.js"></script>
   <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/moment.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/jquery.smartmenus.js"></script>
-  <script type="text/javascript" src="/static/assets/js/jquery.parallax.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/jquery.shuffle.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/main.js"></script>
   <script type="text/javascript">
       $(document).ready(function() {
           $("#selectDepartment").change(function () {
