@@ -33,10 +33,19 @@ public interface RecordDao {
     List<String> findColumnName(String tableName);
 
     //通过医生ID查看个人预约记录(年月日)
-    @Select("SELECT * FROM appointment WHERE doctorId=#{doctorId} AND DATE_FORMAT(appointmentTime,'%Y%m%d')=#{appointmentTime}")
+    @Select("SELECT * FROM appointment WHERE doctorId=#{doctorId} AND DATE_FORMAT(appointmentTime,'%Y%m%d')=#{appointmentTime} AND appointmentStatus='1' ORDER BY appointmentTime, appointmentCreatedTime")
     @Results({
             @Result(property = "doctors",column = "doctorId",one = @One(select = "com.myHospital.hospital.dao.DoctorsDao.findDoctorById")),
             @Result(property = "users", column = "userId",one = @One(select = "com.myHospital.hospital.dao.UsersDao.findUserById"))
     })
     List<Appointment> findTodayAppointment(@Param("doctorId") String doctorId,  @Param("appointmentTime") String appointmentTime);
+
+
+    //通过医生ID查看个人近期预约记录(年月日)
+    @Select("SELECT * FROM appointment WHERE doctorId=#{doctorId} AND appointmentTime BETWEEN #{before3Day} AND #{after7Day} ORDER BY appointmentTime, appointmentCreatedTime")
+    @Results({
+            @Result(property = "doctors",column = "doctorId",one = @One(select = "com.myHospital.hospital.dao.DoctorsDao.findDoctorById")),
+            @Result(property = "users", column = "userId",one = @One(select = "com.myHospital.hospital.dao.UsersDao.findUserById"))
+    })
+    List<Appointment> findRecentAppointment(@Param("doctorId") String doctorId,  @Param("before3Day") String before3Day, @Param("after7Day") String after7Day);
 }

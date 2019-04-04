@@ -13,10 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.*;
 
-import static com.myHospital.hospital.util.getFeatureDayUtil.getFeatureDate;
+import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
 
 /**
  * @author QUEENEY

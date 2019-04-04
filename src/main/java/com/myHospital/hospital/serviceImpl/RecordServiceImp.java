@@ -3,7 +3,6 @@ package com.myHospital.hospital.serviceImpl;
 import com.myHospital.hospital.dao.DoctorsDao;
 import com.myHospital.hospital.dao.RecordDao;
 import com.myHospital.hospital.entity.Appointment;
-import com.myHospital.hospital.entity.Doctors;
 import com.myHospital.hospital.entity.GetMedicine;
 import com.myHospital.hospital.entity.Pay;
 import com.myHospital.hospital.service.RecordService;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
 
 /**
  * @Description:
@@ -62,5 +63,14 @@ public class RecordServiceImp implements RecordService {
         String currentDateTime = simpleDateFormat.format(new Date());
         log.info("*******[{}]-[{}]******",doctorId,currentDateTime);
         return recordDao.findTodayAppointment(doctorId, currentDateTime);
+    }
+
+    @Override
+    public List<Appointment> findRecentAppointment(String doctorId) {
+        log.info("******************findRecentAppointment********************");
+        String before3Day = getFeatureDate(-3).substring(0,8);
+        String after7Day = getFeatureDate(7).substring(0,8);
+        log.info("*******[{}]-[{}]-[{}]******",doctorId,before3Day,after7Day);
+        return recordDao.findRecentAppointment(doctorId,before3Day,after7Day);
     }
 }

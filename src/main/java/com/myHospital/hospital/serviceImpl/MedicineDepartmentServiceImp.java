@@ -145,23 +145,21 @@ public class MedicineDepartmentServiceImp implements MedicineDepartmentService {
                 Row row = sheet.getRow(i);
                 if (row == null){continue;}
                 Medicine medicine = new Medicine();
-                String medicineName = row.getCell(0).getStringCellValue();
-                int medicineCount = (int) row.getCell(1).getNumericCellValue();
-                String medicineUnit = row.getCell(2).getStringCellValue();
-                BigDecimal medicinePrice = BigDecimal.valueOf(row.getCell(3).getNumericCellValue());
-                String medicineResidual = row.getCell(4).getStringCellValue();
-                String medicineType = row.getCell(5).getStringCellValue();
-                String medicineDosage = row.getCell(6).getStringCellValue();
-                String standardUsage = row.getCell(7).getStringCellValue();
+                String medicineName = row.getCell(0).getStringCellValue();//名称
+                String medicineUnit = row.getCell(1).getStringCellValue();//单位
+                BigDecimal medicinePrice = BigDecimal.valueOf(row.getCell(2).getNumericCellValue());//单价
+                String medicineResidual = row.getCell(3).getStringCellValue();//库存
+                String medicineType = row.getCell(4).getStringCellValue();//类型
+                String medicineDosage = row.getCell(5).getStringCellValue();//剂量
+                String companyName = row.getCell(6).getStringCellValue();//公司
 
                 medicine.setMedicineName(medicineName);
-                medicine.setMedicineCount(medicineCount);
                 medicine.setMedicineUnit(medicineUnit);
                 medicine.setMedicinePrice(medicinePrice);
                 medicine.setMedicineResidual(medicineResidual);
                 medicine.setMedicineType(medicineType);
                 medicine.setMedicineDosage(medicineDosage);
-                medicine.setStandardUsage(standardUsage);
+                medicine.setCompanyName(companyName);
 
                 medicines.add(medicine);
             }

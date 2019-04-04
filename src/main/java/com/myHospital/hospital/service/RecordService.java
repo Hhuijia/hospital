@@ -27,6 +27,9 @@ public interface RecordService {
     //查询数据表列名
     List<String> findColumnName(String tableName);
 
-    //通过医生ID查看个人预约记录
-    List<Appointment> findTodayAppointment(String userId);
+    //通过医生ID查看个人预约记录(年月日)
+    List<Appointment> findTodayAppointment(String doctorId);
+
+    //通过医生ID查看个人近期预约记录(年月日)
+    List<Appointment> findRecentAppointment(String doctorId);
 }

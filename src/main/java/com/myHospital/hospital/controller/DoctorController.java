@@ -39,17 +39,17 @@ public class DoctorController {
     @Autowired
     private MedicineDepartmentService medicineDepartmentService;
 
-    @PostMapping("/showRecordPage")
+    @GetMapping("/showRecordPage")
     public ModelAndView showRecordPage(String userId){
         log.info("********医生界面/预约就诊*********");
-        Users users = usersService.findUserByID(userId);
-        List<Record> records = prescriptionRecordService.findAllRecordAndPrescription(userId);//病历
-        List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("title","预约就诊");
+        Users users = usersService.findUserByID(userId);
         modelAndView.addObject("users",users);log.info("[{}]",users);
-        modelAndView.addObject("records",records);log.info("[{}]",records);
+        List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         modelAndView.addObject("medicines",medicines);log.info("[{}]",medicines);
+//        List<Record> records = prescriptionRecordService.findAllRecordAndPrescription(userId);//病历
+//        modelAndView.addObject("records",records);log.info("[{}]",records);
+
         List<Prescription> prescriptions = new ArrayList<>();
         modelAndView.addObject("prescriptions",prescriptions);
         modelAndView.setViewName("doctor/record");
@@ -74,7 +74,7 @@ public class DoctorController {
 //        return modelAndView;
 //    }
 
-    @GetMapping("/current_appointment")
+    @GetMapping("/currentAppointment")
     public ModelAndView currentAppointment(){
         log.info("********医生界面/今日预约*********");
         Session session = SecurityUtils.getSubject().getSession();
@@ -82,9 +82,21 @@ public class DoctorController {
         Doctors doctors = doctorService.findDoctorByUserId(user.getUserId());
         List<Appointment> appointments = recordService.findTodayAppointment(doctors.getDoctorId());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("title","今天预约");
         modelAndView.addObject("appointments",appointments);log.info("[{}]",appointments);
         modelAndView.setViewName("doctor/current_appointment");
+        return modelAndView;
+    }
+
+    @GetMapping("/allAppointment")
+    public ModelAndView allAppointment(){
+        log.info("********医生界面/近期预约*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        Doctors doctors = doctorService.findDoctorByUserId(user.getUserId());
+        List<Appointment> appointments = recordService.findRecentAppointment(doctors.getDoctorId());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("appointments",appointments);log.info("[{}]",appointments);
+        modelAndView.setViewName("doctor/all_appointment");
         return modelAndView;
     }
 }

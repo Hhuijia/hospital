@@ -8,8 +8,10 @@ import java.sql.Timestamp;
  */
 public class Prescription {
     private String prescriptionId;
-    private int prescriptionDosage;
-    private String prescriptionUsage;
+    private int medicineCount;//数量
+    private String medicineUnit;//单位
+    private int prescriptionDosage;//剂量
+    private String prescriptionUsage;//用法 ag:口服
     private Timestamp prescriptionCreatedTime;
     private String recordId;
     private String medicineId;
@@ -22,20 +24,20 @@ public class Prescription {
         this.prescriptionId = prescriptionId;
     }
 
-    public String getRecordId() {
-        return recordId;
+    public int getMedicineCount() {
+        return medicineCount;
     }
 
-    public void setRecordId(String recordId) {
-        this.recordId = recordId;
+    public void setMedicineCount(int medicineCount) {
+        this.medicineCount = medicineCount;
     }
 
-    public String getMedicineId() {
-        return medicineId;
+    public String getMedicineUnit() {
+        return medicineUnit;
     }
 
-    public void setMedicineId(String medicineId) {
-        this.medicineId = medicineId;
+    public void setMedicineUnit(String medicineUnit) {
+        this.medicineUnit = medicineUnit;
     }
 
     public int getPrescriptionDosage() {
@@ -60,5 +62,21 @@ public class Prescription {
 
     public void setPrescriptionCreatedTime(Timestamp prescriptionCreatedTime) {
         this.prescriptionCreatedTime = prescriptionCreatedTime;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
+
+    public String getMedicineId() {
+        return medicineId;
+    }
+
+    public void setMedicineId(String medicineId) {
+        this.medicineId = medicineId;
     }
 }

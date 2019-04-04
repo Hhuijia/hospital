@@ -10,13 +10,12 @@ import java.sql.Timestamp;
 public class Medicine {
     private String medicineId;
     private String medicineName;
-    private Integer medicineCount;
-    private String medicineUnit;
-    private BigDecimal medicinePrice;
-    private String medicineResidual;
-    private String medicineType;
-    private String medicineDosage;
-    private String standardUsage;
+    private String medicineUnit;//单位
+    private BigDecimal medicinePrice;//单价
+    private String medicineResidual;//库存
+    private String medicineType;//类型 ag:妇科用药
+    private String medicineDosage;//规格 ag:0.5g*24粒
+    private String companyName;//公司名称
     private Timestamp medicineCreateTime;
     private Timestamp medicineUpdateTime;
 
@@ -34,14 +33,6 @@ public class Medicine {
 
     public void setMedicineName(String medicineName) {
         this.medicineName = medicineName;
-    }
-
-    public Integer getMedicineCount() {
-        return medicineCount;
-    }
-
-    public void setMedicineCount(Integer medicineCount) {
-        this.medicineCount = medicineCount;
     }
 
     public String getMedicineUnit() {
@@ -84,12 +75,12 @@ public class Medicine {
         this.medicineDosage = medicineDosage;
     }
 
-    public String getStandardUsage() {
-        return standardUsage;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setStandardUsage(String standardUsage) {
-        this.standardUsage = standardUsage;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public Timestamp getMedicineCreateTime() {

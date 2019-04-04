@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class Record {
     private String recordId;
-    private String diagnosticResult;
-    private String symptom;
+    private String diagnosticResult;//诊断结果
+    private String symptom;//症状
     private Timestamp recordCreatedTime;
     private String userId;
     private String doctorId;

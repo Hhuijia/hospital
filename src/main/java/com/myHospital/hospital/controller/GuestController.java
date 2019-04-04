@@ -14,11 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.myHospital.hospital.util.getFeatureDayUtil.getFeatureDate;
+import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
 
 /**
  * @author QUEENEY
