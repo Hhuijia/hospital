@@ -1,9 +1,6 @@
 package com.myHospital.hospital;
 
-import com.myHospital.hospital.entity.Appointment;
-import com.myHospital.hospital.entity.Department;
-import com.myHospital.hospital.entity.Role;
-import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.MedicineDepartmentService;
 import com.myHospital.hospital.service.RecordService;
 import com.myHospital.hospital.service.RolePermissionService;
@@ -17,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,20 +36,23 @@ public class HospitalApplicationTests {
 	private RolePermissionService rolePermissionService;
 	@Test
 	public void contextLoads() {
-		ArrayList<String> featureDaysList = new ArrayList<>();
-		for (int i = 0; i <7; i++) {
-			featureDaysList.add(getFeatureDate(i));
+		String prescriptions = "[[\"MEDICINE_0947_1554423430028\",\"1\",\"瓶\",\"1\",\"每日1次\",\"外用\"],[\"MEDICINE_0907_1554423429897\",\"22\",\"袋\",\"2\",\"每日1次\",\"外用\"]]";
+		List<Prescription> prescription = new ArrayList<>();
+		prescriptions = prescriptions.substring(prescriptions.indexOf("[")+1,prescriptions.lastIndexOf("]"));
+		String[] str = prescriptions.split("]");
+		for (String string : str){
+			Prescription pre = new Prescription();
+			String[] prePart = string.substring(string.indexOf("[")+1).split(",");
+			pre.setMedicineId(prePart[0].substring(1,prePart[0].length()-1));
+			pre.setPrescriptionCount(Integer.parseInt(prePart[1].substring(1,prePart[1].length()-1)));
+			pre.setPrescriptionUnit(prePart[2].substring(1,prePart[2].length()-1));
+			pre.setDosageEachTime(BigDecimal.valueOf(Integer.parseInt(prePart[3].substring(1,prePart[3].length()-1))));
+			pre.setPrescriptionDosage(prePart[4].substring(1,prePart[4].length()-1));
+			pre.setPrescriptionUsage(prePart[5].substring(1,prePart[5].length()-1));
+
+			prescription.add(pre);
 		}
-		for (String date : featureDaysList) {
-			System.out.println(date);
-		}
-	}
-	public static String getFeatureDate(int past) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + past);
-		Date today = calendar.getTime();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd EEE");
-		return format.format(today);
+		log.info("[{}]",prescription);
 	}
 }
 

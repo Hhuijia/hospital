@@ -1,5 +1,6 @@
 package com.myHospital.hospital.entity;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -8,9 +9,10 @@ import java.sql.Timestamp;
  */
 public class Prescription {
     private String prescriptionId;
-    private int medicineCount;//数量
-    private String medicineUnit;//单位
-    private int prescriptionDosage;//剂量
+    private int prescriptionCount;//数量
+    private String prescriptionUnit;//单位
+    private BigDecimal dosageEachTime;//单次服用剂量
+    private String prescriptionDosage;//服用次数
     private String prescriptionUsage;//用法 ag:口服
     private Timestamp prescriptionCreatedTime;
     private String recordId;
@@ -24,27 +26,35 @@ public class Prescription {
         this.prescriptionId = prescriptionId;
     }
 
-    public int getMedicineCount() {
-        return medicineCount;
+    public int getPrescriptionCount() {
+        return prescriptionCount;
     }
 
-    public void setMedicineCount(int medicineCount) {
-        this.medicineCount = medicineCount;
+    public void setPrescriptionCount(int prescriptionCount) {
+        this.prescriptionCount = prescriptionCount;
     }
 
-    public String getMedicineUnit() {
-        return medicineUnit;
+    public String getPrescriptionUnit() {
+        return prescriptionUnit;
     }
 
-    public void setMedicineUnit(String medicineUnit) {
-        this.medicineUnit = medicineUnit;
+    public void setPrescriptionUnit(String prescriptionUnit) {
+        this.prescriptionUnit = prescriptionUnit;
     }
 
-    public int getPrescriptionDosage() {
+    public BigDecimal getDosageEachTime() {
+        return dosageEachTime;
+    }
+
+    public void setDosageEachTime(BigDecimal dosageEachTime) {
+        this.dosageEachTime = dosageEachTime;
+    }
+
+    public String getPrescriptionDosage() {
         return prescriptionDosage;
     }
 
-    public void setPrescriptionDosage(int prescriptionDosage) {
+    public void setPrescriptionDosage(String prescriptionDosage) {
         this.prescriptionDosage = prescriptionDosage;
     }
 

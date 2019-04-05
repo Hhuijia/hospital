@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +41,12 @@ public class DoctorController {
     private MedicineDepartmentService medicineDepartmentService;
 
     @GetMapping("/showRecordPage")
-    public ModelAndView showRecordPage(String userId){
+    public ModelAndView showRecordPage(String userId,String appointmentId){
         log.info("********医生界面/预约就诊*********");
         ModelAndView modelAndView = new ModelAndView();
         Users users = usersService.findUserByID(userId);
         modelAndView.addObject("users",users);log.info("[{}]",users);
+        modelAndView.addObject("appointmentId",appointmentId);log.info(appointmentId);
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         modelAndView.addObject("medicines",medicines);log.info("[{}]",medicines);
 //        List<Record> records = prescriptionRecordService.findAllRecordAndPrescription(userId);//病历
@@ -56,23 +58,43 @@ public class DoctorController {
         return modelAndView;
     }
 
-//    @PostMapping("/addRecordAndPrescription")
-//    public ModelAndView addRecordAndPrescription(@ModelAttribute List<Prescription> prescriptions, @RequestParam String userId,
-//                                                 @RequestParam String recordContent, @RequestParam String advice){
-//        log.info("********添加病历和处方*********");
-//        Session session = SecurityUtils.getSubject().getSession();
-//        Users user = (Users) session.getAttribute("USER_SESSION");
-//        Doctors doctors = doctorService.findDoctorByUserId(user.getUserId());
-//        Record record1 = new Record();
-//        record1.setUserId(userId);
-//        record1.setDoctorId(doctors.getDoctorId());
-//        prescriptionRecordService.addRecordAndPrescription(prescriptions,record1);
-//        List<Record> record = prescriptionRecordService.findAllRecordAndPrescription(userId);
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("title","查看病历信息");
-//        modelAndView.addObject("username",user.getUserName());
-//        return modelAndView;
-//    }
+    @PostMapping("/addRecordAndPrescription")
+    @ResponseBody
+    public int addRecordAndPrescription(@RequestParam String appointmentId, @RequestParam String symptom, @RequestParam String diagnostic,
+                                            @RequestParam String userId, @RequestParam String prescriptions){
+        log.info("********添加病历和处方*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        Doctors doctors = doctorService.findDoctorByUserId(user.getUserId());
+
+        Record record = new Record();
+        record.setUserId(userId);
+        record.setDoctorId(doctors.getDoctorId());
+        record.setDiagnosticResult(diagnostic);
+        record.setSymptom(symptom);
+
+        List<Prescription> prescription = new ArrayList<>();
+        prescriptions = prescriptions.substring(prescriptions.indexOf("[")+1,prescriptions.lastIndexOf("]"));
+        String[] str = prescriptions.split("]");
+        for (String string : str){
+            Prescription pre = new Prescription();
+            String[] prePart = string.substring(string.indexOf("[")+1).split(",");
+            pre.setMedicineId(prePart[0].substring(1,prePart[0].length()-1));
+            pre.setPrescriptionCount(Integer.parseInt(prePart[1].substring(1,prePart[1].length()-1)));
+            pre.setPrescriptionUnit(prePart[2].substring(1,prePart[2].length()-1));
+            pre.setDosageEachTime(BigDecimal.valueOf(Integer.parseInt(prePart[3].substring(1,prePart[3].length()-1))));
+            pre.setPrescriptionDosage(prePart[4].substring(1,prePart[4].length()-1));
+            pre.setPrescriptionUsage(prePart[5].substring(1,prePart[5].length()-1));
+
+            prescription.add(pre);
+        }
+        log.info("[{}]",prescription);
+        int isSuccess = prescriptionRecordService.addRecordAndPrescription(prescription,record);
+        if (isSuccess == 1){
+            usersService.updateStatusById(appointmentId,3);
+        }
+        return isSuccess;
+    }
 
     @GetMapping("/currentAppointment")
     public ModelAndView currentAppointment(){

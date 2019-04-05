@@ -76,8 +76,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void updateStatusById(String appointmentId) {
+    public void updateStatusById(String appointmentId, int appointmentStatus) {
         log.info("******************updateStatusById********************");
-        usersDao.updateStatusById(appointmentId);
+        usersDao.updateStatusById(appointmentId,appointmentStatus);
     }
 }

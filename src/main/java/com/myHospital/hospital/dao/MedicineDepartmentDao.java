@@ -14,7 +14,7 @@ import java.util.List;
 public interface MedicineDepartmentDao {
 
     //添加药品
-    @Insert("INSERT INTO medicine(medicineId,medicineName,medicineCount,medicineUnit,medicinePrice,medicineResidual,medicineType,medicineDosage,standardUsage) VALUES(#{medicineId},#{medicineName},#{medicineCount},#{medicineUnit},#{medicinePrice},#{medicineResidual},#{medicineType},#{medicineDosage},#{standardUsage})")
+    @Insert("INSERT INTO medicine(medicineId,medicineName,medicineUnit,medicinePrice,medicineResidual,medicineType,medicineDosage,companyName) VALUES(#{medicineId},#{medicineName},#{medicineUnit},#{medicinePrice},#{medicineResidual},#{medicineType},#{medicineDosage},#{companyName})")
     void addMedicine(Medicine medicine);
 
     //添加科室
@@ -49,9 +49,17 @@ public interface MedicineDepartmentDao {
     @Select("SELECT * FROM department WHERE departmentId = #{departmentId}")
     Department findDepartmentById(String departmentId);
 
+    //通过ID查找药品
+    @Select("SELECT * FROM department WHERE medicineId = #{medicineId}")
+    Medicine findMedicineById(String medicineId);
+
     //更新科室信息
     @Update("UPDATE department SET departmentSystem = #{departmentSystem}, departmentInfo = #{departmentInfo}, departmentSymptom = #{departmentSymptom} WHERE departmentName = #{departmentName}")
     void updateDepartment(Department department);
+
+    //更新药品库存
+    @Update("UPDATE medicine SET medicineResidual = #{medicineResidual} WHERE medicineId = #{medicineId}")
+    void updateMedicineResidual(@Param("medicineResidual") int medicineResidual, @Param("medicineId") String medicineId);
 
     //通过medicineId删除药品
     @Delete("DELETE FROM medicine WHERE medicineId = #{medicineId}")

@@ -12,7 +12,7 @@ public class Medicine {
     private String medicineName;
     private String medicineUnit;//单位
     private BigDecimal medicinePrice;//单价
-    private String medicineResidual;//库存
+    private int medicineResidual;//库存
     private String medicineType;//类型 ag:妇科用药
     private String medicineDosage;//规格 ag:0.5g*24粒
     private String companyName;//公司名称
@@ -51,11 +51,11 @@ public class Medicine {
         this.medicinePrice = medicinePrice;
     }
 
-    public String getMedicineResidual() {
+    public int getMedicineResidual() {
         return medicineResidual;
     }
 
-    public void setMedicineResidual(String medicineResidual) {
+    public void setMedicineResidual(int medicineResidual) {
         this.medicineResidual = medicineResidual;
     }
 

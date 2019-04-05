@@ -36,5 +36,5 @@ public interface UsersService {
     List<Appointment> findAllAppointmentOfOneByUserId(String userId);
 
     //通过appointmentId更新预约状态
-    void updateStatusById(String appointmentId);
+    void updateStatusById(String appointmentId, int appointmentStatus);
 }

@@ -64,6 +64,6 @@ public interface UsersDao {
     List<Appointment> findAllAppointmentOfOneByUserId(String userId);
 
     //通过appointmentId更新预约状态
-    @Update("UPDATE appointment SET appointmentStatus=2 WHERE appointmentId=#{appointmentId}")
-    void updateStatusById(String appointmentId);
+    @Update("UPDATE appointment SET appointmentStatus=#{appointmentStatus} WHERE appointmentId=#{appointmentId}")
+    void updateStatusById(String appointmentId,int appointmentStatus);
 }

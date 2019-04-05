@@ -1,6 +1,8 @@
 package com.myHospital.hospital.serviceImpl;
 
+import com.myHospital.hospital.dao.MedicineDepartmentDao;
 import com.myHospital.hospital.dao.PrescriptionRecordDao;
+import com.myHospital.hospital.entity.Medicine;
 import com.myHospital.hospital.entity.Prescription;
 import com.myHospital.hospital.entity.Record;
 import com.myHospital.hospital.service.PrescriptionRecordService;
@@ -23,18 +25,34 @@ public class PrescriptionRecordServiceImp implements PrescriptionRecordService {
     @Autowired
     private PrescriptionRecordDao prescriptionRecordDao;
 
+    @Autowired
+    private MedicineDepartmentDao medicineDepartmentDao;
+
     @Override
-    public void addRecordAndPrescription(List<Prescription> prescriptions, Record record) {
+    public int addRecordAndPrescription(List<Prescription> prescriptions, Record record) {
         log.info("******************addRecordAndPrescription********************");
         String strRecord = String.format("%04d", new Random().nextInt(1001));
-        record.setRecordId( "RECORD" + strRecord + "_" + System.currentTimeMillis());
-        prescriptionRecordDao.addRecord(record);
-        for (Prescription prescription : prescriptions){
-            String strPres = String.format("%04d", new Random().nextInt(1001));
-            prescription.setPrescriptionId( "PRESCRIPTION_" + strPres + "_" + System.currentTimeMillis());
-            prescription.setRecordId(record.getRecordId());
-            prescriptionRecordDao.addPrescription(prescription);
+        record.setRecordId( "RECORD_" + strRecord + "_" + System.currentTimeMillis());
+        int addRecordSuccess = prescriptionRecordDao.addRecord(record);
+        if (addRecordSuccess == 1){
+            for (Prescription prescription : prescriptions){
+                String strPres = String.format("%04d", new Random().nextInt(1001));
+                prescription.setPrescriptionId( "PRESCRIPTION_" + strPres + "_" + System.currentTimeMillis());
+                prescription.setRecordId(record.getRecordId());
+                int addPrescriptionSuccess = prescriptionRecordDao.addPrescription(prescription);
+                if (addPrescriptionSuccess == 0){
+                    return 0;
+                }else {
+                    Medicine medicine = medicineDepartmentDao.findMedicineById(prescription.getMedicineId());
+                    int medicineResidual = medicine.getMedicineResidual();
+                    int residualAfterUpdate = medicineResidual - prescription.getPrescriptionCount();
+                    medicineDepartmentDao.updateMedicineResidual(residualAfterUpdate,prescription.getMedicineId());
+                }
+            }
+        }else {
+            return 0;
         }
+        return 1;
     }
 
     @Override

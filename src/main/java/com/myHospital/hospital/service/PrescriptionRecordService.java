@@ -14,7 +14,7 @@ import java.util.List;
 public interface PrescriptionRecordService {
 
     //添加病历和处方
-    void addRecordAndPrescription(List<Prescription> prescriptions, Record record);
+    int addRecordAndPrescription(List<Prescription> prescriptions, Record record);
 
     //通过userId查询个人以往病历和处方
     List<Record> findAllRecordAndPrescription(String userId);

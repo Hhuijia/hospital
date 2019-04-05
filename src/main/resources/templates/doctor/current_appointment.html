@@ -25,13 +25,13 @@
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">我的预约</a> </div>
     <h1>我的预约</h1>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid" id="refreshBody">
     <hr>
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5 th:text="'今天预约共'+${appointments.size()}+'位病患'"></h5>
+            <h5 th:text="'今天预约还剩'+${appointments.size()}+'位病患'"></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
@@ -53,7 +53,7 @@
                 <td th:text="${appointment.getUsers().userSex}"></td>
                 <td th:text="${appointment.getUsers().userPhone}"></td>
                 <td>
-                  <a th:href="@{/doctor/showRecordPage(userId=${appointment.getUsers().userId})}" class="btn btn-primary btn-mini">就诊</a>
+                  <a th:href="@{/doctor/showRecordPage(userId=${appointment.getUsers().userId},appointmentId=${appointment.appointmentId})}" class="btn btn-primary btn-mini">就诊</a>
                 </td>
               </tr>
               </tbody>
@@ -73,5 +73,13 @@
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/matrix.js"></script>
 <script src="/static/js/matrix.tables.js"></script>
+<script type="text/javascript">
+    // $(document).ready(function() {
+    //     setInterval(function() {
+    //         $(document).load("/doctor/currentAppointment","");
+    //     }, 15000);
+    // })
+
+</script>
 </body>
 </html>

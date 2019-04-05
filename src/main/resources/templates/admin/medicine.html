@@ -21,7 +21,7 @@
 <div class="headerPart" th:replace="common/header::header"></div>
 <div id="content">
 	<div id="content-header">
-		<div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">其它管理</a></div>
+		<div id="breadcrumb"><a href="/common/otherIndex" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">其它管理</a></div>
 		<h1>药品管理</h1>
 	</div>
 	<div class="container-fluid">
@@ -63,9 +63,9 @@
 					            	</div>
 					            </div>
 					            <div class="control-group">
-						            <label class="control-label">药品疗效 :</label>
+						            <label class="control-label">药品单位 :</label>
 						            <div class="controls">
-					                	<input type="text" placeholder="Efficacy" th:field="*{medicineEfficacy}">
+					                	<input type="text" placeholder="Efficacy" th:field="*{medicineUnit}">
 					                </div>
 					            </div>
 				        		<div class="control-group">
@@ -74,6 +74,12 @@
 					                <input type="text" placeholder="Dosage" th:field="*{medicineDosage}" />
 					              </div>
 					            </div>
+								<div class="control-group">
+									<label class="control-label">出品公司 :</label>
+									<div class="controls">
+										<input type="text" placeholder="Dosage" th:field="*{companyName}" />
+									</div>
+								</div>
 				        	</div>
 				        	<div class="control-group">
 				            	<div class="controls">
@@ -119,18 +125,18 @@
 				        <table class="table table-bordered data-table">
 				        	<thead>
 					            <tr>
-					              <th>编号</th>
+					              <th></th>
 					              <th>添加日期</th>
 					              <th>名称</th>
 					              <th>单价</th>
-					              <th>剩余</th>
+					              <th>库存</th>
 					              <th>类型</th>
 					              <th>操作</th>
 					            </tr>
 				          	</thead>
 				          	<tbody>
 					            <tr th:each="medicine:${medicines}">
-									<td th:text="${medicine.medicineId}"></td>
+									<td th:text="${medicineStat.count}"></td>
 									<td th:text="${medicine.medicineCreateTime}"></td>
 									<td th:text="${medicine.medicineName}"></td>
 									<td th:text="${medicine.medicinePrice}"></td>

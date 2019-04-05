@@ -51,16 +51,16 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="tip-bottom">病历</a> </div>
-    <h1>请填写病历信息</h1>
+    <h1>请填写病历信息</h1><span id="appointmentId" th:text="${appointmentId}" hidden></span>
   </div>
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href=""> <i class="icon-save"></i> 保存</a> </li>
-        <li class="bg_lb"> <a href=""> <i class="icon-print"></i> 打印</a> </li>
-        <li class="bg_lb"> <a href=""> <i class="icon-inbox"></i><span class="label label-success">10</span> 存为套组 </a> </li>
-        <li class="bg_lb"> <a href=""> <i class="icon-folder-open"></i> 病历</a> </li>
-        <li class="bg_lb"> <a href=""> <i class="icon-question-sign"></i> 帮助</a> </li>
+        <li class="bg_lb" id="saveRecord"> <a href="#"> <i class="icon-save"></i> 保存</a> </li>
+        <li class="bg_lb"> <a href="#"> <i class="icon-print"></i> 打印</a> </li>
+        <li class="bg_lb"> <a href="#"> <i class="icon-inbox"></i><span class="label label-success">10</span> 存为套组 </a> </li>
+        <li class="bg_lb"> <a href="#"> <i class="icon-folder-open"></i> 病历</a> </li>
+        <li class="bg_lb"> <a href="#"> <i class="icon-question-sign"></i> 帮助</a> </li>
       </ul>
     </div>
   </div>
@@ -146,6 +146,7 @@
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
               <h5>药品选择</h5>
+              <button style="margin: 3px;" class="btn btn-info pull-right" id="submitMedicine">发药</button>
             </div>
             <div class="widget-content nopadding">
               <table class="table table-bordered table-striped">
@@ -154,7 +155,6 @@
                   <th>名称</th>
                   <th>数量</th>
                   <th>单位</th>
-                  <th>单价</th>
                   <th>库存</th>
                   <th colspan="3">用法</th>
                 </tr>
@@ -168,27 +168,28 @@
               <h5>药品查询</h5>
             </div>
             <div class="widget-content nopadding">
-              <table class="table table-bordered data-table" id="tablehere">
+              <table class="table table-bordered data-table">
                 <thead>
-                <tr>
-                  <th>药物名称</th>
-                  <th hidden>药物单价</th>
-                  <th hidden>药物库存</th>
-                  <th hidden>药物类型</th>
-                  <th>药物规格</th>
-                  <th>生产公司名称</th>
-                </tr>
+                  <tr>
+                    <th>药物名称</th>
+                    <th hidden>药物单位</th>
+                    <th hidden>药物单价</th>
+                    <th hidden>药物库存</th>
+                    <th hidden>药物类型</th>
+                    <th>药物规格</th>
+                    <th>生产公司名称</th>
+                  </tr>
                 </thead>
-                <tbody>
-                <tr th:each="medicine:${medicines}" th:id="${medicine.medicineId}">
-                  <td th:text="${medicine.medicineName}"></td>
-                  <td th:text="${medicine.medicineUnit}" hidden></td>
-                  <td th:text="${medicine.medicinePrice}" hidden></td>
-                  <td th:text="${medicine.medicineResidual}" hidden></td>
-                  <td th:text="${medicine.medicineType}" hidden></td>
-                  <td th:text="${medicine.medicineDosage}"></td>
-                  <td th:text="${medicine.companyName}"></td>
-                </tr>
+                <tbody id="tablehere">
+                  <tr th:each="medicine:${medicines}" th:id="${medicine.medicineId}">
+                    <td th:text="${medicine.medicineName}"></td>
+                    <td th:text="${medicine.medicineUnit}" hidden></td>
+                    <td th:text="${medicine.medicinePrice}" hidden></td>
+                    <td th:text="${medicine.medicineResidual}" hidden></td>
+                    <td th:text="${medicine.medicineType}" hidden></td>
+                    <td th:text="${medicine.medicineDosage}"></td>
+                    <td th:text="${medicine.companyName}"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -206,44 +207,78 @@
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/matrix.js"></script>
 <script src="/static/js/matrix.tables.js"></script>
-<script src="/static/js/matrix.form_common.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#tablehere tr').dblclick(function(){
-            // var str = toString($(this).attr("id")) + "<br/><br/>";
-            // $('#writehere').append(str);
+        $("body").delegate('#tablehere tr', 'dblclick',function(){
+
             var str ="";
+            var medicineId = $(this).attr("id");
             var medicineName = $(this).children("td").eq(0).text();
-            var medicineUnit = $(this).children("td").eq(0).text();
+            var medicineUnit = $(this).children("td").eq(1).text();
             var medicinePrice = $(this).children("td").eq(2).text();
             var medicineResidual = $(this).children("td").eq(3).text();
             var medicineType = $(this).children("td").eq(4).text();
             var medicineDosage = $(this).children("td").eq(5).text();
 
-            str += "<tr><td>"+medicineName+"</td><td></td><td>"+medicineUnit+"</td><td>"+medicinePrice+"</td><td>"+medicineResidual+"</td>"+
-                  "<td><input type='text' name='medicineCount'></td>"+
-                  "<td><select style='border: none' name='prescriptionDosage'>" +
+            str += "<tr><td>"+medicineName+"</td><td contenteditable='true'></td><td hidden>"+medicineDosage+"</td><td>"+medicineUnit+"</td><td>"+medicineResidual+"</td>"+
+                  "<td><input style=';width: 50px;margin-bottom: 0;' type='text' name='medicineCount'></td>"+
+                  "<td><select style='border: none;width: 110px;margin-bottom: 0;' name='prescriptionDosage'>" +
                       "<option value='每日1次'>每日1次</option><option value='每日2次'>每日2次</option><option value='每日3次'>每日3次</option>"+
                       "<option value='每日4次'>每日4次</option><option value='隔日1次'>隔日1次</option><option value='每2小时1次'>每2小时1次</option>"+
                       "<option value='早晨'>早晨</option><option value='晚上'>晚上</option><option value='睡前'>睡前</option>"+
                       "<option value='饭前'>饭前</option><option value='饭后'>饭后</option><option value='空腹'>空腹</option>"+
                   "</select></td>"+
-                  "<td><select style='border: none' name='prescriptionUsage'>" +
+                  "<td><select style='border: none;width: 100px;margin-bottom: 0;' name='prescriptionUsage'>" +
                       "<option value='外用'>外用</option><option value='口服'>口服</option><option value='灌肠'>灌肠</option>"+
                       "<option value='需要时'>需要时</option><option value='必要时'>必要时</option><option value='皮下注射'>皮下注射</option>"+
                       "<option value='肌肉注射'>肌肉注射</option><option value='静脉注射'>静脉注射</option><option value='静脉滴注'>静脉滴注</option>"+
                   "</select></td>"+
+                  "<td hidden>"+medicineId+"</td>"+
                 "</tr>";
-            str.appendTo($('#tbodyhere'));
+            $('#tbodyhere').append(str);
         });
-    });
-    function toString(id){
-        var tdArr = $("#"+id).children();
-        var str = tdArr.eq(0).text() + "&nbsp;" + tdArr.eq(1).text() + "<br/>" +
-            "&nbsp;&nbsp;用法：&nbsp;" + tdArr.eq(2).text()+ "&nbsp;" +tdArr.eq(3).text()+ "&nbsp;" +tdArr.eq(4).text();
-        return str;
-    }
+        $("#submitMedicine").on('click',function () {
+            var str = "";
+            $("#tbodyhere").children("tr").each(function () {
+                str += $(this).children("td").eq(0).text()+"&nbsp;"+$(this).children("td").eq(2).text()+"&nbsp;"+$(this).children("td").eq(1).text()+$(this).children("td").eq(3).text()+"<br/>"+
+                    "&nbsp;&nbsp;&nbsp;&nbsp;用法：&nbsp;" + $(this).children("td").eq(5).children("input").val()+$(this).children("td").eq(3).text()+ "&nbsp;" +$(this).children("td").eq(6).children("select").val()+
+                    "&nbsp;" +$(this).children("td").eq(7).children("select").val()+"<br/><br/>";
+            });
+            $('#writehere').html(str);
 
+        });
+        $("#saveRecord").on('click',function (){
+            var appointmentId = $("#appointmentId").text();
+            var symptom = $("#symptom").val();
+            var diagnostic = $("#diagnostic").val();
+            var userId = $("#userN").val();
+            var prescriptions = new Array();
+            $("#tbodyhere").children("tr").each(function () {
+                var prescription = [$(this).children("td").eq(8).text(),$(this).children("td").eq(1).text(),
+                    $(this).children("td").eq(3).text(), $(this).children("td").eq(5).children("input").val(),
+                    $(this).children("td").eq(6).children("select").val(),$(this).children("td").eq(7).children("select").val()]
+                prescriptions.push(prescription);
+            })
+            $.ajax({
+              type: "POST",
+              url: '/doctor/addRecordAndPrescription',
+              async: false,
+              data: {
+                  appointmentId: appointmentId,
+                  symptom : symptom,
+                  diagnostic : diagnostic,
+                  userId : userId,
+                  prescriptions : JSON.stringify(prescriptions)
+              },
+                dataType: 'json',
+              success:function(msg) {
+                  if (msg == 1) {//根据返回值进行跳转
+                      window.location.href = '/doctor/currentAppointment';
+                  }
+              }
+            })
+        });
+    })
 </script>
 </body>
 </html>

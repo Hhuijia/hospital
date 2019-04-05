@@ -148,7 +148,7 @@ public class MedicineDepartmentServiceImp implements MedicineDepartmentService {
                 String medicineName = row.getCell(0).getStringCellValue();//名称
                 String medicineUnit = row.getCell(1).getStringCellValue();//单位
                 BigDecimal medicinePrice = BigDecimal.valueOf(row.getCell(2).getNumericCellValue());//单价
-                String medicineResidual = row.getCell(3).getStringCellValue();//库存
+                int medicineResidual = (int) row.getCell(3).getNumericCellValue();//库存
                 String medicineType = row.getCell(4).getStringCellValue();//类型
                 String medicineDosage = row.getCell(5).getStringCellValue();//剂量
                 String companyName = row.getCell(6).getStringCellValue();//公司

@@ -17,9 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,7 +133,7 @@ public class UserController {
     @GetMapping("/cancelAppointment")
     public ModelAndView cancelAppointment(@RequestParam String appointmentId){
         log.info("********用户界面/取消预约*********");
-        usersService.updateStatusById(appointmentId);
+        usersService.updateStatusById(appointmentId,2);
         return new ModelAndView("redirect:checkMyAppointment");
     }
 
