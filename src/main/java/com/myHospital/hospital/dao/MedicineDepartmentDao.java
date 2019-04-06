@@ -50,7 +50,7 @@ public interface MedicineDepartmentDao {
     Department findDepartmentById(String departmentId);
 
     //通过ID查找药品
-    @Select("SELECT * FROM department WHERE medicineId = #{medicineId}")
+    @Select("SELECT * FROM medicine WHERE medicineId = #{medicineId}")
     Medicine findMedicineById(String medicineId);
 
     //更新科室信息

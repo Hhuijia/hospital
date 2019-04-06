@@ -11,6 +11,7 @@ public class Record {
     private String recordId;
     private String diagnosticResult;//诊断结果
     private String symptom;//症状
+    private int recordStatus;
     private Timestamp recordCreatedTime;
     private String userId;
     private String doctorId;
@@ -39,6 +40,14 @@ public class Record {
 
     public void setSymptom(String symptom) {
         this.symptom = symptom;
+    }
+
+    public int getRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(int recordStatus) {
+        this.recordStatus = recordStatus;
     }
 
     public Timestamp getRecordCreatedTime() {

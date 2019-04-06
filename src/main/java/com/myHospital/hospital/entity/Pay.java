@@ -9,12 +9,14 @@ import java.sql.Timestamp;
  */
 public class Pay {
     private String payId;
-    private BigDecimal payCount;
-    private Integer payWay;
-    private Timestamp payTime;
+    private BigDecimal payCount;//总金额
     private Timestamp payCreatedTime;
+    private String recordId;
     private String userId;
     private String nurseId;
+
+    private Record record;
+    private String userName;
 
     public String getPayId() {
         return payId;
@@ -32,28 +34,20 @@ public class Pay {
         this.payCount = payCount;
     }
 
-    public Integer getPayWay() {
-        return payWay;
-    }
-
-    public void setPayWay(Integer payWay) {
-        this.payWay = payWay;
-    }
-
-    public Timestamp getPayTime() {
-        return payTime;
-    }
-
-    public void setPayTime(Timestamp payTime) {
-        this.payTime = payTime;
-    }
-
     public Timestamp getPayCreatedTime() {
         return payCreatedTime;
     }
 
     public void setPayCreatedTime(Timestamp payCreatedTime) {
         this.payCreatedTime = payCreatedTime;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
     }
 
     public String getUserId() {
@@ -70,5 +64,21 @@ public class Pay {
 
     public void setNurseId(String nurseId) {
         this.nurseId = nurseId;
+    }
+
+    public Record getRecord() {
+        return record;
+    }
+
+    public void setRecord(Record record) {
+        this.record = record;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

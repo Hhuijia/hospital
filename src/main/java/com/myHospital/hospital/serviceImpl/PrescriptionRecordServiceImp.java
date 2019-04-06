@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -56,8 +57,39 @@ public class PrescriptionRecordServiceImp implements PrescriptionRecordService {
     }
 
     @Override
-    public List<Record> findAllRecordAndPrescription(String userId) {
+    public Record findRecordById(String recordId) {
         log.info("******************findAllRecordAndPrescription********************");
-        return prescriptionRecordDao.findAllRecordAndPrescription(userId);
+        return prescriptionRecordDao.findRecordById(recordId);
+    }
+
+    @Override
+    public List<Record> findRecordAndPrescription(String userId,String type) {
+        log.info("******************findAllRecordAndPrescription********************");
+        List<Record> records = new ArrayList<>();
+        switch (type){
+            case "all":
+                records =  prescriptionRecordDao.findAllRecordAndPrescription(userId);
+            case "withoutPay":
+                records = prescriptionRecordDao.findRecordAndPrescriptionWithoutPay(userId);
+        }
+        return records;
+    }
+
+    @Override
+    public List<Prescription> findPrescriptionById(String recordId) {
+        log.info("******************updateRecordStatusById********************");
+        return prescriptionRecordDao.findPrescriptionById(recordId);
+    }
+
+    @Override
+    public int updateRecordStatusById(int recordStatus, String recordId) {
+        log.info("******************updateRecordStatusById********************");
+        return prescriptionRecordDao.updateRecordStatusById(recordStatus,recordId);
+    }
+
+    @Override
+    public List<Record> findAllRecordAndPrescriptionWithPay() {
+        log.info("******************findAllRecordAndPrescriptionWithoutPay********************");
+        return prescriptionRecordDao.findAllRecordAndPrescriptionWithPay();
     }
 }

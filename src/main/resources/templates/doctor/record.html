@@ -274,8 +274,11 @@
               success:function(msg) {
                   if (msg == 1) {//根据返回值进行跳转
                       window.location.href = '/doctor/currentAppointment';
+                  }else {
+                      alert("跳转失败！");
                   }
-              }
+              },
+              error: alert("error!!"),
             })
         });
     })

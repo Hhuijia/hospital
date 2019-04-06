@@ -16,6 +16,18 @@ public interface PrescriptionRecordService {
     //添加病历和处方
     int addRecordAndPrescription(List<Prescription> prescriptions, Record record);
 
+    //通过recordId查询病历记录
+    Record findRecordById(String recordId);
+
     //通过userId查询个人以往病历和处方
-    List<Record> findAllRecordAndPrescription(String userId);
+    List<Record> findRecordAndPrescription(String userId,String type);
+
+    //通过recordId查询病人处方
+    List<Prescription> findPrescriptionById(String recordId);
+
+    //更新RecordStatus
+    int updateRecordStatusById(int recordStatus, String recordId);
+
+    //查询所有已缴费病历
+    List<Record> findAllRecordAndPrescriptionWithPay();
 }

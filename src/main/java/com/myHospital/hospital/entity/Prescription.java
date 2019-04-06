@@ -18,6 +18,8 @@ public class Prescription {
     private String recordId;
     private String medicineId;
 
+    private Medicine medicine;
+
     public String getPrescriptionId() {
         return prescriptionId;
     }
@@ -88,5 +90,13 @@ public class Prescription {
 
     public void setMedicineId(String medicineId) {
         this.medicineId = medicineId;
+    }
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
     }
 }
