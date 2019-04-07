@@ -45,65 +45,55 @@ public class UserController {
     private MedicineDepartmentService medicineDepartmentService;
 
     /**
-     * 快速查询
-     * @param doctorId 医生Id
-     * @param departmentName 科室名称
-     * @param appointmentTime 预约时间
-     * @return 预约界面
+     * 按科室查询
+     * @param msg 医生ID+科室ID+预约时间
+     * @return 确定预约信息界面
      */
-    @GetMapping("/ShowAppointmentPage")
-    public ModelAndView ShowAppointmentPage(@RequestParam String doctorId, @RequestParam String departmentName, @RequestParam String appointmentTime){
+    @PostMapping("/ShowAppointmentPage")
+    @ResponseBody
+    public ModelAndView ShowAppointmentPage(@RequestParam String msg){
         log.info("********用户界面/预约*********");
         Session session = SecurityUtils.getSubject().getSession();
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
-        Department department = medicineDepartmentService.findDepartmentByName(departmentName);
-        Doctors doctor = doctorService.findDoctorById(doctorId);
-        log.info("********before-[{}]*********",appointmentTime);
-        String[] appointMsg = appointmentTime.split("_");
-        String appointDate = appointMsg[0];
+        String[] msgs = msg.split(",");
+        Department department = medicineDepartmentService.findDepartmentByName(msgs[1]);
+        Doctors doctor = doctorService.findDoctorById(msgs[0]);
         String appointTime = "";
-        switch (appointMsg[1]){
-            case "1":
+        switch (msgs[3]){
+            case "9:00-10:00":
                 appointTime = "09:00:00";
                 break;
-            case "2":
+            case "10:00-11:00":
                 appointTime = "10:00:00";
                 break;
-            case "3":
+            case "11:00-12:00":
                 appointTime = "11:00:00";
                 break;
-            case "4":
+            case "14:00-15:00":
                 appointTime = "14:00:00";
                 break;
-            case "5":
+            case "15:00-16:00":
                 appointTime = "15:00:00";
                 break;
-            case "6":
+            case "16:00-17:00":
                 appointTime = "16:00:00";
                 break;
             default:
                 break;
         }
-        String appoint = appointDate+" "+appointTime;
+        String appoint = msgs[2]+" "+appointTime;
         log.info("********after-[{}]*********",appoint);
         modelAndView.addObject("title","预约");
         modelAndView.addObject("user", user);
         modelAndView.addObject("department",department);
         modelAndView.addObject("doctor",doctor);
         modelAndView.addObject("appoint",appoint);
+        modelAndView.addObject("scheduleId",msgs[4]);
         modelAndView.addObject("appointment",new Appointment());
         modelAndView.setViewName("user/makeAppointment");
         return modelAndView;
     }
-//
-//    @PostMapping("/findDoctor")
-//    @ResponseBody
-//    public List<Doctors> findDoctor(@RequestParam String departmentName){
-//        log.info("********二级联动找医生*********");
-//        log.info("***********[{}]*******",doctorService.findDoctorInSameDepartment(departmentName));
-//        return doctorService.findDoctorInSameDepartment(departmentName);
-//    }
 
     /**
      * 添加预约
@@ -114,14 +104,15 @@ public class UserController {
      * @return 我的预约界面
      */
     @GetMapping("/makeAppointment")
-    public ModelAndView makeAppointment(@RequestParam String userId, @RequestParam String doctorId, @RequestParam String departmentId, @RequestParam String appointmentTime){
+    public ModelAndView makeAppointment(@RequestParam String userId, @RequestParam String doctorId,
+                                        @RequestParam String departmentId, @RequestParam String appointmentTime, @RequestParam String scheduleId){
         log.info("********用户界面/添加预约*********");
         Appointment appointment = new Appointment();
         appointment.setUserId(userId);
         appointment.setDoctorId(doctorId);
         appointment.setDepartmentId(departmentId);
         appointment.setAppointmentTime(appointmentTime);
-        usersService.makeAppointment(appointment);
+        usersService.makeAppointment(appointment,scheduleId);
         return new ModelAndView("redirect:checkMyAppointment");
     }
 

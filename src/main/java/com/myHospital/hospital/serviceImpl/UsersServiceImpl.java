@@ -1,10 +1,8 @@
 package com.myHospital.hospital.serviceImpl;
 
+import com.myHospital.hospital.dao.ScheduleDao;
 import com.myHospital.hospital.dao.UsersDao;
-import com.myHospital.hospital.entity.Appointment;
-import com.myHospital.hospital.entity.Permission;
-import com.myHospital.hospital.entity.Role;
-import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +23,19 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UsersDao usersDao;
 
+    @Autowired
+    private ScheduleDao scheduleDao;
+
     @Override
     public int updateUserByIdNum(Users user) {
         log.info("******************updateUserByIdNum********************");
         return usersDao.updateUserByIdNum(user);
+    }
+
+    @Override
+    public int updatePwdByIdNum(String userPwd, String salt, String userIDNum) {
+        log.info("******************updatePwdByIdNum********************");
+        return usersDao.updatePwdByIdNum(userPwd,salt,userIDNum);
     }
 
     @Override
@@ -62,11 +69,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void makeAppointment(Appointment appointment) {
+    public void makeAppointment(Appointment appointment, String scheduleId) {
         log.info("******************makeAppointment********************");
         String strAppoint = String.format("%04d", new Random().nextInt(1001));
         appointment.setAppointmentId( "APPOINTMENT_" + strAppoint + "_" + System.currentTimeMillis());
         usersDao.makeAppointment(appointment);
+        Schedule schedule = scheduleDao.findScheduleById(scheduleId);
+        scheduleDao.updateRemianById(schedule.getRemain()-1, scheduleId);
     }
 
     @Override

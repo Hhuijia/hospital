@@ -51,31 +51,9 @@
                 <tr><th>科室：</th><td th:text="${department.departmentName}"></td></tr>
                 <tr><th>医生：</th><td th:text="${doctor.doctorName}"></td></tr>
                 <tr><th>预约时间：</th><td th:text="${appoint}"></td></tr>
-                <tr><td colspan="2"><a th:href="@{/users/makeAppointment(userId=${user.userId},doctorId=${doctor.doctorId},departmentId=${department.departmentId},appointmentTime=${appoint})}" class="btn btn-default">确定</a></td></tr>
+                <tr><td colspan="2"><a th:href="@{/users/makeAppointment(userId=${user.userId},doctorId=${doctor.doctorId},departmentId=${department.departmentId},appointmentTime=${appoint},scheduleId=${scheduleId})}" class="btn btn-default">确定</a></td></tr>
                 </tbody>
               </table>
-                <!--<div class="row">-->
-                  <!--<div class="form-group">-->
-                    <!--<div class="theme-select">-->
-                      <!--<select id="selectDepartment" class="form-control __plannerSelect" title="科室" th:field="*{departmentId}">-->
-                        <!--<option value="0">请选择一个科室</option>-->
-                        <!--<option th:each="department:${departments}" th:value="${department.departmentName}" th:text="${department.departmentName}"></option>-->
-                      <!--</select>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<table class="table table-striped">-->
-                  <!--<thead>-->
-                    <!--<tr>-->
-                      <!--<td>姓名</td>-->
-                      <!--<td>主治</td>-->
-                      <!--<td>从医年限</td>-->
-                      <!--<td>职位</td>-->
-                      <!--<td>介绍</td>-->
-                    <!--</tr>-->
-                  <!--</thead>-->
-                  <!--<tbody id="tbodyData"></tbody>-->
-                <!--</table>-->
             </div>
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
           </div>

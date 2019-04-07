@@ -19,6 +19,10 @@ public interface UsersDao {
     @Update("UPDATE users SET userName=#{userName},userSex=#{userSex},userAge=#{userAge},userPhone=#{userPhone},userAddress=#{userAddress} WHERE userIDNum=#{userIDNum}")
     int updateUserByIdNum(Users user);
 
+    //通过userIDNum更新用户信息
+    @Update("UPDATE users SET userPwd=#{userPwd},salt=#{salt} WHERE userIDNum=#{userIDNum}")
+    int updatePwdByIdNum(@Param("userPwd") String userPwd,@Param("salt") String salt, @Param("userIDNum") String userIDNum);
+
     //通过userIDNum查询用户信息
     @Select("SELECT * FROM users WHERE userIDNum = #{userIDNum}")
     Users findUserByIDNum(String userIDNum);
@@ -65,5 +69,5 @@ public interface UsersDao {
 
     //通过appointmentId更新预约状态
     @Update("UPDATE appointment SET appointmentStatus=#{appointmentStatus} WHERE appointmentId=#{appointmentId}")
-    void updateStatusById(String appointmentId,int appointmentStatus);
+    void updateStatusById(@Param("appointmentId") String appointmentId, @Param("appointmentStatus") int appointmentStatus);
 }

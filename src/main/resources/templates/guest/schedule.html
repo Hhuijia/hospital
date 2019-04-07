@@ -91,7 +91,7 @@
                         <div class="media">
                           <a href="#" class="pull-left"><img src="/static/assets/images/best-rooms/2.jpg" style="width: 100px;height: 100px;" class="media-object" alt='' /></a>
                           <div class="media-body">
-                            <h3 class="media-heading" th:text="${doctor1.departmentName}"></h3>
+                            <h3 class="media-heading" th:text="${doctor1.doctorName}"></h3>
                             <h5 class="media-heading" style="font-size: 10px;margin-left: 15px;" th:text="${doctor1.doctorTitle}"></h5>
                             <p class="media-content" th:text="'擅长：'+${doctor1.doctorProfession}"></p>
                             <a class="pull-right media_body_a" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${doctor1.doctorId}">查看排班</a>
@@ -100,407 +100,6 @@
                       </h4>
                     </div>
                     <div th:id="${doctor1.doctorId}" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        <ul id="myTab1" class="nav nav-tabs">
-                          <li th:each="featureDay:${featureDaysList}" th:class="${featureDayStat.first}?'active'">
-                            <a th:href="'#ddate'+${featureDayStat.count}" data-toggle="tab" th:value="${#strings.substring(featureDay,0,8)}" th:text="${#strings.substring(featureDay,9)}"></a>
-                          </li>
-                        </ul>
-                        <div id="myTabContent1" class="tab-content">
-                          <div class="tab-pane fade in active" id="ddate1">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate2">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate3">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate4">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate5">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate6">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="ddate7">
-                            <table class="table table-hover" contenteditable="true">
-                              <thead>
-                                <th>时间</th>
-                                <th>剩余</th>
-                                <th>操作</th>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>9:00-10:0</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="success">
-                                  <td>10:00-11:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">20</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="error">
-                                  <td>11:00-12:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">30</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="warning">
-                                  <td>14:00-15:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">60</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                                <tr class="info">
-                                  <td>15:00-16:00</td>
-                                  <td>
-                                    <p style="margin-bottom: 0px;"><span class="badge" contenteditable="true">10</span></p>
-                                  </td>
-                                  <td>
-                                    <button type="submit" class="btn btn-min">确定</button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -523,14 +122,24 @@
           $("#dateSelectMyTab > li").click(function () {
               var aValue = $(this).children().attr("value");
               var aHref = $(this).children().attr("href");
-              alert(aValue+aHref);
               doctorVal(aValue,aHref);
           });
           $("#dateSelectMyTabContent").on('click','.media-body',function () {
               var hrefVal = $(this).children(".media_body_a").attr("href");
-              var count = $(this).attr("id");
               scheduleVal(hrefVal);
-          })
+          });
+          $("#accordion").on('click','.media-body',function () {
+              var hrefVal = $(this).children(".media_body_a").attr("href");
+              scheduleValTwo(hrefVal);
+          });
+          $("#accordion").on('click','.confirmAppointment',function () {
+              var msg = $(this).children("span").text();
+              changeHtml(msg);
+          });
+          $("#dateSelectMyTabContent").on('click','.confirmAppointment',function () {
+              var msg = $(this).children("span").text();
+              changeHtml(msg);
+          });
       });
       function doctorVal(aValue,aHref) {
           var departmentName = $('#GetDepartName').text();
@@ -564,10 +173,6 @@
                   });
                   str += "</div>"
                   $(aHref).html(str);
-                  // $(".media-body").on('click',function () {
-                  //     var hrefVal = $(this).children(".media_body_a").attr("href");
-                  //     scheduleVal(hrefVal);
-                  // })
               },
               error: function (err) {
                   alert("error!!")
@@ -587,7 +192,7 @@
               dataType: 'TEXT',
               success: function (data) {
                   var str = "<div class='panel-body'>"+
-                      "<table class='table table-hover' contenteditable='false'>"+
+                      "<table class='table table-hover'>"+
                         "<thead><th>时间</th><th>剩余</th><th>操作</th></thead>"+
                         "<tbody>";
                   $.each($.parseJSON(data), function (n,datelist) {
@@ -616,12 +221,116 @@
                       }
                       str +="<tr>"+
                               "<td>"+timeStr+"</td>"+
-                              "<td><p style='margin-bottom: 0;'><span class='badge' contenteditable='true'>"+datelist.remain+"</span></p></td>"+
-                              "<td><a href='/users/ShowAppointmentPage?doctorId="+datelist.doctorId+"&departmentName="+datelist.departmentName+"&appointmentTime="+datelist.workDate+"_"+datelist.workTime+"' class='btn btn-success'>预约</a></td>"+
+                              "<td><p style='margin-bottom: 0;'><span class='badge'>"+datelist.remain+"</span></p></td>"+
+                              "<td><button class='btn btn-success confirmAppointment'>预约" +
+                                  "<span hidden>"+datelist.doctorId+","+datelist.departmentName+","+datelist.workDate+","+timeStr+","+datelist.scheduleId+"</span></button></td>"+
                             "</tr>";
+                      //可以换成buttom，然后通过Ajax跳转，数据保存在hidden的td里面
                   });
                   str += "</tbody></table></div>";
                   $(hrefVal).html(str);
+              },
+              error: function (err) {
+                  alert("error!!")
+              }
+          });
+      }
+      function scheduleValTwo(hrefVal) {
+          var doctorId = hrefVal.substr(1);
+          $.ajax({
+              url: '/guest/initScheduleMsgByDoctor',
+              data: {
+                  doctorId: doctorId
+              },
+              type: 'post',
+              dataType: 'TEXT',
+              success: function (data) {
+                  var str = "";
+                  var strLi = "";
+                  var strA = "";
+                  var scheduleArray;
+                  var dataArray = [];
+                  var isExit="";
+                  var scheduleMap = new Map;
+                  $.each($.parseJSON(data), function (n,datelist) {
+                      if ($.trim(isExit) != $.trim(datelist.workDate)){
+                          console.log(isExit+"_"+datelist.workDate);
+                          scheduleArray = new Array();
+                          isExit = datelist.workDate;
+                          dataArray.push(isExit);
+                      }
+                      var schedule={};
+                      schedule.scheduleId=datelist.scheduleId;
+                      schedule.doctorId=datelist.doctorId;
+                      schedule.departmentName=datelist.departmentName;
+                      schedule.workDate=datelist.workDate;
+                      switch (datelist.workTime){
+                          case 1:
+                              schedule.workTime = "9:00-10:00";
+                              break;
+                          case 2:
+                              schedule.workTime = "10:00-11:00";
+                              break;
+                          case 3:
+                              schedule.workTime = "11:00-12:00";
+                              break;
+                          case 4:
+                              schedule.workTime = "14:00-15:00";
+                              break;
+                          case 5:
+                              schedule.workTime = "15:00-16:00";
+                              break;
+                          case 6:
+                              schedule.workTime = "16:00-17:00";
+                              break;
+                          default:
+                              break;
+                      }
+                      schedule.remian = datelist.remain;
+                      scheduleArray.push(schedule);
+                      scheduleMap.set(isExit,scheduleArray);
+                  });
+                  for(var i=0;i<dataArray.length;i++){
+                      if (i==0){
+                          strLi += "<li class='active'><a href='#ddate"+i+"' id='' data-toggle='tab'>"+dataArray[i]+"</a></li>";
+                          strA += "<div class='tab-pane fade in active' id='ddate"+i+"'>";
+                      }else {
+                          strLi += "<li><a href='#ddate"+i+"' id='' data-toggle='tab'>"+dataArray[i]+"</a></li>";
+                          strA += "<div class='tab-pane fade' id='ddate"+i+"'>";
+                      }
+                      strA += "<table class='table table-hover'>" +
+                          "<thead><th>时间</th><th>剩余</th><th>操作</th></thead>" +
+                          "<tbody>";
+                      $(scheduleMap.get(dataArray[i])).each(function(){
+                        strA += "<tr >" +
+                            "<td>"+this.workTime+"</td>" +
+                            "<td> <p style='margin-bottom: 0;'><span class='badge'>"+this.remian+"</span></p></td>" +
+                            "<td class='conA'><button class='btn btn-success confirmAppointment'>预约" +
+                            "<span hidden>"+this.doctorId+","+this.departmentName+","+this.workDate+","+this.workTime+","+this.scheduleId+"</span></button></td></tr>";
+                      });
+                      strA += "</tbody></table></div>";
+                  }
+                  str += "<div class='panel-body'><ul class='nav nav-tabs'>"+strLi+"</ul><div id='doctorTabContent' class='tab-content'>"+strA+"</div></div>"
+                  $(hrefVal).html(str);
+              },
+              error: function (err) {
+                  alert("error!!")
+              }
+          });
+      }
+      function changeHtml(msg) {
+          console.log(msg);
+          $.ajax({
+              url: '/users/ShowAppointmentPage',
+              data: {
+                  msg: msg
+              },
+              type: 'post',
+              dataType: 'html',
+              success: function (data) {
+                  if (data){
+                      $("body").html(data);
+                  }
               },
               error: function (err) {
                   alert("error!!")

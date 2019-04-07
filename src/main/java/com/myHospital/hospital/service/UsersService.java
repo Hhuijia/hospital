@@ -14,6 +14,9 @@ public interface UsersService {
     //通过userIDNum更新用户信息
     int updateUserByIdNum(Users user);
 
+    //通过userIDNum更新用户信息
+    int updatePwdByIdNum(String userPwd, String salt, String userIDNum);
+
     //通过userIDNum查找用户信息
     Users findUserByIDNum(String userIDNum);
 
@@ -30,7 +33,7 @@ public interface UsersService {
     List<Users> checkAllUser();
 
     //添加预约
-    void makeAppointment(Appointment appointment);
+    void makeAppointment(Appointment appointment,String scheduleId);
 
     //查询预约记录
     List<Appointment> findAllAppointmentOfOneByUserId(String userId);

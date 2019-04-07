@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
@@ -407,12 +408,14 @@ public class AdminController {
     public List<Schedule> findSchedule(@RequestParam String departmentName) throws Exception{
         log.info("********管理员界面/findSchedule*********");
         ArrayList<String> featureDaysList = new ArrayList<>();
-        for (int i = 0; i <7; i++) {
+        for (int i = -1; i <6; i++) {
             featureDaysList.add(getFeatureDate(i).substring(0,8));
         }
+        log.info("[{}]",featureDaysList);
         List<Schedule> schedules = new ArrayList<>();
         for (String featureDay : featureDaysList){
             schedules.addAll(scheduleService.findScheduleCurrentDay(featureDay,departmentName));
+            log.info("[{}]",schedules);
         }
 //        Date date;
 //        Calendar calendar = new GregorianCalendar();
@@ -420,7 +423,7 @@ public class AdminController {
 //            calendar.setTime(schedule.getWorkDate());
 //            calendar.add(calendar.DATE,1);
 //            date = calendar.getTime();
-//            schedule.setWorkDate(date);
+//            schedule.setWorkDate(new java.sql.Date(date.getTime()));
 //        }
         return schedules;
     }

@@ -14,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
 
 /**
  * @author QUEENEY
@@ -45,6 +46,15 @@ public class ScheduleServiceImp implements ScheduleService {
     public List<Schedule> findScheduleCurrentDay(String currentDay, String departmentName) {
         log.info("******************findScheduleCurrentDay********************");
         return scheduleDao.findScheduleCurrentDay(currentDay,departmentName);
+    }
+
+    @Override
+    public List<Schedule> findScheduleBetweenOneWeek(String doctorId) {
+        log.info("******************findScheduleBetweenOneWeek********************");
+        String currentDate = getFeatureDate(0).substring(0,8);
+        String after7Day = getFeatureDate(7).substring(0,8);
+        log.info(after7Day);
+        return scheduleDao.findScheduleBetweenOneWeek(doctorId,currentDate,after7Day);
     }
 
     @Override

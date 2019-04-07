@@ -136,4 +136,12 @@ public class GuestController {
         log.info("********[{}]-[{}]*********",doctorId,currentDay);
         return scheduleService.findScheduleByDoctorId(doctorId,currentDay);
     }
+
+    @PostMapping("/initScheduleMsgByDoctor")
+    @ResponseBody
+    public List<Schedule> initScheduleMsgByDoctor(@RequestParam String doctorId){
+        log.info("********用户界面/加载排班信息*********");
+        log.info("********[{}]-[{}]*********",doctorId);
+        return scheduleService.findScheduleBetweenOneWeek(doctorId);
+    }
 }

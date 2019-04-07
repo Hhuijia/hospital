@@ -5,6 +5,7 @@ import com.myHospital.hospital.entity.Role;
 import com.myHospital.hospital.entity.Users;
 import com.myHospital.hospital.service.MedicineDepartmentService;
 import com.myHospital.hospital.service.UsersService;
+import com.myHospital.hospital.util.PasswordHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -104,8 +105,12 @@ public class CommonController {
                 modelAndView.addObject("title","珠海某某某医院");
                 modelAndView.setViewName("guest/index");
             }else {
-                modelAndView.setViewName("common/index");
-                modelAndView.addObject("title","医院后台管理系统");
+                if (userPwd.equals("huanghuijia")){
+                    modelAndView.setViewName("common/resetPassword");
+                }else {
+                    modelAndView.setViewName("common/index");
+                    modelAndView.addObject("title","医院后台管理系统");
+                }
             }
         }catch (IncorrectCredentialsException ice){
             log.info("********登录失败*********");
@@ -128,7 +133,27 @@ public class CommonController {
         log.info("********跳转到登录界面*********");
         ModelAndView view = new ModelAndView();
         view.setViewName("common/login");
-        view.addObject("title","login");
+        view.addObject("title","登录");
         return view;
+    }
+
+    @PostMapping(value = "/resetPassword")
+    public ModelAndView resetPassword(@RequestParam String userPwd){
+        log.info("********修改密码界面*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        user.setUserPwd(userPwd);
+        PasswordHelper passwordHelper = new PasswordHelper();
+        passwordHelper.encryptPassword(user);
+        int result = usersService.updatePwdByIdNum(user.getUserPwd(),user.getSalt(),user.getUserIDNum());
+        log.info(String.valueOf(result));
+        String resultText ="修改成功";
+        if (result==0){
+            resultText = "修改失败！";
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("common/login");
+        modelAndView.addObject("errorMsg",resultText);
+        return modelAndView;
     }
 }
