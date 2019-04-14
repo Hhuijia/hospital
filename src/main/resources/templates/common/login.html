@@ -13,7 +13,7 @@
 <body>
     <div id="loginbox">
         <form id="loginform" class="form-vertical" action="/common/login" method="post">
-             <div class="control-group normal_text"> <h3><img th:src="@{/static/img/logo.png}" alt="Logo" /></h3><h4 th:text="${errorMsg}"></h4></div>
+             <div class="control-group normal_text"> <h3>登 录</h3><h4 th:text="${errorMsg}"></h4></div>
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
@@ -29,20 +29,8 @@
                 </div>
             </div>
             <div class="form-actions">
-                <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">忘记密码?</a></span>
+                <span class="pull-left"><a href="/guest/resign" class="btn btn-success">去注册</a></span>
                 <span class="pull-right"><button type="submit" class="btn btn-success" > 登录</button></span>
-            </div>
-        </form>
-        <form id="recoverform" action="#" class="form-vertical">
-            <p class="normal_text">请输入正确的用户名密码.</p>
-            <div class="controls">
-                <div class="main_input_box">
-                    <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
-                </div>
-            </div>
-            <div class="form-actions">
-                <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; 返回登录</a></span>
-                <span class="pull-right"><a href="#" class="btn btn-info">确定</a></span>
             </div>
         </form>
     </div>
@@ -50,5 +38,4 @@
     <script th:src="@{/static/js/jquery.min.js}"></script>
     <script th:src="@{/static/js/matrix.login.js}"></script>
 </body>
-
 </html>

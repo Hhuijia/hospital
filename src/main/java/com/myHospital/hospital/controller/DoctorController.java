@@ -49,13 +49,23 @@ public class DoctorController {
         modelAndView.addObject("appointmentId",appointmentId);log.info(appointmentId);
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         modelAndView.addObject("medicines",medicines);log.info("[{}]",medicines);
-//        List<Record> records = prescriptionRecordService.findAllRecordAndPrescription(userId);//病历
-//        modelAndView.addObject("records",records);log.info("[{}]",records);
-
+        List<Record> records = prescriptionRecordService.findRecordAndPrescription(userId,4);
+        for (Record record : records){
+            String doctorName = doctorService.findDoctorById(record.getDoctorId()).getDoctorName();
+            record.setDoctorId(doctorName);
+        }
+        modelAndView.addObject("records", records);
         List<Prescription> prescriptions = new ArrayList<>();
         modelAndView.addObject("prescriptions",prescriptions);
         modelAndView.setViewName("doctor/record");
         return modelAndView;
+    }
+
+    @GetMapping("/overTime")
+    public ModelAndView overTime(String appointmentId){
+        log.info("********医生界面/过号处理*********");
+        usersService.updateStatusById(appointmentId,4);
+        return new ModelAndView(("redirect:currentAppointment"));
     }
 
     @PostMapping("/addRecordAndPrescription")

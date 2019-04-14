@@ -26,7 +26,7 @@ public interface ScheduleDao {
     Schedule findScheduleById(String scheduleId);
 
     //查询某个医生的某天排班
-    @Select("SELECT * FROM schedule WHERE doctorId = #{doctorId} AND DATE_FORMAT(workDate,'%Y%m%d')=#{currentDay}")
+    @Select("SELECT * FROM schedule WHERE doctorId = #{doctorId} AND DATE_FORMAT(workDate,'%Y%m%d')=#{currentDay} ORDER BY workTime")
     List<Schedule> findScheduleByDoctorId(@Param("doctorId") String doctorId, @Param("currentDay") String currentDay);
 
     //查询某一天的某个科室的所有值班医生

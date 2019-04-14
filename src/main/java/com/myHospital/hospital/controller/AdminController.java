@@ -150,16 +150,11 @@ public class AdminController {
     public ModelAndView nurseManage(){
         log.info("********管理员界面/护士管理*********");
         List<Nurses> nurses = commonService.findAll("nurse");
-        List<String> departmentName = medicineDepartmentService.findAllDepartmentName();
         List<Role> roles = rolePermissionService.findAllRole();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","护士管理");
-        modelAndView.addObject("nurses",nurses);
-        log.info("[{}]",nurses);
-        modelAndView.addObject("departmentName",departmentName);
-        log.info("[{}]",departmentName);
-        modelAndView.addObject("roles",roles);
-        log.info("[{}]",roles);
+        modelAndView.addObject("nurses",nurses);log.info("[{}]",nurses);
+        modelAndView.addObject("roles",roles);log.info("[{}]",roles);
         modelAndView.addObject("users",new Users());
         modelAndView.setViewName("admin/nurses");
         return modelAndView;

@@ -40,6 +40,9 @@ public class GuestController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private UsersService usersService;
+
     /**
      * 获取表单值进行用户注册
      * @param users 用户
@@ -67,6 +70,10 @@ public class GuestController {
         return modelAndView;
     }
 
+    /**
+     * 按照科室预约
+     * @return 所有科室页面
+     */
     @GetMapping("/makeAppointmentByDepartment")
     public ModelAndView makeAppointmentByDepartment(){
         log.info("********按照科室预约*********");
@@ -96,6 +103,11 @@ public class GuestController {
         return modelAndView;
     }
 
+    /**
+     * 所选科室排班
+     * @param departmentId 科室ID
+     * @return 所选科室排班页面
+     */
     @GetMapping("/choiceDoctorAndDateTime")
     public ModelAndView choiceDoctorAndDateTime(@RequestParam String departmentId){
         log.info("********用户界面/选择医生时间*********");
@@ -122,6 +134,12 @@ public class GuestController {
         return modelAndView;
     }
 
+    /**
+     * 加载当天值班医生的信息
+     * @param currentDay 日期
+     * @param departmentName 科室名称
+     * @return 当天值班医生的信息
+     */
     @PostMapping("/initDoctorMsg")
     @ResponseBody
     public List<Doctors> initDoctorMsg(@RequestParam String currentDay, @RequestParam String departmentName){
@@ -143,5 +161,11 @@ public class GuestController {
         log.info("********用户界面/加载排班信息*********");
         log.info("********[{}]-[{}]*********",doctorId);
         return scheduleService.findScheduleBetweenOneWeek(doctorId);
+    }
+
+    @PostMapping("/isExit")
+    @ResponseBody
+    public boolean isExit(String userIDNum){
+        return usersService.findUserByIDNum(userIDNum) == null;
     }
 }

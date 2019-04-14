@@ -1,13 +1,7 @@
 package com.myHospital.hospital.controller;
 
-import com.myHospital.hospital.entity.Appointment;
-import com.myHospital.hospital.entity.Department;
-import com.myHospital.hospital.entity.Doctors;
-import com.myHospital.hospital.entity.Users;
-import com.myHospital.hospital.service.CommonService;
-import com.myHospital.hospital.service.DoctorService;
-import com.myHospital.hospital.service.MedicineDepartmentService;
-import com.myHospital.hospital.service.UsersService;
+import com.myHospital.hospital.entity.*;
+import com.myHospital.hospital.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
@@ -33,9 +27,6 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private CommonService commonService;
-
-    @Autowired
     private UsersService usersService;
 
     @Autowired
@@ -43,6 +34,9 @@ public class UserController {
 
     @Autowired
     private MedicineDepartmentService medicineDepartmentService;
+
+    @Autowired
+    private PrescriptionRecordService prescriptionRecordService;
 
     /**
      * 按科室查询
@@ -156,8 +150,8 @@ public class UserController {
         Users user = (Users) session.getAttribute("USER_SESSION");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","查看个人信息");
-        Users users = usersService.findUserByID(user.getUserId());
-        modelAndView.addObject("users", users);
+//        Users users = usersService.findUserByID(user.getUserId());
+        modelAndView.addObject("users", user);
         modelAndView.setViewName("user/myPage");
         return modelAndView;
     }
@@ -191,5 +185,20 @@ public class UserController {
         return userAfterUpdateMap;
     }
 
+    @GetMapping("/checkMyRecord")
+    public ModelAndView checkMyRecord(){
+        log.info("********用户界面/查看历史病历*********");
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        ModelAndView modelAndView = new ModelAndView();
+        List<Record> records = prescriptionRecordService.findRecordAndPrescription(user.getUserId(),4);
+        for (Record record : records){
+            String doctorName = doctorService.findDoctorById(record.getDoctorId()).getDoctorName();
+            record.setDoctorId(doctorName);
+        }
+        modelAndView.addObject("records", records);
+        modelAndView.setViewName("user/myRecord");
+        return modelAndView;
+    }
 
 }

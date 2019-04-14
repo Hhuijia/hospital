@@ -21,13 +21,6 @@ public interface PrescriptionRecordDao {
     @Insert("INSERT INTO prescription(prescriptionId,prescriptionCount,prescriptionUnit,dosageEachTime,prescriptionDosage,prescriptionUsage,recordId,medicineId) VALUES(#{prescriptionId},#{prescriptionCount},#{prescriptionUnit},#{dosageEachTime},#{prescriptionDosage},#{prescriptionUsage},#{recordId},#{medicineId})")
     int addPrescription(Prescription prescription);
 
-    //通过userId查询个人以往病历和处方
-    @Select("SELECT * FROM record where userId = #{userId}")
-    @Results({
-            @Result(property = "prescription",column = "recordId",many = @Many(select = "com.myHospital.hospital.dao.PrescriptionRecordDao.findPrescriptionById"))
-    })
-    List<Record> findAllRecordAndPrescription(String userId);
-
     //通过recordId查询病历记录
     @Select("SELECT * FROM record where recordId = #{recordId}")
     Record findRecordById(String recordId);
@@ -40,14 +33,14 @@ public interface PrescriptionRecordDao {
     List<Prescription> findPrescriptionById(String recordId);
 
     //通过userId未缴费查询病人病历
-    @Select("SELECT * FROM record where userId = #{userId} AND recordStatus=1")
+    @Select("SELECT * FROM record WHERE userId = #{userId} AND recordStatus = #{recordStatus}")
     @Results({
-            @Result(property = "prescription",column = "recordId",many = @Many(select = "com.myHospital.hospital.dao.PrescriptionRecordDao.findPrescriptionById"))
+            @Result(property = "prescriptions",column = "recordId",many = @Many(select = "com.myHospital.hospital.dao.PrescriptionRecordDao.findPrescriptionById"))
     })
-    List<Record> findRecordAndPrescriptionWithoutPay(String userId);
+    List<Record> findRecordAndPrescription(@Param("userId") String userId, @Param("recordStatus") int recordStatus);
 
     //查询所有已缴费病历
-    @Select("SELECT * FROM record WHERE recordStatus=2")
+    @Select("SELECT * FROM record WHERE recordStatus='2'")
     List<Record> findAllRecordAndPrescriptionWithPay();
 
     //更新RecordStatus

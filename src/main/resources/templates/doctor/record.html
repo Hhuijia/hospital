@@ -47,7 +47,7 @@
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<div class="headerPart" th:replace="common/header::header"></div>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="tip-bottom">病历</a> </div>
@@ -59,7 +59,7 @@
         <li class="bg_lb" id="saveRecord"> <a href="#"> <i class="icon-save"></i> 保存</a> </li>
         <li class="bg_lb"> <a href="#"> <i class="icon-print"></i> 打印</a> </li>
         <li class="bg_lb"> <a href="#"> <i class="icon-inbox"></i><span class="label label-success">10</span> 存为套组 </a> </li>
-        <li class="bg_lb"> <a href="#"> <i class="icon-folder-open"></i> 病历</a> </li>
+        <li class="bg_lb" id="showRecord"> <a href="#" data-toggle="modal" data-target="#myModal"> <i class="icon-folder-open"></i> 病历</a> </li>
         <li class="bg_lb"> <a href="#"> <i class="icon-question-sign"></i> 帮助</a> </li>
       </ul>
     </div>
@@ -95,12 +95,13 @@
         <div class="span5">
           <div class="widget-box">
             <div class="widget-content nopadding">
-              <h3 class="text-center" style="letter-spacing:30px;">珠海市某某某医院</h3>
+              <h3 class="text-center" style="letter-spacing:30px;">珠海市四人行医院</h3>
               <h4 class="text-center" style="letter-spacing:30px;">处方笺</h4>
               <table style="border-collapse: inherit;width: -webkit-fill-available;padding-right: 15px;padding-bottom: 15px;">
                 <tr>
                   <td class="td_header">姓名:</td>
-                  <td id="userN" class="under-line" th:value="${users.userId}" th:text="${users.userName}"></td>
+                  <td id="userN" th:text="${users.userId}" hidden></td>
+                  <td class="under-line"  th:text="${users.userName}"></td>
                   <td class="td_header">性别:</td>
                   <td class="under-line" th:text="${users.userSex}"></td>
                   <td class="td_header">年龄:</td>
@@ -195,10 +196,56 @@
             </div>
           </div>
         </div>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" style="top: 30%;width: 750px;left: 45%;" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">历史病历</h4>
+              </div>
+              <div class="modal-body">
+                <div style="margin-bottom: 40px;" th:each="record:${records}">
+                    <table class="table table-bordered">
+                      <tbody>
+                      <tr>
+                        <td class="bgcol">就诊时间</td><td colspan="2" th:text="${#dates.format(record.recordCreatedTime, 'yyyy-MM-dd')}"></td>
+                        <td class="bgcol">就诊医生</td><td colspan="2" th:text="${record.doctorId}"></td>
+                      </tr>
+                      <tr>
+                        <td class="bgcol">诊断结果</td><td th:text="${record.diagnosticResult}"></td>
+                        <td class="bgcol">主要症状</td><td colspan="3" th:text="${record.symptom}"></td>
+                      </tr>
+                      <tr>
+                        <td class="bgcol">药品</td>
+                        <td class="bgcol">名称</td>
+                        <td class="bgcol">生产公司</td>
+                        <td class="bgcol">服用频率</td>
+                        <td class="bgcol">单次使用量</td>
+                        <td class="bgcol">服用方法</td>
+                      </tr>
+                      <tr th:each="prescription:${record.getPrescriptions()}">
+                        <td th:text="${prescriptionStat.count}"></td>
+                        <td th:text="${prescription.medicine.medicineName}"></td>
+                        <td th:text="${prescription.medicine.companyName}"></td>
+                        <td th:text="${prescription.prescriptionDosage}"></td>
+                        <td th:text="${prescription.dosageEachTime}"></td>
+                        <td th:text="${prescription.prescriptionUsage}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal -->
+        </div>
       </div>
     </div>
   </div>
-
+<div class="footerPart" th:replace="common/footer::footer"></div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/jquery.ui.custom.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -251,7 +298,8 @@
             var appointmentId = $("#appointmentId").text();
             var symptom = $("#symptom").val();
             var diagnostic = $("#diagnostic").val();
-            var userId = $("#userN").val();
+            var userId = $("#userN").text();
+            alert(userId);
             var prescriptions = new Array();
             $("#tbodyhere").children("tr").each(function () {
                 var prescription = [$(this).children("td").eq(8).text(),$(this).children("td").eq(1).text(),
@@ -278,7 +326,9 @@
                       alert("跳转失败！");
                   }
               },
-              error: alert("error!!"),
+              error:function () {
+                  alert("error!!")
+              }
             })
         });
     })

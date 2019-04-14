@@ -54,6 +54,7 @@
                 <td th:text="${appointment.getUsers().userPhone}"></td>
                 <td>
                   <a th:href="@{/doctor/showRecordPage(userId=${appointment.getUsers().userId},appointmentId=${appointment.appointmentId})}" class="btn btn-primary btn-mini">就诊</a>
+                  <a th:href="@{/doctor/overTime(appointmentId=${appointment.appointmentId})}" class="btn btn-warning btn-mini">过号</a>
                 </td>
               </tr>
               </tbody>

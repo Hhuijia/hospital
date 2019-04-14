@@ -58,8 +58,8 @@ public class RolePermissionServiceImp implements RolePermissionService {
     public List<Role> findAllRole() {
         log.info("******************findAllRole********************");
         List<Role> roles = rolePermissionDao.findAllRole();
-        StringBuilder str = new StringBuilder();
         for (Role role : roles){
+            StringBuilder str = new StringBuilder();
             List<String> perNames = rolePermissionDao.findPermissionByRoleId(role.getRoleId());
             for (String perName : perNames) {
                 str.append(perName).append(",");

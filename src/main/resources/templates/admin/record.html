@@ -49,19 +49,17 @@
 								<th>预约用户</th>
 								<th>预约医生</th>
 								<th>预约时间</th>
-								<th>紧急联系人</th>
-								<th>紧急联系人电话</th>
+								<th>预约状态</th>
 								<th>记录产生时间</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr th:each="appointment:${appointments}">
-								<td th:text="${appointment.appointmentId}"></td>
+								<td th:text="${appointmentStat.count}"></td>
 								<td th:text="${appointment.userId}"></td>
 								<td th:text="${appointment.doctorId}"></td>
 								<td th:text="${appointment.appointmentTime}"></td>
-								<td th:text="${appointment.emergencyContact}"></td>
-								<td th:text="${appointment.emergContPhone}"></td>
+								<td th:text="${appointment.appointmentStatus}"></td>
 								<td th:text="${appointment.appointmentCreatedTime}"></td>
 							</tr>
 							</tbody>
@@ -87,19 +85,15 @@
 								<th>支付用户</th>
 								<th>操作护士</th>
 								<th>金额</th>
-								<th>支付方式</th>
 								<th>支付时间</th>
-								<th>记录产生时间</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr th:each="pay:${pays}">
-								<td th:text="${pay.payId}"></td>
+								<td th:text="${payStat.count}"></td>
 								<td th:text="${pay.userId}"></td>
 								<td th:text="${pay.nurseId}"></td>
 								<td th:text="${pay.payCount}"></td>
-								<td th:text="${pay.payWay}"></td>
-								<td th:text="${pay.payTime}"></td>
 								<td th:text="${pay.payCreatedTime}"></td>
 							</tr>
 							</tbody>
@@ -129,7 +123,7 @@
 							</thead>
 							<tbody>
 							<tr th:each="getMedicine:${getMedicines}">
-								<td th:text="${getMedicine.getMedicineId}"></td>
+								<td th:text="${getMedicineStat.count}"></td>
 								<td th:text="${getMedicine.userId}"></td>
 								<td th:text="${getMedicine.nurseId}"></td>
 								<td th:text="${getMedicine.getMedicineCreatedTime}"></td>

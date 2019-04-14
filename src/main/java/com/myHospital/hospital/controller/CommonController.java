@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.myHospital.hospital.util.GetFeatureDayUtil.getFeatureDate;
 
 /**
  * @Description:
@@ -46,6 +49,11 @@ public class CommonController {
         ModelAndView modelAndView = new ModelAndView();
         List<Department> departments = medicineDepartmentService.findAllDepartment();
         modelAndView.addObject("departments",departments);
+        ArrayList<String> featureDaysList = new ArrayList<>();
+        for (int i = 0; i <7; i++) {
+            featureDaysList.add(getFeatureDate(i));
+        }
+        modelAndView.addObject("featureDaysList",featureDaysList);
         modelAndView.addObject("title","珠海某某某医院");
         modelAndView.setViewName("guest/index");
         return modelAndView;
@@ -53,7 +61,7 @@ public class CommonController {
 
     @GetMapping("/otherIndex")
     public ModelAndView otherIndex() {
-        log.info("********游客首页*********");
+        log.info("********后台首页*********");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title","医院后台管理系统");
         modelAndView.setViewName("common/index");
@@ -71,7 +79,7 @@ public class CommonController {
     public ModelAndView notRole(){
         //无权限，跳转到首页
         log.info("********无权限，跳转到首页*********");
-        return new ModelAndView("common/error500");
+        return new ModelAndView("500");
     }
 
     @GetMapping("/loginOut")
@@ -100,16 +108,12 @@ public class CommonController {
                 }
             }
             if (isUser){
-                List<Department> departments = medicineDepartmentService.findAllDepartment();
-                modelAndView.addObject("departments",departments);
-                modelAndView.addObject("title","珠海某某某医院");
-                modelAndView.setViewName("guest/index");
+                return new ModelAndView("redirect:index");
             }else {
                 if (userPwd.equals("huanghuijia")){
                     modelAndView.setViewName("common/resetPassword");
                 }else {
-                    modelAndView.setViewName("common/index");
-                    modelAndView.addObject("title","医院后台管理系统");
+                    return new ModelAndView("redirect:otherIndex");
                 }
             }
         }catch (IncorrectCredentialsException ice){

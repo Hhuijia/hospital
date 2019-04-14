@@ -20,7 +20,7 @@ public interface PrescriptionRecordService {
     Record findRecordById(String recordId);
 
     //通过userId查询个人以往病历和处方
-    List<Record> findRecordAndPrescription(String userId,String type);
+    List<Record> findRecordAndPrescription(String userId,int recordStatus);
 
     //通过recordId查询病人处方
     List<Prescription> findPrescriptionById(String recordId);

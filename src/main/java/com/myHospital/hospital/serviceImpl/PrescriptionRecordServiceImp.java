@@ -63,15 +63,9 @@ public class PrescriptionRecordServiceImp implements PrescriptionRecordService {
     }
 
     @Override
-    public List<Record> findRecordAndPrescription(String userId,String type) {
+    public List<Record> findRecordAndPrescription(String userId,int recordStatus) {
         log.info("******************findAllRecordAndPrescription********************");
-        List<Record> records = new ArrayList<>();
-        switch (type){
-            case "all":
-                records =  prescriptionRecordDao.findAllRecordAndPrescription(userId);
-            case "withoutPay":
-                records = prescriptionRecordDao.findRecordAndPrescriptionWithoutPay(userId);
-        }
+        List<Record> records = prescriptionRecordDao.findRecordAndPrescription(userId,recordStatus);
         return records;
     }
 

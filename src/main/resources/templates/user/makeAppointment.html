@@ -66,38 +66,6 @@
   <!-- Scripts -->
   <script type="text/javascript" src="/static/assets/js/jquery.min.js"></script>
   <script type="text/javascript" src="/static/assets/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-      $(document).ready(function() {
-          $("#selectDepartment").change(function () {
-              doctorVal();
-          });
-      });
-      function doctorVal() {
-          var departmentName = $('#selectDepartment').val();
-          $.ajax({
-              url: '/users/findDoctor',
-              data: {
-                  departmentName: departmentName
-              },
-              type: 'post',
-              dataType: 'TEXT',
-              success: function (data) {
-                  var str = "";
-                  $.each($.parseJSON(data), function (n,datelist) {
-                      str+="<tr>"+
-                          "<td>"+datelist.doctorName+"</td>"+
-                          "<td>"+datelist.doctorProfession+"</td>"+
-                          "<td>"+datelist.doctorMedicalServiceLife+"</td>"+
-                          "<td>"+datelist.doctorTitle+"</td>"+
-                          "<td>"+datelist.doctorIntroduction+"</td>"+
-                          "</tr>";
-                  });
-                  document.getElementById("tbodyData").innerHTML=str;
-              },
-              error: function (err) {}
-          });
-      }
-  </script>
   <!-- /Scripts -->
 </body>
 </html>

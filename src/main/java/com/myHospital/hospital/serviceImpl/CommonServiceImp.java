@@ -5,7 +5,6 @@ import com.myHospital.hospital.entity.*;
 import com.myHospital.hospital.service.CommonService;
 import com.myHospital.hospital.util.ExcelUtil;
 import com.myHospital.hospital.util.PasswordHelper;
-import org.apache.ibatis.annotations.One;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +44,7 @@ public class CommonServiceImp implements CommonService {
     private RolePermissionDao rolePermissionDao;
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void add(Users users, Object o, List roleIds, String type) {
         log.info("******************add********************");
         if (usersDao.findUserByIDNum(users.getUserIDNum()) == null){
@@ -142,7 +142,7 @@ public class CommonServiceImp implements CommonService {
     }
 
     @Override
-    public  void batchImport(String fileName, MultipartFile file, String type) throws IOException{
+    public  void batchImport(String fileName, MultipartFile file, String type) throws Exception{
         log.info("******************batchImport********************");
         ExcelUtil excelUtil = new ExcelUtil();
         if (!excelUtil.validateExcel(fileName)){

@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="parallax-text">
-              <h2 class="parallax_t __white">珠海某某某医院</h2>
+              <h2 class="parallax_t __white">珠海四人行医院</h2>
               <h2 class="parallax_t __green">开创于2010年10月1日</h2>
               <p>病人至上，严谨学术，仁德俱全，收费合理！秉承 “ 开拓、进取、务实、创新 ” 的精神，弘扬 “ 人道、博爱、奉献 ” 的红十字精神！ 多一声问候，多一份关爱，多一些笑容，多一声祝福！</p>
             </div>
@@ -29,31 +29,35 @@
           <!-- planner-->
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 planner">
             <div class="planner-block">
-              <form class="form-planner form-horizontal" th:action="@{/users/ShowAppointmentPage}" method="post">
+              <form class="form-planner form-horizontal" th:action="@{/guest/choiceDoctorAndDateTime}" method="get">
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <label>预约日期（年/月/日）</label>
-                      <input class="form-control __plannerInput" type="text" placeholder="10-05-2015" name="appointmentDate">
+                      <label>预约科室</label>
+                      <div class="theme-select">
+                        <select class="form-control __plannerSelect" title="" name="departmentId">
+                          <option value="0">请选择一个科室</option>
+                          <option th:each="department:${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <label>预约科室</label>
-                        <div class="theme-select">
-                          <select class="form-control __plannerSelect" title="" name="departmentId">
-                            <option value="0">请选择一个科室</option>
-                            <option th:each="department:${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
-                          </select>
-                        </div>
+                      <label>预约日期</label>
+                      <div class="theme-select">
+                        <select class="form-control __plannerSelect" title="" name="appointmentTime">
+                          <option th:each="featureDay:${featureDaysList}" th:value="${featureDay}" th:text="${featureDay}"></option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>>
+                </div>
                 <div class="row">
                   <div class="planner-check-availability">
-                    <a href="#" type="submit" class="btn btn-default">快速查询</a>
+                    <button type="submit" class="btn btn-default">快速查询</button>
                   </div>
                 </div>
               </form>

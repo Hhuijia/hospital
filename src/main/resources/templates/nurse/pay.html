@@ -30,18 +30,10 @@
 					<span class="icon"> <i class="icon-align-justify"></i> </span>
 					<h5>待缴费信息</h5>
 				</div>
-				<div class="widget-content nopadding">
-					<div class="control-group">
-						<label class="control-label">身份证号:</label>
-						<div class="controls">
-							<input id="userIDNum" type="text" class="span5" placeholder="IDNum"/>
-						</div>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							<button id="search" class="btn btn-success">确定</button>
-						</div>
-					</div>
+				<div id="searchP" class="widget-content nopadding" style="text-align: center;">
+					<label class="control-label" style="display: inline-block;">身份证号:</label>
+					<input id="userIDNum" type="text" placeholder="IDNum" style="margin: 15px;"/>
+					<button class="btn btn-success">确定</button>
 				</div>
 			</div>
 	    </div>
@@ -83,7 +75,7 @@
 <script src="/static/js/matrix.tables.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#search").on("click",function () {
+		$("#searchP button").on("click",function () {
 			var userIDNum = $("#userIDNum").val();
 			$.ajax({
                 url: '/nurse/showPrescriptionWithoutPay',
@@ -98,15 +90,15 @@
                     $.each($.parseJSON(data), function (n,datelist) {
                         str+="<tr>"+
                             "<td>"+n+"</td>"+
-                            "<td>"+datelist.getMedicine().medicineName+"</td>"+
+                            "<td>"+datelist.medicine.medicineName+"</td>"+
                             "<td>"+datelist.prescriptionCount+"</td>"+
                             "<td>"+datelist.prescriptionUnit+"</td>"+
-                            "<td>"+datelist.getMedicine().medicinePrice+"</td>"+
-                            "<td>"+datelist.prescriptionCount*datelist.getMedicine().medicinePrice+"</td>"+
+                            "<td>"+datelist.medicine.medicinePrice+"</td>"+
+                            "<td>"+datelist.prescriptionCount*datelist.medicine.medicinePrice+"</td>"+
                             "</tr>";
-                        sum += datelist.prescriptionCount*datelist.getMedicine().medicinePrice;
+                        sum += datelist.prescriptionCount*datelist.medicine.medicinePrice;
                     })
-					str += "<tr><td id='totalPrice'>结算："+sum+"</td><td><button id='confirm' class='btn btn-success'>确认已缴费</button></td></tr>";
+					str += "<tr><td id='totalPrice'>结算："+sum+"</td><td colspan='5'><button id='confirm' class='btn btn-success'>确认已缴费</button></td></tr>";
                     $("#tbodyAdd").html(str);
                     $("#confirm").on("click",function () {
                             $.ajax({

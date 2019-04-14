@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
@@ -40,10 +37,11 @@ public class NurseController {
 
     @PostMapping("/showPrescriptionWithoutPay")
     @ResponseBody
-    public List<Prescription> showPrescriptionWithoutPay(String userIdNum){
+    public List<Prescription> showPrescriptionWithoutPay(@RequestParam String userIDNum){
         log.info("********护士界面/病患缴费*********");
-        Users users = usersService.findUserByIDNum(userIdNum);
-        List<Record> records = prescriptionRecordService.findRecordAndPrescription(users.getUserId(),"withoutPay");
+        Users users = usersService.findUserByIDNum(userIDNum);
+        log.info("********[{}]*********",users);
+        List<Record> records = prescriptionRecordService.findRecordAndPrescription(users.getUserId(),1);
         List<Prescription> prescriptions = new ArrayList<>();
         for (Record record : records){
             prescriptions.addAll(record.getPrescriptions());
@@ -62,21 +60,22 @@ public class NurseController {
 
     @PostMapping("/confirmPay")
     @ResponseBody
-    public boolean confirmPay(String userIdNum, BigDecimal sum){
+    public boolean confirmPay(@RequestParam String userIDNum, @RequestParam BigDecimal sum){
         log.info("********护士界面/确认缴费*********");
         Session session = SecurityUtils.getSubject().getSession();
         Users user = (Users) session.getAttribute("USER_SESSION");
         Nurses nurses = nurseService.findNurseByUserId(user.getUserId());
-        Users users = usersService.findUserByIDNum(userIdNum);
-        List<Record> records = prescriptionRecordService.findRecordAndPrescription(users.getUserId(),"withoutPay");
+        Users users = usersService.findUserByIDNum(userIDNum);
+        List<Record> records = prescriptionRecordService.findRecordAndPrescription(users.getUserId(),1);
         for (Record record : records){
-            int i = prescriptionRecordService.updateRecordStatusById(2,record.getRecordId());//待配药
+            String recordId = record.getPrescriptions().get(0).getRecordId();
+            int i = prescriptionRecordService.updateRecordStatusById(2,recordId);//待配药
             log.info("[{}]",i);
             Pay pay = new Pay();
             pay.setPayCount(sum);
             pay.setUserId(record.getUserId());
             pay.setNurseId(nurses.getNurseId());
-            pay.setRecordId(record.getRecordId());
+            pay.setRecordId(recordId);
             nurseService.addPay(pay);
         }
         return true;
@@ -97,7 +96,7 @@ public class NurseController {
     }
 
     @GetMapping("/showPrescriptionDetail")
-    public ModelAndView showPrescriptionDetail(String recordId){
+    public ModelAndView showPrescriptionDetail(@RequestParam String recordId){
         log.info("********护士界面/处方详情界面*********");
         ModelAndView modelAndView = new ModelAndView();
         int i = prescriptionRecordService.updateRecordStatusById(3,recordId);//正在配药
@@ -108,8 +107,8 @@ public class NurseController {
         return modelAndView;
     }
 
-    @PostMapping("/confirmGetMedicine")
-    public ModelAndView confirmGetMedicine(String recordId){
+    @GetMapping("/confirmGetMedicine")
+    public ModelAndView confirmGetMedicine(@RequestParam String recordId){
         log.info("********护士界面/确认取药*********");
         int i = prescriptionRecordService.updateRecordStatusById(4,recordId);//完成配药
         log.info("[{}]",i);
