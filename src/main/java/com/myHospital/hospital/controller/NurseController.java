@@ -1,20 +1,22 @@
 package com.myHospital.hospital.controller;
 
 import com.myHospital.hospital.entity.*;
-import com.myHospital.hospital.service.NurseService;
-import com.myHospital.hospital.service.PrescriptionRecordService;
-import com.myHospital.hospital.service.UsersService;
+import com.myHospital.hospital.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.soap.SOAPBinding;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +36,15 @@ public class NurseController {
 
     @Autowired
     private PrescriptionRecordService prescriptionRecordService;
+
+    @Autowired
+    private MedicineDepartmentService medicineDepartmentService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private CommonService commonService;
 
     @PostMapping("/showPrescriptionWithoutPay")
     @ResponseBody
@@ -122,5 +133,95 @@ public class NurseController {
         getMedicine.setRecordId(recordId);
         nurseService.addGetMedicine(getMedicine);
         return new ModelAndView("redirect:showGetMedicinePage");
+    }
+
+    @GetMapping("/makeAppointment")
+    public ModelAndView makeAppointment(){
+        log.info("********护士界面/预约挂号*********");
+        ModelAndView modelAndView = new ModelAndView();
+        List<Department> departments = medicineDepartmentService.findAllDepartment();
+        modelAndView.addObject("departments",departments);
+        modelAndView.setViewName("nurse/makeAppointment");
+        return modelAndView;
+    }
+
+    @GetMapping("/choiceDoctor")
+    public ModelAndView choiceDoctor(@RequestParam String departmentId){
+        log.info("********护士界面/选择医生*********");
+        ModelAndView modelAndView = new ModelAndView();
+        Department department = medicineDepartmentService.findDepartmentById(departmentId);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        List<Schedule> schedules = scheduleService.findScheduleCurrentDay(sdf.format(new Date()),department.getDepartmentName());
+        modelAndView.addObject("schedules",schedules);
+        modelAndView.setViewName("nurse/choiceDoctor");
+        return modelAndView;
+    }
+
+    @GetMapping("/loadUser")
+    public ModelAndView loadUser(@RequestParam String scheduleId){
+        log.info("********护士界面/载入病患*********");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("scheduleId",scheduleId);
+        modelAndView.setViewName("nurse/loadUser");
+        return modelAndView;
+    }
+
+    @PostMapping("/findUser")
+    @ResponseBody
+    public Users findUser(@RequestParam String userIDNum){
+        log.info("********护士界面/查找病患*********");
+        Users users = usersService.findUserByIDNum(userIDNum);
+        return users;
+    }
+
+    @PostMapping("/confirmAppointment")
+    @ResponseBody
+    public boolean confirmAppointment(@RequestParam String userIDNum, @RequestParam String scheduleId){
+        log.info("********护士界面/已注册用户确定预约*********");
+        Users users = usersService.findUserByIDNum(userIDNum);
+        Schedule schedule = scheduleService.findScheduleById(scheduleId);
+        Department department = medicineDepartmentService.findDepartmentByName(schedule.getDepartmentName());
+        String time = "";
+        switch (schedule.getWorkTime()){
+            case 1:
+                time = "09:00:00";break;
+            case 2:
+                time = "10:00:00";break;
+            case 3:
+                time = "11:00:00";break;
+            case 4:
+                time = "14:00:00";break;
+            case 5:
+                time = "15:00:00";break;
+            case 6:
+                time = "16:00:00";break;
+            default:
+                break;
+        }
+        String appointmentTime = schedule.getWorkDate().toString()+" "+time;
+        Appointment appointment = new Appointment();
+        appointment.setUserId(users.getUserId());
+        appointment.setDoctorId(schedule.getDoctorId());
+        appointment.setDepartmentId(department.getDepartmentId());
+        appointment.setAppointmentTime(appointmentTime);
+        usersService.makeAppointment(appointment,scheduleId);
+        return true;
+    }
+
+    @PostMapping("/addU")
+    public ModelAndView addU(@RequestParam String scheduleId, @RequestParam String userName,
+                             @RequestParam String userPhone, @RequestParam String userIDNum){
+        log.info("********护士界面/未注册用户确定预约*********");
+        Users users = new Users();
+        users.setUserName(userName);
+        users.setUserPwd(userIDNum.substring(userIDNum.length()-6));
+        users.setUserIDNum(userIDNum);
+        users.setUserPhone(userPhone);
+        users.setUserAddress("未填写");
+        List<String> roleIds = new ArrayList<>();
+        roleIds.add("ROLE_0338_1552723369168");
+        commonService.add(users,null,roleIds,"user");
+        confirmAppointment(userIDNum,scheduleId);
+        return new ModelAndView("redirect:makeAppointment");
     }
 }

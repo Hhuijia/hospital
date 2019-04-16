@@ -96,4 +96,10 @@ public class ScheduleServiceImp implements ScheduleService {
             }
         }
     }
+
+    @Override
+    public Schedule findScheduleById(String scheduleId) {
+        log.info("******************findScheduleById********************");
+        return scheduleDao.findScheduleById(scheduleId);
+    }
 }

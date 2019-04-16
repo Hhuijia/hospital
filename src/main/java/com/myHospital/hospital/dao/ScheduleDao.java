@@ -21,7 +21,7 @@ public interface ScheduleDao {
     @Update("UPDATE schedule SET remain=#{remain} WHERE scheduleId=#{scheduleId}")
     int updateRemianById(@Param("remain") int remain, @Param("scheduleId") String scheduleId);
 
-    //查询某个医生的某天排班
+    //通过ID查询排班
     @Select("SELECT * FROM schedule WHERE scheduleId = #{scheduleId}")
     Schedule findScheduleById(String scheduleId);
 

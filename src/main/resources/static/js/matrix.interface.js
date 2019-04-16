@@ -41,9 +41,8 @@ $(document).ready(function(){
 	
 	// === jQeury Gritter, a growl-like notifications === //
 	$.gritter.add({
-		title:	'Important Unread messages',
-		text:	'You have 12 unread messages.',
-		image: 	'img/demo/envelope.png',
+		title:	'您好！欢迎上线~',
+		text:	'祝你工作愉快~',
 		sticky: false
 	});	
 	$('#gritter-notify .normal').click(function(){

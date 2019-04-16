@@ -25,4 +25,7 @@ public interface ScheduleService {
 
     //上传排班文件
     void batchImportSchedule(String fileName, MultipartFile file) throws Exception;
+
+    //通过ID查询排班
+    Schedule findScheduleById(String scheduleId);
 }
