@@ -215,6 +215,8 @@ public class NurseController {
         Users users = new Users();
         users.setUserName(userName);
         users.setUserPwd(userIDNum.substring(userIDNum.length()-6));
+        users.setUserSex("男");
+        users.setUserAge(18);
         users.setUserIDNum(userIDNum);
         users.setUserPhone(userPhone);
         users.setUserAddress("未填写");

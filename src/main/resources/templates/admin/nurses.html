@@ -148,6 +148,7 @@
 									<th></th>
 									<th>所属科室</th>
 									<th>姓名</th>
+									<th>角色</th>
 									<th>身份证号</th>
 									<th>性别</th>
 									<th>联系电话</th>
@@ -159,6 +160,7 @@
 									<td th:text="${nurseStat.count}"></td>
 									<td th:text="${nurse.nursePlace}"></td>
 									<td th:text="${nurse.nurseName}"></td>
+									<td th:text="${nurse.getRoleName()}"></td>
 									<td th:text="${nurse.getUsers().userIDNum}"></td>
 									<td th:text="${nurse.getUsers().userSex}"></td>
 									<td th:text="${nurse.getUsers().userPhone}"></td>

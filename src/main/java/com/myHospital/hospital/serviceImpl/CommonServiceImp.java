@@ -103,11 +103,26 @@ public class CommonServiceImp implements CommonService {
         log.info("******************findAll********************");
         switch (type) {
             case "doctor":
-                return doctorsDao.findAllDoctor();
+                List<Doctors> doctors = doctorsDao.findAllDoctor();
+                for (Doctors doctor : doctors){
+                    List<String> roleName = rolePermissionDao.findRoleName(doctor.getUsers().getUserId());
+                    doctor.setRoleName(roleName);
+                }
+                return doctors;
             case "nurse":
-                return nursesDao.findAllNurse();
+                List<Nurses> nurses = nursesDao.findAllNurse();
+                for (Nurses nurse : nurses){
+                    List<String> roleName = rolePermissionDao.findRoleName(nurse.getUsers().getUserId());
+                    nurse.setRoleName(roleName);
+                }
+                return nurses;
             case "admin":
-                return adminsDao.findAllAdmin();
+                List<Admins> admins = adminsDao.findAllAdmin();
+                for (Admins admin : admins){
+                    List<String> roleName = rolePermissionDao.findRoleName(admin.getUsers().getUserId());
+                    admin.setRoleName(roleName);
+                }
+                return admins;
             default :
                 return null;
         }

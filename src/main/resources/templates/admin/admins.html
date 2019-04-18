@@ -134,25 +134,25 @@
 			        <table class="table table-bordered data-table">
 			        	<thead>
 				            <tr>
-				              <th>权限</th>
-				              <th>职称</th>
-				              <th>姓名</th>
-				              <th>身份证号</th>
-				              <th>性别</th>
-				              <th>联系电话</th>
-				              <th>状态</th>
-				              <th>操作</th>
+								<th></th>
+								<th>权限</th>
+								<th>职称</th>
+								<th>姓名</th>
+								<th>身份证号</th>
+								<th>性别</th>
+								<th>联系电话</th>
+								<th>操作</th>
 				            </tr>
 			          	</thead>
 			          	<tbody>
 							<tr th:each="admin:${admins}">
-								<td th:text="${admin.adminName}"></td>
+								<td th:text="${adminStat.count}"></td>
+								<td th:text="${admin.getRoleName()}"></td>
 								<td th:text="${admin.adminTitle}"></td>
 								<td th:text="${admin.adminName}"></td>
 								<td th:text="${admin.getUsers().userIDNum}"></td>
 								<td th:text="${admin.getUsers().userSex}"></td>
 								<td th:text="${admin.getUsers().userPhone}"></td>
-								<td>离职</td>
 								<td>
 			        				<a th:href="@{/admin/editAdmin(adminId=${admin.getAdminId()})}" class="btn btn-primary btn-mini">编辑</a>
 			        				<a th:href="@{/admin/delAdmin(adminId=${admin.getAdminId()})}" class="btn btn-danger btn-mini">删除</a>

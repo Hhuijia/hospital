@@ -54,7 +54,7 @@ public class CommonController {
             featureDaysList.add(getFeatureDate(i));
         }
         modelAndView.addObject("featureDaysList",featureDaysList);
-        modelAndView.addObject("title","珠海某某某医院");
+        modelAndView.addObject("title","珠海四人行医院");
         modelAndView.setViewName("guest/index");
         return modelAndView;
     }
@@ -158,6 +158,14 @@ public class CommonController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("common/login");
         modelAndView.addObject("errorMsg",resultText);
+        return modelAndView;
+    }
+
+    @GetMapping("/calendar")
+    public ModelAndView calendar(){
+        log.info("********日历界面*********");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("common/calendar");
         return modelAndView;
     }
 }

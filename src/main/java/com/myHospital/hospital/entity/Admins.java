@@ -1,7 +1,9 @@
 package com.myHospital.hospital.entity;
 
+import org.thymeleaf.util.StringUtils;
+
 import java.sql.Timestamp;
-import java.util.Random;
+import java.util.List;
 
 public class Admins {
 
@@ -13,6 +15,8 @@ public class Admins {
     private String userId;
 
     private Users users;
+
+    private List<String> roleName;
 
     public String getAdminId() {
         return adminId;
@@ -68,5 +72,13 @@ public class Admins {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public String getRoleName() {
+        return StringUtils.join(roleName,",");
+    }
+
+    public void setRoleName(List<String> roleName) {
+        this.roleName = roleName;
     }
 }

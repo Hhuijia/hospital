@@ -69,11 +69,12 @@
       <li shiro:hasRole="admin"><a href="/admin/recordManage"><i class="icon icon-file"></i> <span>查看记录</span> </a></li>
       <li shiro:hasRole="doctor"><a href="/doctor/currentAppointment"><i class="icon icon-tint"></i> <span>我的预约</span></a></li>
       <li shiro:hasRole="doctor"><a href="/doctor/allAppointment"><i class="icon icon-tint"></i> <span>近期预约</span></a></li>
-      <li shiro:hasRole="doctor"><a href="/doctor/addRecord"><i class="icon icon-tint"></i> <span>病历填写</span></a></li>
+      <!--<li shiro:hasRole="doctor"><a href="/doctor/addRecord"><i class="icon icon-tint"></i> <span>病历填写</span></a></li>-->
       <li shiro:hasRole="payRoomNurse"><a href="/nurse/showPayPage"><i class="icon icon-tint"></i> <span>病患缴费</span></a></li>
+      <li shiro:hasRole="payRoomNurse"><a href="/nurse/makeAppointment"><i class="icon icon-tint"></i> <span>预约挂号</span></a></li>
       <li shiro:hasRole="medicineRoomNurse"><a href="/nurse/showGetMedicinePage"><i class="icon icon-tint"></i> <span>开始配药</span></a></li>
-      <li><a th:href="@{calendar.html}"><i class="icon icon-bell"></i> <span>日历</span></a></li>
-      <li><a href="calendar.html"><i class="icon icon-info-sign"></i> <span>帮助页面</span> </a></li>
+      <li><a href="/common/calendar"><i class="icon icon-bell"></i> <span>日历</span></a></li>
+      <li><a href="/common/calendar"><i class="icon icon-info-sign"></i> <span>帮助页面</span> </a></li>
     </ul>
   </div>
 </div>
