@@ -10,9 +10,15 @@
     <link th:href="@{/static/font-awesome/css/font-awesome.css}" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body style="margin-top: 5%">
+    <div class="logo" style="text-align: center;margin: 40px 10px;">
+        <a href="index.html" class="navbar-brand page-scroll">
+            <img src="/static/assets/images/logo/logo.png" alt="logo" style="height: 90px;">
+            <h4 style="display: inline-block;font-size: 68px;vertical-align: middle;margin-left: 8px;color: #333;">珠海市仁济医院</h4>
+        </a>
+    </div>
     <div id="loginbox">
-        <form id="loginform" class="form-vertical" action="/common/login" method="post">
+        <form id="loginform" class="form-vertical" style="border-top: none;" action="/common/login" method="post">
              <div class="control-group normal_text"> <h3>登 录</h3><h4 th:text="${errorMsg}"></h4></div>
             <div class="control-group">
                 <div class="controls">

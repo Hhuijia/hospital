@@ -10,11 +10,19 @@
     <link th:href="@{/static/font-awesome/css/font-awesome.css}" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body style="margin-top: 3%">
+    <div class="logo" style="text-align: center;margin: 20px 10px;">
+        <a href="index.html" class="navbar-brand page-scroll">
+            <img src="/static/assets/images/logo/logo.png" alt="logo" style="height: 90px;">
+            <h4 style="display: inline-block;font-size: 68px;vertical-align: middle;margin-left: 8px;color: #333;">珠海市仁济医院</h4>
+        </a>
+    </div>
     <div id="loginbox">
-        <form id="loginform" class="form-vertical" action="/guest/addUser" method="post" th:object="${user}">
-             <div class="control-group normal_text"> <h3>请 注 册</h3></div>
-            <div class="control-group">
+        <form id="loginform" class="form-vertical" style="border-top: none;" action="/guest/addUser" method="post" th:object="${user}">
+            <div class="control-group normal_text">
+                <h3 style="line-height: 20px;">请 注 册</h3>
+            </div>
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lg"><i class="icon-user"></i></span>
@@ -22,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_ly"><i class="icon-lock"></i></span>
@@ -30,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lh"><i class="icon-user-md"></i></span>
@@ -41,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lo"><i class="icon-calendar"></i></span>
@@ -49,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lr"><i class="icon-phone"></i></span>
@@ -57,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_ls"><i class="icon-credit-card"></i></span>
@@ -65,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control-group">
+            <div class="control-group" style="padding: 10px 0;">
                 <div class="controls">
                     <div class="main_input_box">
                         <span class="add-on bg_lv"><i class="icon-pencil"></i></span>

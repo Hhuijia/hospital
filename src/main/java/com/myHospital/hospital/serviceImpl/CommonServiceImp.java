@@ -235,4 +235,32 @@ public class CommonServiceImp implements CommonService {
             }
         }
     }
+
+    @Override
+    public List<String> findRoleName(String userId) {
+        log.info("******************findRoleName********************");
+        return rolePermissionDao.findRoleName(userId);
+    }
+
+    @Override
+    public Object findMyMsg(String userId, String type) {
+        log.info("******************findMyMsg********************");
+        switch (type){
+            case "admin":
+                log.info("******************admin********************");
+                Admins admin = adminsDao.findAdminByUserId(userId);
+                return admin;
+            case "doctor":
+                log.info("******************doctor********************");
+                Doctors doctor = doctorsDao.findDoctorByUserId(userId);
+                return doctor;
+            case "nurse":
+                log.info("******************nurse********************");
+                Nurses nurse = nursesDao.findNurseByUserId(userId);
+                return nurse;
+            default:
+                log.info("******************null********************");
+                return null;
+        }
+    }
 }

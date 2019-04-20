@@ -25,4 +25,10 @@ public interface CommonService<T> {
     //上传EXCEL文件
     void batchImport(String fileName, MultipartFile file, String type) throws Exception;
 
+    //查询某用户的角色名
+    List<String> findRoleName(String userId);
+
+    //获取用户信息
+    Object findMyMsg(String userId, String type);
+
 }

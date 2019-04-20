@@ -1,8 +1,7 @@
 package com.myHospital.hospital.controller;
 
-import com.myHospital.hospital.entity.Department;
-import com.myHospital.hospital.entity.Role;
-import com.myHospital.hospital.entity.Users;
+import com.myHospital.hospital.entity.*;
+import com.myHospital.hospital.service.CommonService;
 import com.myHospital.hospital.service.MedicineDepartmentService;
 import com.myHospital.hospital.service.UsersService;
 import com.myHospital.hospital.util.PasswordHelper;
@@ -42,6 +41,9 @@ public class CommonController {
 
     @Autowired
     private MedicineDepartmentService medicineDepartmentService;
+
+    @Autowired
+    private CommonService commonService;
 
     @GetMapping("/index")
     public ModelAndView index() {
@@ -141,6 +143,14 @@ public class CommonController {
         return view;
     }
 
+    @GetMapping("/showResetPag")
+    public ModelAndView showResetPag(){
+        log.info("********跳转到修改密码界面*********");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("common/resetPassword");
+        return modelAndView;
+    }
+
     @PostMapping(value = "/resetPassword")
     public ModelAndView resetPassword(@RequestParam String userPwd){
         log.info("********修改密码界面*********");
@@ -166,6 +176,28 @@ public class CommonController {
         log.info("********日历界面*********");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("common/calendar");
+        return modelAndView;
+    }
+
+    @GetMapping("/myMsg")
+    public ModelAndView myMsg(){
+        log.info("********我的资料*********");
+        ModelAndView modelAndView = new ModelAndView();
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        modelAndView.addObject("user",user);
+        List<String> roleNme = commonService.findRoleName(user.getUserId());
+        if (roleNme.contains("admin")){
+            Admins admin = (Admins) commonService.findMyMsg(user.getUserId(),"admin");
+            modelAndView.addObject("admin",admin);
+        }else if (roleNme.contains("doctor")){
+            Doctors doctor = (Doctors) commonService.findMyMsg(user.getUserId(),"doctor");
+            modelAndView.addObject("doctor",doctor);
+        }else if (roleNme.contains("nurse")){
+            Nurses nurse = (Nurses) commonService.findMyMsg(user.getUserId(),"nurse");
+            modelAndView.addObject("nurse",nurse);
+        }
+        modelAndView.setViewName("common/myMsg");
         return modelAndView;
     }
 }

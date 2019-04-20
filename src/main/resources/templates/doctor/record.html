@@ -5,6 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style type="text/css">
+    .btn-li{
+      float: left;
+      margin-right: 15px;
+    }
     .under-line {
       border-bottom: solid 1px black;
       color: blue;
@@ -18,7 +22,7 @@
       text-align: center;
     }
     #writehere{
-      height: 540px;
+      height: 500px;
       text-align: center;
       padding-top: 70px;
       font-size: 15px;
@@ -47,25 +51,24 @@
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div class="headerPart" th:replace="common/header::header"></div>
-<div id="content">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="tip-bottom">病历</a> </div>
-    <h1>请填写病历信息</h1><span id="appointmentId" th:text="${appointmentId}" hidden></span>
-  </div>
-  <div class="container-fluid">
-    <div class="quick-actions_homepage">
-      <ul class="quick-actions">
-        <li class="bg_lb" id="saveRecord"> <a href="#"> <i class="icon-save"></i> 保存</a> </li>
-        <li class="bg_lb"> <a href="#"> <i class="icon-print"></i> 打印</a> </li>
-        <li class="bg_lb"> <a href="#"> <i class="icon-inbox"></i><span class="label label-success">10</span> 存为套组 </a> </li>
-        <li class="bg_lb" id="showRecord"> <a href="#" data-toggle="modal" data-target="#myModal"> <i class="icon-folder-open"></i> 病历</a> </li>
-        <li class="bg_lb"> <a href="#"> <i class="icon-question-sign"></i> 帮助</a> </li>
-      </ul>
+  <div class="headerPart" th:replace="common/header::header"></div>
+  <div id="content">
+    <div id="content-header">
+      <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="tip-bottom">病历</a> </div>
+      <span id="appointmentId" th:text="${appointmentId}" hidden></span>
     </div>
-  </div>
     <div class="container-fluid">
-      <hr>
+      <div>
+        <ul style="list-style: none;">
+          <li class="btn-li" id="saveRecord"> <a href="#" class="btn btn-info"> <i class="icon-save"></i> 保存</a> </li>
+          <li class="btn-li"> <a href="#" class="btn btn-info"> <i class="icon-print"></i> 打印</a> </li>
+          <li class="btn-li"> <a href="#" class="btn btn-info"> <i class="icon-inbox"></i> 存为套组 </a> </li>
+          <li class="btn-li" id="showRecord"> <a href="#" class="btn btn-info" data-toggle="modal" data-target="#myModal"> <i class="icon-folder-open"></i> 病历</a> </li>
+          <li class="btn-li"> <a href="#" class="btn btn-info"> <i class="icon-question-sign"></i> 帮助</a> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container-fluid">
       <div class="row-fluid">
         <div class="span2">
           <div class="widget-box">
@@ -95,7 +98,7 @@
         <div class="span5">
           <div class="widget-box">
             <div class="widget-content nopadding">
-              <h3 class="text-center" style="letter-spacing:30px;">珠海市四人行医院</h3>
+              <h3 class="text-center" style="letter-spacing:30px;">珠海市仁济医院</h3>
               <h4 class="text-center" style="letter-spacing:30px;">处方笺</h4>
               <table style="border-collapse: inherit;width: -webkit-fill-available;padding-right: 15px;padding-bottom: 15px;">
                 <tr>
@@ -111,7 +114,7 @@
                   <td class="td_header">地址(电话):</td>
                   <td colspan="3" class="under-line" th:text="${users.userAddress}"></td>
                   <td class="td_header">日期:</td>
-                  <td class="under-line">2019-03-19</td>
+                  <td class="under-line" th:text="${#dates.format(currentDate,'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                   <td class="td_header">诊断:</td>
@@ -196,8 +199,8 @@
             </div>
           </div>
         </div>
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" style="top: 30%;width: 750px;left: 45%;" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <!--模态框（Modal）-->
+        <div class="modal fade" style="width: 750px;display: none;" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

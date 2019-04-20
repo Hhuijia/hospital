@@ -17,8 +17,8 @@
 <div class="headerPart" th:fragment="header">
   <!--Header-part-->
   <div >
-    <img src="/static/assets/images/logo/logo.png" style="margin-left: 13px;margin-top: 22px;height: 64px;">
-    <h1 style="display: inline;vertical-align: middle;"><a href="#">HUIJIA</a></h1>
+    <img src="/static/assets/images/logo/logo.png" style="margin-left: 70px;margin-top: 22px;height: 64px;">
+    <!--<h1 style="display: inline;vertical-align: middle;"><a href="#">珠海市仁济医院</a></h1>-->
   </div>
   <!--close-Header-part-->
 
@@ -28,7 +28,7 @@
       <li  class="dropdown" id="profile-messages" >
         <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎<shiro:principal property="userName" /></span><b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="#"><i class="icon-user"></i> 我的资料</a></li>
+          <li><a href="/common/myMsg"><i class="icon-user"></i> 我的资料</a></li>
           <li class="divider"></li>
           <li><a href="#"><i class="icon-check"></i> 我的任务</a></li>
           <li class="divider"></li>
@@ -73,6 +73,7 @@
       <li shiro:hasRole="payRoomNurse"><a href="/nurse/showPayPage"><i class="icon icon-tint"></i> <span>病患缴费</span></a></li>
       <li shiro:hasRole="payRoomNurse"><a href="/nurse/makeAppointment"><i class="icon icon-tint"></i> <span>预约挂号</span></a></li>
       <li shiro:hasRole="medicineRoomNurse"><a href="/nurse/showGetMedicinePage"><i class="icon icon-tint"></i> <span>开始配药</span></a></li>
+      <li shiro:hasRole="medicineRoomNurse"><a href="/nurse/todayGetMedicine"><i class="icon icon-tint"></i> <span>今天配药记录</span></a></li>
       <li><a href="/common/calendar"><i class="icon icon-bell"></i> <span>日历</span></a></li>
       <li><a href="/common/calendar"><i class="icon icon-info-sign"></i> <span>帮助页面</span> </a></li>
     </ul>

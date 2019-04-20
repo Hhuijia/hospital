@@ -43,7 +43,7 @@
         <div id="grid" class="row best-room_ul best-rooms-isotope-page">
           <div th:each="department:${departments}" th:attr="data-groups='[&quot;'+${department.departmentSystem}+'&quot;]'" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 best-room_li">
               <div class="best-room_img">
-                <a href="#"th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"><img src="/static/assets/images/best-rooms/1.jpg" alt=""></a>
+                <a href="#"th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"><img src="/static/assets/images/best-rooms/3.jpg" alt=""></a>
                 <div class="best-room_overlay">
                   <div class="overlay_icn"><a th:href="@{/guest/showDepartmentDetail(departmentId=${department.getDepartmentId()})}"></a></div>
                 </div>

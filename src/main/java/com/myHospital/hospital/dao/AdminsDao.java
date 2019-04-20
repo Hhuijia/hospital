@@ -24,6 +24,10 @@ public interface AdminsDao {
     })
     List<Admins> findAllAdmin();
 
+    //查询管理员信息
+    @Select("SELECT * FROM admins WHERE userId = #{userId}")
+    Admins findAdminByUserId(String userId);
+
     //通过adminsId删除管理员
     @Delete("DELETE FROM admins WHERE adminId = #{adminId}")
     void deleteAdminById(String adminId);

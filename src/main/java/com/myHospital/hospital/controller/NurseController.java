@@ -226,4 +226,10 @@ public class NurseController {
         confirmAppointment(userIDNum,scheduleId);
         return new ModelAndView("redirect:makeAppointment");
     }
+
+//    @GetMapping("/todayGetMedicine")
+//    public ModelAndView todayGetMedicine(){
+//        log.info("********护士界面/今日配药记录*********");
+////        List<Record> records =
+//    }
 }

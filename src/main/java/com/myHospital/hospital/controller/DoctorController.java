@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class DoctorController {
         Users users = usersService.findUserByID(userId);
         modelAndView.addObject("users",users);log.info("[{}]",users);
         modelAndView.addObject("appointmentId",appointmentId);log.info(appointmentId);
+        modelAndView.addObject("currentDate",new Date());
         List<Medicine> medicines = medicineDepartmentService.findAllMedicine();
         modelAndView.addObject("medicines",medicines);log.info("[{}]",medicines);
         List<Record> records = prescriptionRecordService.findRecordAndPrescription(userId,4);
