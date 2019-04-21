@@ -13,6 +13,9 @@ public class GetMedicine {
     private String userId;
     private String nurseId;
 
+    private Users users;
+    private String nurseName;
+
     public String getGetMedicineId() {
         return getMedicineId;
     }
@@ -51,5 +54,21 @@ public class GetMedicine {
 
     public void setNurseId(String nurseId) {
         this.nurseId = nurseId;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public String getNurseName() {
+        return nurseName;
+    }
+
+    public void setNurseName(String nurseName) {
+        this.nurseName = nurseName;
     }
 }

@@ -24,6 +24,9 @@ public interface NurseService {
     //通过userId查询对应在护士表的信息
     Nurses findNurseByUserId(String userId);
 
+    //查找当天所有配药记录
+    List<GetMedicine> findAllGetMedicineToday();
+
     //按缴费顺序输出缴费记录
     List<Pay> finAllPay();
 }

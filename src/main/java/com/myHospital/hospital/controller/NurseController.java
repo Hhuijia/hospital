@@ -107,13 +107,19 @@ public class NurseController {
     }
 
     @GetMapping("/showPrescriptionDetail")
-    public ModelAndView showPrescriptionDetail(@RequestParam String recordId){
+    public ModelAndView showPrescriptionDetail(@RequestParam String recordId, @RequestParam String type){
         log.info("********护士界面/处方详情界面*********");
         ModelAndView modelAndView = new ModelAndView();
-        int i = prescriptionRecordService.updateRecordStatusById(3,recordId);//正在配药
-        log.info("[{}]",i);
+        boolean isShow = false;
+        if (type.equals("check")){
+            isShow = true;
+        }else {
+            int i = prescriptionRecordService.updateRecordStatusById(3,recordId);//正在配药
+            log.info("[{}]",i);
+        }
         List<Prescription> prescriptions = prescriptionRecordService.findPrescriptionById(recordId);
         modelAndView.addObject("prescriptions", prescriptions);
+        modelAndView.addObject("isShow",isShow);
         modelAndView.setViewName("nurse/prescriptionDetail");
         return modelAndView;
     }
@@ -227,9 +233,13 @@ public class NurseController {
         return new ModelAndView("redirect:makeAppointment");
     }
 
-//    @GetMapping("/todayGetMedicine")
-//    public ModelAndView todayGetMedicine(){
-//        log.info("********护士界面/今日配药记录*********");
-////        List<Record> records =
-//    }
+    @GetMapping("/todayGetMedicine")
+    public ModelAndView todayGetMedicine(){
+        log.info("********护士界面/今日配药记录*********");
+        ModelAndView modelAndView = new ModelAndView();
+        List<GetMedicine> getMedicines = nurseService.findAllGetMedicineToday();
+        modelAndView.addObject("getMedicines",getMedicines);
+        modelAndView.setViewName("nurse/todayGetMedicine");
+        return modelAndView;
+    }
 }

@@ -302,7 +302,6 @@
             var symptom = $("#symptom").val();
             var diagnostic = $("#diagnostic").val();
             var userId = $("#userN").text();
-            alert(userId);
             var prescriptions = new Array();
             $("#tbodyhere").children("tr").each(function () {
                 var prescription = [$(this).children("td").eq(8).text(),$(this).children("td").eq(1).text(),

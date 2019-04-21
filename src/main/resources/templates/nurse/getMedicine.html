@@ -49,7 +49,7 @@
 								<td th:text="${pay.recordId}"></td>
 								<td th:text="${pay.payCreatedTime}"></td>
 								<td>
-									<a th:href="@{/nurse/showPrescriptionDetail(recordId=${pay.getRecordId()})}" class="btn btn-primary btn-mini">待配药</a>
+									<a th:href="@{/nurse/showPrescriptionDetail(recordId=${pay.getRecordId()},type='update')}" class="btn btn-primary btn-mini">待配药</a>
 								</td>
 							</tr>
 						</tbody>

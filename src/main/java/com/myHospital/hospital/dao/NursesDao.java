@@ -34,6 +34,10 @@ public interface NursesDao {
     @Select("SELECT * FROM nurses WHERE userId = #{userId}")
     Nurses findNurseByUserId(String userId);
 
+    //通过nurseId查询护士姓名
+    @Select("SELECT nurseName FROM nurses WHERE nurseId = #{nurseId}")
+    String findNameByNurseId(String nurseId);
+
     //查询所有护士信息
     @Select("SELECT * FROM nurses")
     @Results({
@@ -44,6 +48,10 @@ public interface NursesDao {
     //按缴费顺序输出缴费记录
     @Select("SELECT * FROM paym WHERE recordId IN (SELECT recordId FROM record WHERE recordStatus=2) ORDER BY payCreatedTime")
     List<Pay> finAllPay();
+
+    //查找当天所有配药记录
+    @Select("SELECT * FROM getMedicine WHERE DATE_FORMAT(getMedicineCreatedTime,'%Y%m%d')=#{currentDate} ORDER BY getMedicineCreatedTime")
+    List<GetMedicine> findAllGetMedicineToday(String currentDate);
 
     //通过nurseId删除护士信息
     @Delete("DELETE FROM nurses WHERE nurseId = #{nurseId}")
