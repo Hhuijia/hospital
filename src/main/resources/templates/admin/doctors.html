@@ -14,6 +14,21 @@
 <link rel="stylesheet" href="/static/css/matrix-media.css" />
 <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		#myModal{
+			width: 750px;
+			display: none;
+			position: fixed;
+			top: 20%;
+			left: 30%;
+			background-color: #f9f9f9;
+			border: 3px solid #5bb75d;
+		}
+		.m-footer{
+			text-align: center;
+			margin-bottom: 10px;
+		}
+	</style>
 </head>
 <body>
 <div class="headerPart" th:replace="common/header::header"></div>
@@ -161,6 +176,7 @@
 				        	<thead>
 					            <tr>
 									<th></th>
+									<th hidden>biaohao</th>
 					              <th>添加日期</th>
 					              <th>权限</th>
 					              <th>科室</th>
@@ -174,6 +190,7 @@
 				          	<tbody>
 					            <tr th:each="doctor:${doctors}">
 									<td th:text="${doctorStat.count}"></td>
+									<td th:text="${doctor.doctorId}" hidden id="idNum"></td>
 									<td th:text="${doctor.doctorCreateTime}"></td>
 									<td th:text="${doctor.getRoleName()}"></td>
 									<td th:text="${doctor.departmentName}"></td>
@@ -182,7 +199,7 @@
 									<td th:text="${doctor.getUsers().userSex}"></td>
 									<td th:text="${doctor.getUsers().userPhone}"></td>
 									<td>
-				        				<a th:href="@{/admin/editDoctor(doctorId=${doctor.getDoctorId()})}" class="btn btn-primary btn-mini">编辑</a>
+				        				<button id="editDoctor" class="btn btn-primary btn-mini">编辑</button>
 				        				<a th:href="@{/admin/delDoctor(doctorId=${doctor.getDoctorId()})}" class="btn btn-danger btn-mini">删除</a>
 					            	</td>
 					            </tr>
@@ -191,6 +208,27 @@
 				    </div>
 				</div>
 			</div>
+		</div>
+		<div id="myModal">
+			<div>
+				<div>
+					<div class="m-header">
+						<button style="margin-right: 20px;" type="button" class="close">&times;</button>
+						<h4 style="margin-left: 20px;" class="m-title">修改医生信息</h4>
+					</div>
+					<div class="m-body">
+						<div>
+							<table class="table table-bordered" id="tablehere">
+
+							</table>
+						</div>
+					</div>
+					<div class="m-footer">
+						<button style="margin-right: 25px;" type="button" class="btn btn-danger b-close">取消</button>
+						<button type="button" class="btn btn-success b-success">确定</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
 		</div>
 	</div>
 </div>
@@ -205,5 +243,48 @@
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/matrix.js"></script>
 <script src="/static/js/matrix.tables.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").delegate('#editDoctor', 'click',function(){
+            var doctorId = $("#idNum").text();
+            $.ajax({
+                type: "POST",
+                url: '/admin/editDoctor',
+                data: {
+                    doctorId: doctorId
+                },
+                dataType: 'json',
+                success:function(data) {
+                    var str = "<tbody><tr>"+
+                        "<td style='width: 70px;background-color: #ededed'>姓名</td><td contenteditable>"+data.doctorName+"</td>"+
+                        "<td style='width: 70px;background-color: #ededed'>性别</td><td contenteditable>"+data.users.userSex+"</td>"+
+                        "<td style='width: 70px;background-color: #ededed'>年龄</td><td contenteditable>"+data.users.userAge+"</td></tr>"+
+                        "<tr><td style='width: 70px;background-color: #ededed'>联系方式</td><td colspan='2' contenteditable>"+data.users.userPhone+"</td>"+
+                        "<td style='width: 70px;background-color: #ededed'>住址</td><td colspan='2' contenteditable>"+data.users.userAddress+"</td></tr>"+
+                        "<tr><td style='width: 70px;background-color: #ededed'>职称</td><td colspan='2' contenteditable>"+data.doctorTitle+"</td>"+
+                        "<td style='width: 70px;background-color: #ededed'>从医年限</td ><td colspan='2' contenteditable>"+data.doctorMedicalServiceLife+"</td></tr>"+
+                        "<tr><td style='width: 70px;background-color: #ededed'>主诊</td><td colspan='5' contenteditable>"+data.doctorProfession+"</td></tr>"+
+                        "<tr><td style='width: 70px;background-color: #ededed'>介绍</td><td colspan='5' contenteditable>"+data.doctorIntroduction+"</td></tr></tbody>";
+                    $("#tablehere").html(str);
+                    $("#myModal").fadeIn();
+                },
+                error:function () {
+                    alert("error!!")
+                }
+            })
+        });
+        $(".close").click(function(){
+            $("#myModal").fadeOut();
+        });
+        $(".b-close").click(function(){
+            $("#myModal").fadeOut();
+        });
+        $('.b-success').click(function () {
+			
+        })
+    })
+
+</script>
+
 </body>
 </html>

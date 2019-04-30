@@ -87,10 +87,13 @@ public class AdminController {
         commonService.delete(doctorId,"doctor");
         return new ModelAndView("redirect:doctorManage");
     }
-    @GetMapping("/editDoctor")
-    public ModelAndView editDoctor(@RequestParam String doctorId){
+    @PostMapping("/editDoctor")
+    @ResponseBody
+    public Doctors editDoctor(@RequestParam String doctorId){
         log.info("********编辑医生*********");
-        return new ModelAndView("redirect:doctorManage");
+        Doctors doctors = doctorService.findDoctorById(doctorId);
+        doctors.setUsers(usersService.findUserByID(doctors.getUserId()));
+        return doctors;
     }
     @PostMapping("/importDoctor")
     public ModelAndView importDoctor(@RequestParam MultipartFile file) throws Exception{

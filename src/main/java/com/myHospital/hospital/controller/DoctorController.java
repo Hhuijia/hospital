@@ -45,6 +45,10 @@ public class DoctorController {
     public ModelAndView showRecordPage(String userId,String appointmentId){
         log.info("********医生界面/预约就诊*********");
         ModelAndView modelAndView = new ModelAndView();
+        Session session = SecurityUtils.getSubject().getSession();
+        Users user = (Users) session.getAttribute("USER_SESSION");
+        Doctors doctors = doctorService.findDoctorByUserId(user.getUserId());
+        modelAndView.addObject("departmentName",doctors.getDepartmentName());
         Users users = usersService.findUserByID(userId);
         modelAndView.addObject("users",users);log.info("[{}]",users);
         modelAndView.addObject("appointmentId",appointmentId);log.info(appointmentId);
