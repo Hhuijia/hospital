@@ -50,18 +50,20 @@ public class ExcelUtil<T> {
         return sheet;
     }
 
-    public void export(HttpServletResponse response, List<T> records, List<String> columns, String msgType) throws IOException {
+    public void export(HttpServletResponse response, List records, List<String> columns, String msgType) throws IOException {
 
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
         HSSFSheet hssfSheet = hssfWorkbook.createSheet(msgType);
         HSSFRow hssfRow = hssfSheet.createRow(0);
         for (int i=0; i<columns.size(); i++){
             hssfRow.createCell(i).setCellValue(columns.get(i));
+            log.info(columns.get(i));
         }
         for (int j=0;j<records.size();j++){
             hssfRow = hssfSheet.createRow(j+1);
             String record = records.get(j).toString();
             String[] recordValue = record.split(",");
+            log.info("[{}]",record);
             for (int i=0; i<columns.size(); i++){
                 hssfRow.createCell(i).setCellValue(recordValue[i]);
             }

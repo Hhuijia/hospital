@@ -81,4 +81,10 @@ public class Pay {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        String str = this.payId+","+this.payCount+","+this.payCreatedTime+","+this.nurseId+","+this.userId+","+this.recordId;
+        return str;
+    }
 }

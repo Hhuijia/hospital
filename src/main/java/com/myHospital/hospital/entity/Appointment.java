@@ -92,8 +92,8 @@ public class Appointment {
 
     @Override
     public String toString() {
-        String str = this.appointmentId+","+this.userId+","+this.doctorId+","+this.departmentId+","+
-                this.appointmentTime+","+this.appointmentCreatedTime;
+        String str = this.appointmentId+","+this.appointmentTime+","+this.appointmentCreatedTime
+                +","+this.appointmentStatus+","+this.doctorId+","+this.userId+","+this.departmentId;
         return str;
     }
 }

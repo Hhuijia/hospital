@@ -71,4 +71,10 @@ public class GetMedicine {
     public void setNurseName(String nurseName) {
         this.nurseName = nurseName;
     }
+
+    @Override
+    public String toString() {
+        String str = this.getMedicineId+","+this.getMedicineCreatedTime+","+this.nurseId+","+this.userId+","+this.recordId;
+        return str;
+    }
 }

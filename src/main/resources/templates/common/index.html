@@ -6,252 +6,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/static/css/bootstrap-responsive.min.css}" />
-<link rel="stylesheet" th:href="@{/static/css/fullcalendar.css}" />
 <link rel="stylesheet" th:href="@{/static/css/uniform.css}" />
 <link rel="stylesheet" th:href="@{/static/css/select2.css}" />
 <link rel="stylesheet" th:href="@{/static/css/matrix-style.css}" />
 <link rel="stylesheet" th:href="@{/static/css/matrix-media.css}" />
 <link th:href="@{/static/font-awesome/css/font-awesome.css}" rel="stylesheet" />
-<link rel="stylesheet" th:href="@{/static/css/jquery.gritter.css}" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div class="headerPart" th:replace="common/header::header"></div>
 <!--main-container-part-->
 <div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="/common/otherIndex" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a></div>
-  </div>
-<!--End-breadcrumbs-->
 
-<!--Action boxes-->
-  <div class="container-fluid">
-    <div class="quick-actions_homepage">
-      <ul shiro:hasRole="admin" class="quick-actions">
-        <li class="bg_lb"> <a href="#"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> 查找医生</a> </li>
-        <li class="bg_lg"> <a href="#"> <i class="icon-signal"></i> 查找护士</a> </li>
-        <li class="bg_ly"> <a href="#"> <i class="icon-inbox"></i> 查找管理员</a> </li>
-        <li class="bg_lo"> <a href="#"> <i class="icon-th"></i> 查看用户</a> </li>
-        <li class="bg_ls"> <a href="#"> <i class="icon-fullscreen"></i> 今日所有预约</a> </li>
-        <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> 日历</a> </li>
-      </ul>
-      <ul shiro:hasRole="doctor" class="quick-actions">
-        <li class="bg_lb"> <a href="#"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> 我的预约</a> </li>
-        <li class="bg_lg"> <a href="#"> <i class="icon-signal"></i> 所有预约</a> </li>
-        <li class="bg_ly"> <a href="#zxfb"> <i class="icon-inbox"></i> 最新发布</a> </li>
-        <li class="bg_lo"> <a href="#ypcx"> <i class="icon-th"></i> 药品查询</a> </li>
-        <li class="bg_ls"> <a href="#yscx"> <i class="icon-fullscreen"></i> 医生查询</a> </li>
-        <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> 日历</a> </li>
-      </ul>
-    </div>
-<!--End-Action boxes-->    
-
-<!--Chart-box-->    
-    <div class="row-fluid">
-      <div class="widget-box">
-        <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>数据统计</h5>
-        </div>
-        <div class="widget-content" >
-          <div class="row-fluid">
-            <div class="span9">
-              <div class="chart"></div>
-            </div>
-            <div class="span3">
-              <ul class="site-stats">
-                <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>所有预约</small></li>
-                <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>新的预约 </small></li>
-                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>所有点赞</small></li>
-                <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>所有评论</small></li>
-                <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Pending Orders</small></li>
-                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Online Orders</small></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-<!--End-Chart-box--> 
-    <hr/>
-    <div shiro:hasRole="doctor" class="row-fluid">
-      <div class="span12">
-        <div class="widget-box" id="zxfb">
-          <div class="widget-title bg_lo"  data-toggle="collapse" href="#collapseG3" > <span class="icon"> <i class="icon-chevron-down"></i> </span>
-            <h5>最新发布</h5>
-          </div>
-          <div class="widget-content nopadding updates collapse in" id="collapseG3">
-            <div class="new-update clearfix"><i class="icon-ok-sign"></i>
-              <div class="update-done"><a title="" href="#"><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong></a> <span>dolor sit amet, consectetur adipiscing eli</span> </div>
-              <div class="update-date"><span class="update-day">20</span>jan</div>
-            </div>
-            <div class="new-update clearfix"> <i class="icon-gift"></i> <span class="update-notice"> <a title="" href="#"><strong>Congratulation Maruti, Happy Birthday </strong></a> <span>many many happy returns of the day</span> </span> <span class="update-date"><span class="update-day">11</span>jan</span> </div>
-            <div class="new-update clearfix"> <i class="icon-move"></i> <span class="update-alert"> <a title="" href="#"><strong>Maruti is a Responsive Admin theme</strong></a> <span>But already everything was solved. It will ...</span> </span> <span class="update-date"><span class="update-day">07</span>Jan</span> </div>
-            <div class="new-update clearfix"> <i class="icon-leaf"></i> <span class="update-done"> <a title="" href="#"><strong>Envato approved Maruti Admin template</strong></a> <span>i am very happy to approved by TF</span> </span> <span class="update-date"><span class="update-day">05</span>jan</span> </div>
-            <div class="new-update clearfix"> <i class="icon-question-sign"></i> <span class="update-notice"> <a title="" href="#"><strong>I am alwayse here if you have any question</strong></a> <span>we glad that you choose our template</span> </span> <span class="update-date"><span class="update-day">01</span>jan</span> </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div shiro:hasRole="doctor" class="row-fluid">
-      <div class="span12">
-        <div class="widget-box" id="ypcx">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>药品信息</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
-              <thead>
-                <tr>
-                  <th>名称</th>
-                  <th>单价（元）</th>
-                  <th>类别</th>
-                  <th>剩余量</th>
-                  <th>主要药效</th>
-                  <th>用量规范</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="gradeX">
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>Win 95+</td>
-                  <td>Win 95+</td>
-                  <td>Win 95+</td>
-                  <td>4</td>
-                </tr>
-                <tr class="gradeC">
-                  <td>Trident</td>
-                  <td>Internet Explorer 5.0</td>
-                  <td>Win 95+</td>
-                  <td>Win 95+</td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                </tr>
-                <tr class="gradeC">
-                  <td>Misc</td>
-                  <td>PSP browser</td>
-                  <td>PSP</td>
-                  <td>PSP</td>
-                  <td>PSP</td>
-                  <td>-</td>
-                </tr>
-                <tr class="gradeU">
-                  <td>Other browsers</td>
-                  <td>All others</td>
-                  <td>All others</td>
-                  <td>All others</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div shiro:hasRole="doctor" class="row-fluid">
-      <div class="span12">
-        <div class="widget-box" id="yscx">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>医生信息</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
-              <thead>
-                <tr>
-                  <th>姓名</th>
-                  <th>所属科室</th>
-                  <th>主诊</th>
-                  <th>职称</th>
-                  <th>联系电话</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="gradeX">
-                  <td>Trident</td>
-                  <td>Internet Explorer 4.0</td>
-                  <td>Win 95+</td>
-                  <td>4</td>
-                  <td>4</td>
-                </tr>
-                <tr class="gradeC">
-                  <td>Trident</td>
-                  <td>Internet Explorer 5.0</td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>5</td>
-                </tr>
-                <tr class="gradeC">
-                  <td>Misc</td>
-                  <td>PSP browser</td>
-                  <td>PSP</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-                <tr class="gradeU">
-                  <td>Other browsers</td>
-                  <td>All others</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="container-fluid" style="background: url('/static/assets/images/parallax/slide1.jpg')">
+    <h1 style="margin-top: 180px;font-size: 60px;margin-bottom: 50px;color: #FFFFFF;text-align: center;">珠海仁济医院</h1>
+    <h2 style="color: #FFFFFF;text-align: center;">开创于2010年10月1日</h2>
+    <p style="text-align: center;color: #FFFFFF;font-size: 24px;margin-bottom: 380px;line-height: initial">病人至上，严谨学术，仁德俱全，收费合理！<br>秉承 “ 开拓、进取、务实、创新 ” 的精神，弘扬 “ 人道、博爱、奉献 ” 的红十字精神！<br> 多一声问候，多一份关爱，多一些笑容，多一声祝福！</p>
   </div>
 </div>
 
 <!--end-main-container-part-->
 <div class="footerPart" th:replace="common/footer::footer"></div>
 
-<script th:src="@{/static/js/excanvas.min.js}"></script>
 <script th:src="@{/static/js/jquery.min.js}"></script>
 <script th:src="@{/static/js/jquery.ui.custom.js}"></script>
 <script th:src="@{/static/js/bootstrap.min.js}"></script>
-<script th:src="@{/static/js/jquery.flot.min.js}"></script>
-<script th:src="@{/static/js/jquery.flot.resize.min.js}"></script>
-<script th:src="@{/static/js/jquery.peity.min.js}"></script>
-<script th:src="@{/static/js/fullcalendar.min.js}"></script>
-<script th:src="@{/static/js/matrix.dashboard.js}"></script>
-<script th:src="@{/static/js/jquery.gritter.min.js}"></script>
-<script th:src="@{/static/js/matrix.interface.js}"></script>
-<script th:src="@{/static/js/jquery.validate.js}"></script>
-<script th:src="@{/static/js/matrix.form_validation.js}"></script>
-<script th:src="@{/static/js/jquery.wizard.js}"></script>
-<script th:src="@{/static/js/jquery.uniform.js}"></script>
 <script th:src="@{/static/js/select2.min.js}"></script>
-<script th:src="@{/static/js/matrix.popover.js}"></script>
-<script th:src="@{/static/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/static/js/matrix.js}"></script>
-<script th:src="@{/static/js/matrix.tables.js}"></script>
 
-<script type="text/javascript">
-  // This function is called from the pop-up menus to transfer to
-  // a different page. Ignore if the value returned is a null string:
-  function goPage (newURL) {
-
-      // if url is empty, skip the menu dividers and reset the menu selection to default
-      if (newURL != "") {
-      
-          // if url is "-", it is this page -- reset the menu:
-          if (newURL == "-" ) {
-              resetMenu();            
-          } 
-          // else, send page to designated URL            
-          else {  
-            document.location.href = newURL;
-          }
-      }
-  }
-
-// resets the menu selection upon entry to this page:
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
-}
-</script>
 </body>
 </html>
