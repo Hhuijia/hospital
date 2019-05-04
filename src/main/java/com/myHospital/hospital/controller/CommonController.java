@@ -56,7 +56,7 @@ public class CommonController {
             featureDaysList.add(getFeatureDate(i));
         }
         modelAndView.addObject("featureDaysList",featureDaysList);
-        modelAndView.addObject("title","珠海四人行医院");
+        modelAndView.addObject("title","珠海仁济医院");
         modelAndView.setViewName("guest/index");
         return modelAndView;
     }
